@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    buildFeatures {
+        buildConfig = true
+    }
+
 
     buildTypes {
         release {
@@ -31,6 +35,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    packaging {
+        jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
+    }
 }
 
 dependencies {
@@ -44,5 +51,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.android.material:material:1.2.0")
-
+    implementation("com.mapbox.maps:android:11.3.1")
+    //implementation("com.tomtom.sdk.maps:map-display:1.1.0")
   }
