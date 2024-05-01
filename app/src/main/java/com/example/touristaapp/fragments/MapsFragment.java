@@ -1,8 +1,9 @@
-package com.example.touristaapp;
+package com.example.touristaapp.fragments;
 
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 
+import com.example.touristaapp.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

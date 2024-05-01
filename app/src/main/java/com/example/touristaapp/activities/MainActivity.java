@@ -1,8 +1,10 @@
-package com.example.touristaapp;
+package com.example.touristaapp.activities;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.touristaapp.R;
+import com.example.touristaapp.fragments.MapsFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends BaseActivity {

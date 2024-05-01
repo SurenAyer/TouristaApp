@@ -1,4 +1,4 @@
-package com.example.touristaapp;
+package com.example.touristaapp.activities;
 
 import android.content.Intent;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.touristaapp.R;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BaseActivity extends AppCompatActivity {

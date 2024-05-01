@@ -1,13 +1,13 @@
-package com.example.touristaapp;
+package com.example.touristaapp.activities;
 
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.touristaapp.R;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ExploreActivity extends BaseActivity{
