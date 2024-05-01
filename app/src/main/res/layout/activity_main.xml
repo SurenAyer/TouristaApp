@@ -89,13 +89,21 @@
     </com.google.android.material.tabs.TabLayout>
 
     <!-- Map Display -->
-    <com.mapbox.maps.MapView
+    <!--<com.mapbox.maps.MapView
         android:id="@+id/map_view"
-        app:mapbox_cameraTargetLat="39.5"
-        app:mapbox_cameraTargetLng="-98.0"
         app:mapbox_cameraZoom="2.0"
         app:mapbox_cameraPitch="0.0"
         app:mapbox_cameraBearing="0.0"
+        app:mapbox_locationComponentEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category"/>-->
+    <FrameLayout
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="20dp"

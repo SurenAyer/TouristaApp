@@ -51,6 +51,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.android.material:material:1.2.0")
-    implementation("com.mapbox.maps:android:11.3.1")
+//    implementation("com.mapbox.maps:android:10.0.0")
+//    implementation ("com.mapbox.mapboxsdk:mapbox-android-core:3.1.0")
     //implementation("com.tomtom.sdk.maps:map-display:1.1.0")
+    implementation("com.google.android.gms:play-services-maps:17.0.0")
   }
