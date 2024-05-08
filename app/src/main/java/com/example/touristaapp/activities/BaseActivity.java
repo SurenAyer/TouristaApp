@@ -10,7 +10,7 @@ import com.example.touristaapp.R;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BaseActivity extends AppCompatActivity {
-    String TAG = "MSG";
+    String TAG = "BASEACTIVITY";
 
     protected void setupNavigation(NavigationBarView navigation, Class<?> currentActivityClass, @IdRes int selectedItemId) {
         int homeId = navigation.getMenu().findItem(R.id.home).getItemId();
@@ -40,10 +40,6 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             return true;
-
         });
     }
 }
-
-
-

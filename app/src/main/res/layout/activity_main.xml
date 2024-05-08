@@ -51,40 +51,45 @@
         app:tabMode="scrollable">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/category1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category1" />
+            android:icon="@drawable/pc_nature"
+            android:text="Natural" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/category2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category2" />
+            android:icon="@drawable/pc_historical"
+            android:text="Historical" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/category3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/pc_cultural"
+            android:text="Cultural" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/category4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category3" />
+            android:icon="@drawable/pc_religion"
+            android:text="Religious" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/category5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category4" />
+            android:icon="@drawable/pc_entertainment"
+            android:text="Entertainment" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/category6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category5" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_explore_foreground"
-            android:text="Category6" />
+            android:icon="@drawable/pc_adventure"
+            android:text="Adventure" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -165,25 +170,25 @@
                     android:layout_weight="1"
                     android:contentDescription="some description"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/temple" />
+                    app:srcCompat="@drawable/pc_historical" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
+                    android:id="@+id/card1tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Shiva Temple"
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
+                    android:id="@+id/card1rating"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="10dp"
-                    android:text="5/5"
                     android:textAlignment="viewEnd"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
@@ -218,25 +223,25 @@
                     android:layout_weight="1"
                     android:contentDescription="some description"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/temple" />
+                    app:srcCompat="@drawable/pc_adventure" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
+                    android:id="@+id/card2tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="St. Marry Church"
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
+                    android:id="@+id/card2rating"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="10dp"
-                    android:text="4.5/5"
                     android:textAlignment="viewEnd"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
@@ -271,25 +276,25 @@
                     android:layout_weight="1"
                     android:contentDescription="some description"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/temple" />
+                    app:srcCompat="@drawable/pc_nature" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
+                    android:id="@+id/card3tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Ali Mosque"
                     android:textAlignment="center"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
+                    android:id="@+id/card3rating"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingRight="10dp"
-                    android:text="4/5"
                     android:textAlignment="viewEnd"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"

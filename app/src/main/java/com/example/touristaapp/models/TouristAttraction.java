@@ -8,9 +8,10 @@ public class TouristAttraction {
     private String description;
     private String address;
     private int phoneNumber;
-    private int longitude;
-    private int latitude;
+    private float longitude;
+    private float latitude;
     private String category;
+    private Float rating= 0.0F;
 
     private User user;
 
@@ -18,18 +19,11 @@ public class TouristAttraction {
     private Photo[] photos;
     private Event[] events;
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, int longitude, int latitude, String category) {
-        this.attractionId = attractionId;
-        this.name = name;
-        this.description = description;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.category = category;
+
+    public TouristAttraction() {
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, int longitude, int latitude, String category, User user, Review[] reviews, Photo[] photos, Event[] events) {
+    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, float longitude, float latitude, String category, Float rating) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -38,13 +32,23 @@ public class TouristAttraction {
         this.longitude = longitude;
         this.latitude = latitude;
         this.category = category;
+        this.rating = rating;
+    }
+
+    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, float longitude, float latitude, String category, Float rating, User user, Review[] reviews, Photo[] photos, Event[] events) {
+        this.attractionId = attractionId;
+        this.name = name;
+        this.description = description;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.category = category;
+        this.rating = rating;
         this.user = user;
         this.reviews = reviews;
         this.photos = photos;
         this.events = events;
-    }
-
-    public TouristAttraction() {
     }
 
     public int getAttractionId() {
@@ -87,19 +91,19 @@ public class TouristAttraction {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
 
-    public int getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
 
@@ -109,6 +113,14 @@ public class TouristAttraction {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 
     public User getUser() {
@@ -154,6 +166,7 @@ public class TouristAttraction {
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
                 ", category='" + category + '\'' +
+                ", rating=" + rating +
                 ", user=" + user +
                 ", reviews=" + Arrays.toString(reviews) +
                 ", photos=" + Arrays.toString(photos) +

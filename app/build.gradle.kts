@@ -55,4 +55,5 @@ dependencies {
 //    implementation ("com.mapbox.mapboxsdk:mapbox-android-core:3.1.0")
     //implementation("com.tomtom.sdk.maps:map-display:1.1.0")
     implementation("com.google.android.gms:play-services-maps:17.0.0")
-  }
+    implementation ("com.google.code.gson:gson:2.8.8");
+}

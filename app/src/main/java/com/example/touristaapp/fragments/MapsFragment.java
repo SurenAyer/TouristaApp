@@ -4,7 +4,7 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 
 import com.example.touristaapp.R;
-import com.google.android.gms.maps.CameraUpdate;
+import com.example.touristaapp.models.TouristAttraction;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -13,8 +13,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.Manifest;
@@ -29,13 +29,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import java.util.List;
+
 
 public class MapsFragment extends Fragment
         implements
@@ -49,6 +53,14 @@ public class MapsFragment extends Fragment
     private boolean permissionDenied = false;
     private GoogleMap map;
 
+    private List<TouristAttraction> touristAttractionList;
+    private String category;
+
+    private OnMapReadyListener onMapReadyListener;
+
+    public void setOnMapReadyListener(OnMapReadyListener onMapReadyListener) {
+        this.onMapReadyListener = onMapReadyListener;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
@@ -70,55 +82,48 @@ public class MapsFragment extends Fragment
         //Initial Camera Focus
         LatLng newLatLng = new LatLng(-37.65, 144.92);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(newLatLng, 13));
-        addMarker(googleMap);
-
-    }
-
-    private void addMarker(GoogleMap googleMap) {
-        MarkerOptions markerOptions=new MarkerOptions();
-        // Set position of marker
-        //if latlong is used then marker is created at clicked position
-        LatLng newLatLng = new LatLng(-37.65, 144.92);
-        markerOptions.position(newLatLng);
-        // Set title of marker
-        //markerOptions.title(latLng.latitude+" : "+latLng.longitude);
-        markerOptions.title("Hello World");
-        markerOptions.contentDescription("This is a marker");
-        markerOptions.icon(BitmapFromVector(
-                getActivity().getApplicationContext(),
-                R.drawable.hindu));
-        // Remove all marker
-        googleMap.clear();
-        // Animating to zoom the marker
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLatLng,13));
-        // Add marker on map
-        googleMap.addMarker(markerOptions);
-        /*googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        //addMarker(getContext());
+        if (onMapReadyListener != null) {
+            onMapReadyListener.onMapReady();
+        }
+        // Set an OnMarkerClickListener
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
-                // When clicked on map
-                // Initialize marker options
-                MarkerOptions markerOptions=new MarkerOptions();
-                // Set position of marker
-                //if latlong is used then marker is created at clicked position
-                LatLng newLatLng = new LatLng(-37.65, 144.92);
-                markerOptions.position(newLatLng);
-                // Set title of marker
-                //markerOptions.title(latLng.latitude+" : "+latLng.longitude);
-                markerOptions.title("Hello World");
-                markerOptions.contentDescription("This is a marker");
-                markerOptions.icon(BitmapFromVector(
-                        getActivity().getApplicationContext(),
-                        R.drawable.hindu));
-                // Remove all marker
-                googleMap.clear();
-                // Animating to zoom the marker
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
-                // Add marker on map
-                googleMap.addMarker(markerOptions);
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(getActivity(), "Marker Clicked", Toast.LENGTH_SHORT).show();
+                return true; // Return true to indicate that we have handled the event and that we do not wish for the default behavior to occur (which is for the camera to move such that the marker is centered and for the marker's info window to open, if it has one).
             }
-        });*/
+        });
     }
+
+    public void addMarker(Context context, List<TouristAttraction> touristAttractionList, String category) {
+    if (map != null) {
+        map.clear(); // Clear old markers
+        for (TouristAttraction attraction : touristAttractionList) {
+            // Inflate the custom marker layout
+            View markerView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
+            TextView markerTitle = markerView.findViewById(R.id.marker_title);
+            markerTitle.setText(attraction.getName()); // Set the title
+            ImageView imageView = markerView.findViewById(R.id.marker_icon);
+            int resourceId = context.getResources().getIdentifier("pin_" + category.toLowerCase(), "drawable", context.getPackageName());
+            imageView.setImageResource(resourceId);
+
+            // Convert the view to a bitmap
+            markerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            markerView.layout(0, 0, markerView.getMeasuredWidth(), markerView.getMeasuredHeight());
+            Bitmap bitmap = Bitmap.createBitmap(markerView.getMeasuredWidth(), markerView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            markerView.draw(canvas);
+
+            // Create the marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng latLng = new LatLng(attraction.getLatitude(), attraction.getLongitude());
+            markerOptions.position(latLng);
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap)); // Set the icon to the custom view
+            map.addMarker(markerOptions);
+        }
+    }
+}
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -214,5 +219,25 @@ public class MapsFragment extends Fragment
         // after generating our bitmap we are returning our
         // bitmap.
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    public List<TouristAttraction> getTouristAttractionList() {
+        return touristAttractionList;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setTouristAttractionList(List<TouristAttraction> touristAttractionList) {
+        this.touristAttractionList = touristAttractionList;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public interface OnMapReadyListener {
+        void onMapReady();
     }
 }
