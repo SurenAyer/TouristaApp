@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    buildFeatures {
+        buildConfig = true
+    }
+
 
     buildTypes {
         release {
@@ -31,6 +35,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    packaging {
+        jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
 }
 
@@ -46,6 +53,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    
     implementation(libs.material.v120)
     // Import the BoM for the Firebase platform
     implementation(platform(libs.firebase.bom))
@@ -53,5 +61,8 @@ dependencies {
     // Declare the dependency for the App Indexing library and specify a version
     // This specified library version overrides the version designated in the BoM.
     implementation(libs.firebase.appindexing)
+    implementation("com.google.android.material:material:1.2.0")
+    implementation("com.google.android.gms:play-services-maps:17.0.0")
+    implementation ("com.google.code.gson:gson:2.8.8");
+}
 
-  }
