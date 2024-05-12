@@ -4,7 +4,11 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 
 import com.example.touristaapp.R;
+import com.example.touristaapp.activities.MainActivity;
+import com.example.touristaapp.activities.ViewPlaceActivity;
 import com.example.touristaapp.models.TouristAttraction;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -16,16 +20,23 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +51,6 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
-
 public class MapsFragment extends Fragment
         implements
         OnMyLocationButtonClickListener,
@@ -53,52 +63,56 @@ public class MapsFragment extends Fragment
     private boolean permissionDenied = false;
     private GoogleMap map;
 
-    private List<TouristAttraction> touristAttractionList;
-    private String category;
+    private Gson gson;
 
     private OnMapReadyListener onMapReadyListener;
-
+    private FusedLocationProviderClient fusedLocationClient;
+    private LatLng defaultLocation;
+    private Location userLocation;
+    private List<TouristAttraction> touristAttractionList;
     public void setOnMapReadyListener(OnMapReadyListener onMapReadyListener) {
         this.onMapReadyListener = onMapReadyListener;
     }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+   @Override
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
-        mapFragment.getMapAsync(this);
+    SupportMapFragment mapFragment =
+            (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
+    mapFragment.getMapAsync(this);
 
-        return view;
-    }
+    // Initialize the FusedLocationProviderClient
+    fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+    return view;
+}
+
+
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        // ...
         map = googleMap;
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
-        enableMyLocation();
+        gson=new Gson();
         //Initial Camera Focus
-        LatLng newLatLng = new LatLng(-37.65, 144.92);
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(newLatLng, 13));
+        defaultLocation = new LatLng(-37.65, 144.92);
+        enableMyLocation();
+
         //addMarker(getContext());
         if (onMapReadyListener != null) {
             onMapReadyListener.onMapReady();
         }
-        // Set an OnMarkerClickListener
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(getActivity(), "Marker Clicked", Toast.LENGTH_SHORT).show();
-                return true; // Return true to indicate that we have handled the event and that we do not wish for the default behavior to occur (which is for the camera to move such that the marker is centered and for the marker's info window to open, if it has one).
-            }
-        });
+
+
     }
 
-    public void addMarker(Context context, List<TouristAttraction> touristAttractionList, String category) {
+    @SuppressLint("PotentialBehaviorOverride")
+    public void addMarker(Context context, List<TouristAttraction> touristAttractions, String category) {
+        touristAttractionList = touristAttractions;
     if (map != null) {
         map.clear(); // Clear old markers
+        Log.d("MAPTAG", "addMarker: " + category+"PLACE="+touristAttractionList.size());
         for (TouristAttraction attraction : touristAttractionList) {
             // Inflate the custom marker layout
             View markerView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
@@ -119,10 +133,48 @@ public class MapsFragment extends Fragment
             MarkerOptions markerOptions = new MarkerOptions();
             LatLng latLng = new LatLng(attraction.getLatitude(), attraction.getLongitude());
             markerOptions.position(latLng);
+            markerOptions.title(String.valueOf(attraction.getAttractionId()));
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap)); // Set the icon to the custom view
             map.addMarker(markerOptions);
         }
+    }else{
+        Log.d("MAPTAG", "addMarker: map is null");
     }
+    //Focus on Marker
+    Log.d("MAPTAGACTIVITY", "activity="+getActivity().getLocalClassName());
+        // Set an OnMarkerClickListener
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if(getActivity().getClass() == MainActivity.class)
+                {
+                    Intent markerIntent = new Intent(getActivity(), ViewPlaceActivity.class);
+                    int attractionId = Integer.parseInt(marker.getTitle());
+                    TouristAttraction attraction = null;
+                    for (TouristAttraction ta : touristAttractionList) {
+                        if (ta.getAttractionId() == attractionId) {
+                            attraction = ta;
+                            break;
+                        }
+                    }
+                    String placeJson = gson.toJson(attraction);
+                    Log.d("MARKER", "onClick: " + placeJson);
+                    markerIntent.putExtra("touristAttraction", placeJson);
+                    Log.d("MARKER", "DataSent: " + markerIntent.getStringExtra("touristAttraction"));
+                    startActivity(markerIntent);
+                }else{
+                    Toast.makeText(getActivity(), "Please select a place from the list", Toast.LENGTH_SHORT).show();
+                    //Add address here
+                    marker.setTitle(touristAttractionList.get(0).getName());
+                    marker.showInfoWindow();
+                }
+                // Update the camera focus to the marker's position
+                LatLng markerPosition = marker.getPosition();
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, 10));
+
+                return true; // Return true to indicate that we have handled the event and that we do not wish for the default behavior to occur (which is for the camera to move such that the marker is centered and for the marker's info window to open, if it has one).
+            }
+        });
 }
 
     @Override
@@ -138,6 +190,27 @@ public class MapsFragment extends Fragment
                 || ContextCompat.checkSelfPermission(getActivity(), permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
+
+            fusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+        @Override
+        public void onComplete(@NonNull Task<Location> task) {
+            if (task.isSuccessful() && task.getResult() != null) {
+                userLocation = task.getResult();
+                //Focus on User Location
+                if(getActivity().getClass()== MainActivity.class) {
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 13));
+                }
+                //Focus on Marker
+                else{
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(touristAttractionList.get(0).getLatitude(), touristAttractionList.get(0).getLongitude()), 14));
+                }
+                Toast.makeText(getActivity(), "User Location", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("MapsFragment", "Failed to get location.");
+            }
+        }
+    });
             return;
         }
         else{
@@ -221,21 +294,44 @@ public class MapsFragment extends Fragment
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    public List<TouristAttraction> getTouristAttractionList() {
-        return touristAttractionList;
-    }
+/*
+public void showPathToMarker(Float markerLatitude, Float markerLongitude){
+    // Get the current user location
+    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(getActivity(), permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+        map.setMyLocationEnabled(true);
 
-    public String getCategory() {
-        return category;
+        fusedLocationClient.getLastLocation()
+                .addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            userLocation = task.getResult();
+                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 13));
+                            Toast.makeText(getActivity(), "User Location", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d("MapsFragment", "Failed to get location.");
+                        }
+                    }
+                });
+        return;
     }
+    else{
+        Toast.makeText(getActivity(), "Kindly allow location permission", Toast.LENGTH_LONG).show();
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+    }
+    Log.d("ShowPath", "showPathToMarker: " + userLocation);
 
-    public void setTouristAttractionList(List<TouristAttraction> touristAttractionList) {
-        this.touristAttractionList = touristAttractionList;
-    }
+    if (userLocation != null) {
 
-    public void setCategory(String category) {
-        this.category = category;
+    } else {
+        Toast.makeText(getActivity(), "Unable to get current location", Toast.LENGTH_SHORT).show();
     }
+}
+*/
+
 
     public interface OnMapReadyListener {
         void onMapReady();

@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Always include this permission -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Include only if your app benefits from precise location access. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -17,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ViewPlaceActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ExploreActivity"
             android:exported="false" />

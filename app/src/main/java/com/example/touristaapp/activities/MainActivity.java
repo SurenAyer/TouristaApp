@@ -1,23 +1,26 @@
 package com.example.touristaapp.activities;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
 import com.example.touristaapp.models.TouristAttraction;
 import com.example.touristaapp.utils.JsonReader;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import org.json.JSONObject;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -26,27 +29,26 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends BaseActivity implements MapsFragment.OnMapReadyListener{
 
-//    PermissionsManager permissionsManager;
-//    LocationEngine locationEngine;
-//    private MapView mapView;
-//    private MapboxMap map;
-//    private static final String TAG = "MainActivity";
-    //private boolean isFirstLocationUpdate = true;
     String TAG = "MAINACTIVITY";
     TextView card1TV;
-    TextView card1Rating;
+    RatingBar card1Rating;
     TextView card2TV;
-    TextView card2Rating;
+    RatingBar card2Rating;
     TextView card3TV;
-    TextView card3Rating;
+    RatingBar card3Rating;
     NavigationBarView navigation;
     Fragment mapFragment;
+    CardView cardView1;
+    CardView cardView2;
+    CardView cardView3;
     Map<String, String> categoryMap = new HashMap<>();
     String categorySelected="Natural";
     List<TouristAttraction> touristAttractionList = new ArrayList<>();
     List<TouristAttraction> trendingAttractionList = new ArrayList<>();
+    Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Toast.makeText(this, "Welcome to Main Activity", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -65,13 +67,30 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         card2Rating= findViewById(R.id.card2rating);
         card3TV= findViewById(R.id.card3tv);
         card3Rating= findViewById(R.id.card3rating);
+        cardView1=findViewById(R.id.card1);
+        cardView2=findViewById(R.id.card2);
+        cardView3=findViewById(R.id.card3);
+        gson= new Gson();
+        cardView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPlaceIntent(trendingAttractionList.get(0));
+            }
+        });
+        cardView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPlaceIntent(trendingAttractionList.get(1));
+            }
+        });
 
-//        // Initialize Maps SDK
-//        try {
-//            MapsInitializer.initialize(this);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        cardView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPlaceIntent(trendingAttractionList.get(2));
+            }
+        });
+
         // Initialize fragment
         mapFragment = new MapsFragment();
         ((MapsFragment) mapFragment).setOnMapReadyListener(this);
@@ -87,9 +106,19 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         //Get Currently Selected Category
         touristAttractionList=readData(categorySelected);
         trendingAttractionList=getTrendingAttraction(touristAttractionList);
+        Log.d("TESTTAG", "EventDate= "+trendingAttractionList.get(0).getEvent().get(0).getEventDate());
         setTrendingAttraction();
         //((MapsFragment) mapFragment).onMapReady(map);
         Log.d(TAG, "CategorySelected= " + categorySelected);
+    }
+
+    private void viewPlaceIntent(TouristAttraction touristAttraction) {
+        Intent cardIntent = new Intent(MainActivity.this, ViewPlaceActivity.class);
+        String placeJson = gson.toJson(touristAttraction);
+        Log.d(TAG, "onClick: "+placeJson);
+        cardIntent.putExtra("touristAttraction", placeJson);
+        Log.d(TAG, "DataSent: "+cardIntent.getStringExtra("touristAttraction"));
+        startActivity(cardIntent);
     }
 
 
@@ -146,33 +175,40 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
     }
 
     private void setTrendingAttraction() {
-
+        cardView1.setClickable(true);
+        cardView2.setClickable(true);
+        cardView3.setClickable(true);
         if(trendingAttractionList!=null){
             card1TV.setText(trendingAttractionList.get(0).getName());
-            card1Rating.setText(String.valueOf(trendingAttractionList.get(0).getRating()));
+            card1Rating.setRating(trendingAttractionList.get(0).getRating());
             if(trendingAttractionList.size()>1) {
                 card2TV.setText(trendingAttractionList.get(1).getName());
-                card2Rating.setText(String.valueOf(trendingAttractionList.get(1).getRating()));
+                card2Rating.setRating(trendingAttractionList.get(1).getRating());
             }
             else {
                 card2TV.setText("No Data");
-                card2Rating.setText("0.0");
+                card2Rating.setRating(0.0F);
+                cardView2.setClickable(false);
             }
             if(trendingAttractionList.size()>2) {
                 card3TV.setText(trendingAttractionList.get(2).getName());
-                card3Rating.setText(String.valueOf(trendingAttractionList.get(2).getRating()));
+                card3Rating.setRating(trendingAttractionList.get(2).getRating());
             }
             else {
                 card3TV.setText("No Data");
-                card3Rating.setText("0.0");
+                card3Rating.setRating(0.0F);
+                cardView3.setClickable(false);
             }
         }else{
             card1TV.setText("No Data");
-            card1Rating.setText("0.0");
+            card1Rating.setRating(0.0F);
+            cardView1.setClickable(false);
             card2TV.setText("No Data");
-            card2Rating.setText("0.0");
+            card2Rating.setRating(0.0F);
+            cardView2.setClickable(false);
             card3TV.setText("No Data");
-            card3Rating.setText("0.0");
+            card3Rating.setRating(0.0F);
+            cardView3.setClickable(false);
         }
     }
 
@@ -191,7 +227,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
 
     private List<TouristAttraction> getTrendingAttraction(List<TouristAttraction> touristAttractionList) {
     List<TouristAttraction> topAttractionList = new ArrayList<>();
-    if (touristAttractionList.size() > 0) {
+    if (!touristAttractionList.isEmpty()) {
         topAttractionList = touristAttractionList.stream()
                 .sorted(Comparator.comparing(TouristAttraction::getRating).reversed())
                 .limit(3)

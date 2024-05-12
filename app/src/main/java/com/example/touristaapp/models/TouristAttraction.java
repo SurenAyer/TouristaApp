@@ -1,6 +1,7 @@
 package com.example.touristaapp.models;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class TouristAttraction {
     private int attractionId;
@@ -8,6 +9,7 @@ public class TouristAttraction {
     private String description;
     private String address;
     private int phoneNumber;
+    private String openHours;
     private float longitude;
     private float latitude;
     private String category;
@@ -15,40 +17,42 @@ public class TouristAttraction {
 
     private User user;
 
-    private Review[] reviews;
-    private Photo[] photos;
-    private Event[] events;
+    private List<Review> review;
+    private List<Photo> photo;
+    private List<Event> event;
 
 
     public TouristAttraction() {
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, float longitude, float latitude, String category, Float rating) {
+    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.openHours = openHours;
         this.longitude = longitude;
         this.latitude = latitude;
         this.category = category;
         this.rating = rating;
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, float longitude, float latitude, String category, Float rating, User user, Review[] reviews, Photo[] photos, Event[] events) {
+    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> review, List<Photo> photo, List<Event> event) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.openHours = openHours;
         this.longitude = longitude;
         this.latitude = latitude;
         this.category = category;
         this.rating = rating;
         this.user = user;
-        this.reviews = reviews;
-        this.photos = photos;
-        this.events = events;
+        this.review = review;
+        this.photo = photo;
+        this.event = event;
     }
 
     public int getAttractionId() {
@@ -91,6 +95,14 @@ public class TouristAttraction {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getOpenHours() {
+        return openHours;
+    }
+
+    public void setOpenHours(String openHours) {
+        this.openHours = openHours;
+    }
+
     public float getLongitude() {
         return longitude;
     }
@@ -131,28 +143,28 @@ public class TouristAttraction {
         this.user = user;
     }
 
-    public Review[] getReviews() {
-        return reviews;
+    public List<Review> getReview() {
+        return review;
     }
 
-    public void setReviews(Review[] reviews) {
-        this.reviews = reviews;
+    public List<Photo> getPhoto() {
+        return photo;
     }
 
-    public Photo[] getPhotos() {
-        return photos;
+    public List<Event> getEvent() {
+        return event;
     }
 
-    public void setPhotos(Photo[] photos) {
-        this.photos = photos;
+    public void setReview(List<Review> review) {
+        this.review = review;
     }
 
-    public Event[] getEvents() {
-        return events;
+    public void setPhoto(List<Photo> photo) {
+        this.photo = photo;
     }
 
-    public void setEvents(Event[] events) {
-        this.events = events;
+    public void setEvent(List<Event> event) {
+        this.event = event;
     }
 
     @Override
@@ -163,14 +175,15 @@ public class TouristAttraction {
                 ", description='" + description + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber=" + phoneNumber +
+                ", openHours='" + openHours + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
                 ", category='" + category + '\'' +
                 ", rating=" + rating +
                 ", user=" + user +
-                ", reviews=" + Arrays.toString(reviews) +
-                ", photos=" + Arrays.toString(photos) +
-                ", events=" + Arrays.toString(events) +
+                ", review=" + review +
+                ", photo=" + photo +
+                ", event=" + event +
                 '}';
     }
 }

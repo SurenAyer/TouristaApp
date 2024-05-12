@@ -4,8 +4,9 @@
       "attractionId": 111,
       "name": "Attraction1 Name",
       "address": "Attraction1 Address",
-      "description": "Attraction1 Description Here",
+      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
       "phoneNumber": 456278728,
+      "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
       "longitude":144.92,
       "latitude": -37.65,
@@ -14,12 +15,14 @@
         {
           "reviewId": 111222,
           "rating": 4,
+          "userName": "John Doe",
           "comment": "Some Comment about the Attraction1",
           "timestamp": "1224552"
         },
         {
           "reviewId": 111223,
           "rating": 3,
+          "userName": "Jane Doe",
           "comment": "Some Comment about the Attraction1",
           "timestamp": 1224543
         }
@@ -39,16 +42,14 @@
           "eventId": 111444,
           "eventName": "Event Name1",
           "description": "Event Description",
-          "date": "12/05/2024",
-          "time": "1310",
+          "eventDate": "1715480493",
           "duration": "120"
         },
         {
           "eventId": 111445,
           "eventName": "Event Name2",
           "description": "Event Description",
-          "date": "10/04/2024",
-          "time": "1020",
+          "eventDate": "1715480493",
           "duration": 60
         }
       ],
@@ -69,8 +70,9 @@
       "attractionId": 112,
       "name": "Attraction2 Name",
       "address": "Attraction2 Address",
-      "description": "Attraction1 Description Here",
+      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
       "phoneNumber": 456278243,
+      "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
       "longitude":144.92,
       "latitude": -37.66,
@@ -79,12 +81,14 @@
         {
           "reviewId": 112224,
           "rating": 5,
+          "userName": "John Doe",
           "comment": "Some Comment about the Attraction2",
           "timestamp": "1224523"
         },
         {
           "reviewId": 112225,
           "rating": 4,
+          "userName": "Jane Doe",
           "comment": "Some Comment about the Attraction2",
           "timestamp": "12245234"
         }
@@ -104,16 +108,14 @@
           "eventId": 111446,
           "eventName": "Event Name1",
           "description": "Event Description",
-          "date": "16/06/2024",
-          "time": "1500",
+          "eventDate": "1715480493",
           "duration": 180
         },
         {
           "eventId": 111447,
           "eventName": "Event Name2",
           "description": "Event Description",
-          "date": "02/03/2024",
-          "time": "1200",
+          "eventDate": "1715480493",
           "duration": 240
         }
       ],
@@ -134,8 +136,9 @@
       "attractionId": 113,
       "name": "Attraction3 Name",
       "address": "Attraction3 Address",
-      "description": "Attraction3 Description Here",
+      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
       "phoneNumber": 456278729,
+      "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
       "longitude":144.92,
       "latitude": -37.62,
@@ -144,6 +147,7 @@
         {
           "reviewId": 113226,
           "rating": 5,
+          "userName": "John Doe",
           "comment": "Some Comment about the Attraction3",
           "timestamp": "1224553"
         }
@@ -159,8 +163,7 @@
           "eventId": 113448,
           "eventName": "Event Name3",
           "description": "Event Description",
-          "date": "15/07/2024",
-          "time": "1400",
+          "eventDate": "1715480493",
           "duration": "90"
         }
       ],
@@ -181,16 +184,18 @@
       "attractionId": 114,
       "name": "Attraction4 Name",
       "address": "Attraction4 Address",
-      "description": "Attraction4 Description Here",
+      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
       "phoneNumber": 456278730,
+      "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
-      "longitude":144.92,
+      "longitude":144.93,
       "latitude": -37.66,
-      "rating": 3,
+      "rating": 3.2,
       "review": [
         {
           "reviewId": 114227,
           "rating": 4,
+          "userName": "John Doe",
           "comment": "Some Comment about the Attraction4",
           "timestamp": "1224554"
         }
@@ -206,8 +211,7 @@
           "eventId": 114449,
           "eventName": "Event Name4",
           "description": "Event Description",
-          "date": "18/08/2024",
-          "time": "1500",
+          "eventDate": "1715480493",
           "duration": "120"
         }
       ],

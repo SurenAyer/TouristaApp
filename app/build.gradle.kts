@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -56,4 +57,7 @@ dependencies {
     //implementation("com.tomtom.sdk.maps:map-display:1.1.0")
     implementation("com.google.android.gms:play-services-maps:17.0.0")
     implementation ("com.google.code.gson:gson:2.8.8");
+    implementation ("com.google.maps.android:android-maps-utils:2.2.6");
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.12.3")
+
 }

@@ -4,24 +4,27 @@ public class Review {
     private int reviewId;
     private int rating;
     private String comment;
-    private int timestamp;
+    private Long timestamp;
+    private String userName;
     private TouristAttraction touristAttraction;
 
     public Review() {
     }
 
-    public Review(int reviewId, int rating, String comment, int timestamp) {
+    public Review(int reviewId, int rating, String comment, Long timestamp, String userName) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
         this.timestamp = timestamp;
+        this.userName = userName;
     }
 
-    public Review(int reviewId, int rating, String comment, int timestamp, TouristAttraction touristAttraction) {
+    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, TouristAttraction touristAttraction) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
         this.timestamp = timestamp;
+        this.userName = userName;
         this.touristAttraction = touristAttraction;
     }
 
@@ -49,14 +52,20 @@ public class Review {
         this.comment = comment;
     }
 
-    public int getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
     public TouristAttraction getTouristAttraction() {
         return touristAttraction;
     }
@@ -72,6 +81,7 @@ public class Review {
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
                 ", timestamp=" + timestamp +
+                ", userName='" + userName + '\'' +
                 ", touristAttraction=" + touristAttraction +
                 '}';
     }

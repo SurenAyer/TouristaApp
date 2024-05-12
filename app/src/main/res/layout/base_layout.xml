@@ -24,6 +24,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu"
-            app:itemIconSize="32dp" />
+            app:itemIconSize="32dp"
+            app:itemIconTint="@color/tab_icon_color"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
