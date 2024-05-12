@@ -3,4 +3,7 @@
     <color name="colorPrimaryDark">#A953D5</color> <!-- Amber 900 Dark -->
     <color name="colorAccent">#64DD17</color> <!-- Light Green A700 -->
     <color name="grey">#808080</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#03A9F4</color>
 </resources>
