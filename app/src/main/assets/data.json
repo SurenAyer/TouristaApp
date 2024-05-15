@@ -3,7 +3,7 @@
     {
       "attractionId": 111,
       "name": "Attraction1 Name",
-      "address": "Attraction1 Address",
+      "address": "11 Nareen Ave, Coolaroo",
       "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
       "phoneNumber": 456278728,
       "openHours": "9:00AM-5:00PM(Mon-Sun)",
@@ -56,7 +56,7 @@
       "user": {
         "userId": 666,
         "firstName": "John",
-        "lalstName": "Doe",
+        "lastName": "Doe",
         "email": "johndoe@gmail.com",
         "password": "xxxxx",
         "phoneNumber": 45362772,
@@ -121,8 +121,8 @@
       ],
       "user": {
         "userId": 667,
-        "firstName": "JOhn",
-        "lalstName": "Snow",
+        "firstName": "John",
+        "lastName": "Snow",
         "email": "johnsnow@gmail.com",
         "password": "xxxxx",
         "phoneNumber": 45672882,

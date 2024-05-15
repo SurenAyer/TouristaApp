@@ -8,7 +8,7 @@
     android:background="@drawable/screen"
     android:padding="40dp"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <TextView
         android:layout_width="match_parent"

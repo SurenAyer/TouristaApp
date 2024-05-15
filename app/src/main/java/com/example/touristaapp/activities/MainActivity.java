@@ -48,7 +48,6 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
     Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toast.makeText(this, "Welcome to Main Activity", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

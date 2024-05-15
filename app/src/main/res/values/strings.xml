@@ -15,4 +15,12 @@
     <string name="log_in">Log In</string>
     <string name="sign_in">Sign In</string>
     <string name="register_text">Don\'t have an account?</string>
+    <string-array name="categories">
+        <item>Natural</item>
+        <item>Historical</item>
+        <item>Cultural</item>
+        <item>Religious</item>
+        <item>Adventure</item>
+        <item>Entertainment</item>
+    </string-array>
 </resources>

@@ -46,8 +46,8 @@ public class ReviewActivity extends BaseActivity {
         placePhoneNumber = findViewById(R.id.contactTV);
         placeOpenHours = findViewById(R.id.openHoursTV);
         placeRating = findViewById(R.id.rating);
-        btnViewReview = findViewById(R.id.reviewButton);
-        btnViewEvents = findViewById(R.id.eventButton);
+//        btnViewReview = findViewById(R.id.reviewButton);
+//        btnViewEvents = findViewById(R.id.eventButton);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

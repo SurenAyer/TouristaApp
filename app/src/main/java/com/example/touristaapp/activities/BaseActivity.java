@@ -28,10 +28,10 @@ public class BaseActivity extends AppCompatActivity {
                 intent = new Intent(this, ExploreActivity.class);
             } else if (item.getItemId() == contributeId) {
                 Log.d(TAG, "onCreate: contribute");
-                intent = new Intent(this, ExploreActivity.class);
+                intent = new Intent(this, ContributeActivity.class);
             } else if (item.getItemId() == profileId) {
                 Log.d(TAG, "onCreate: profile");
-                intent = new Intent(this, ExploreActivity.class);
+                intent = new Intent(this, ProfileActivity.class);
             } else {
                 return false;
             }

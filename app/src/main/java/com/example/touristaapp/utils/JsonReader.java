@@ -57,7 +57,7 @@ public class JsonReader {
         // Filter the data based on the category
         List<TouristAttraction> filteredList = new ArrayList<>();
 
-        if (touristAttractionList != null) {
+        if (touristAttractionList != null && category != null) {
             try {
                 filteredList = touristAttractionList.stream()
                         .filter(attraction -> category.equals(attraction.getCategory()))
@@ -69,7 +69,7 @@ public class JsonReader {
                 return null;
             }
         } else {
-            return null;
+            return touristAttractionList;
         }
 
     }

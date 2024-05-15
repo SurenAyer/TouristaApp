@@ -1,6 +1,7 @@
 package com.example.touristaapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -45,8 +46,8 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
     TextView placePhoneNumber;
     TextView placeOpenHours;
     RatingBar placeRating;
-    Button btnViewReview;
-    Button btnViewEvents;
+    Button btnAddReview;
+    Button btnAddEvent;
     ImageView coverIV;
 
     View mapView;
@@ -69,6 +70,10 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_place);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         NavigationBarView navigation = findViewById(R.id.bottomNavigationView);
         setupNavigation(navigation, ViewPlaceActivity.class, R.id.explore);
         detailsCardView = findViewById(R.id.details_card);
@@ -78,8 +83,8 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
         placePhoneNumber = findViewById(R.id.contactTV);
         placeOpenHours = findViewById(R.id.openHoursTV);
         placeRating = findViewById(R.id.rating);
-        btnViewReview = findViewById(R.id.reviewButton);
-        btnViewEvents = findViewById(R.id.eventButton);
+        btnAddReview = findViewById(R.id.addReviewBtn);
+        btnAddEvent = findViewById(R.id.addEventBtn);
         mapView= findViewById(R.id.map_view);
 
         btnExpandReview = findViewById(R.id.expand_reviews);
@@ -94,10 +99,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
         reviewText = new ArrayList<>();
         reviewRating = new ArrayList<>();
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
 
 
         // Initialize fragment
@@ -138,7 +140,8 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             Log.d("VIEWPLACETAG", "onCreatePlace: touristAttraction is null");
         }
 
-        btnViewReview.setOnClickListener(v -> openReviewActivity());
+        btnAddReview.setOnClickListener(v -> addReviewActivity());
+        btnAddEvent.setOnClickListener(v -> addEventActivity());
 
         // set the Review List
         ReviewListAdapter reviewListAdapter = new ReviewListAdapter(this, reviewUserName, reviewText, reviewRating);
@@ -261,10 +264,36 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
 
 
 
-    private void openReviewActivity() {
-        Intent reviewIntent = new Intent(ViewPlaceActivity.this, ReviewActivity.class);
-        reviewIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
-        startActivity(reviewIntent);
+    private void addReviewActivity() {
+        // Retrieve the login state
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        // If the user is not logged in, redirect to LoginActivity
+        if (!isLoggedIn) {
+            Intent intent = new Intent(ViewPlaceActivity.this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            Intent reviewIntent = new Intent(ViewPlaceActivity.this, CreateReviewActivity.class);
+            reviewIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+            startActivity(reviewIntent);
+        }
+    }
+
+
+    private void addEventActivity() {
+        // Retrieve the login state
+        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+        // If the user is not logged in, redirect to LoginActivity
+        if (!isLoggedIn) {
+            Intent intent = new Intent(ViewPlaceActivity.this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            Intent eventIntent = new Intent(ViewPlaceActivity.this, CreateEventActivity.class);
+            eventIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+            startActivity(eventIntent);
+        }
     }
 
     private void addNewMarkers() {
