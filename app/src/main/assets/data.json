@@ -11,45 +11,49 @@
       "longitude":144.92,
       "latitude": -37.65,
       "rating": 4,
-      "review": [
+      "reviews": [
         {
-          "reviewId": 111222,
+          "reviewsId": 111222,
           "rating": 4,
           "userName": "John Doe",
+          "userId": 666,
           "comment": "Some Comment about the Attraction1",
           "timestamp": "1224552"
         },
         {
-          "reviewId": 111223,
+          "reviewsId": 111223,
           "rating": 3,
+          "userId": 666,
           "userName": "Jane Doe",
           "comment": "Some Comment about the Attraction1",
           "timestamp": 1224543
         }
       ],
-      "photo": [
+      "photos": [
         {
-          "photoId": 111333,
-          "photoUrl": "imagelink1 here"
+          "photosId": 111333,
+          "photosUrl": "imagelink1 here"
         },
         {
-          "photoId": 111334,
-          "photoUrl": "imagelink2 here"
+          "photosId": 111334,
+          "photosUrl": "imagelink2 here"
         }
       ],
-      "event": [
+      "events": [
         {
-          "eventId": 111444,
-          "eventName": "Event Name1",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 111444,
+          "eventsName": "events Name1",
+          "userId": 666,
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": "120"
         },
         {
-          "eventId": 111445,
-          "eventName": "Event Name2",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 111445,
+          "userId": 666,
+          "eventsName": "events Name2",
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": 60
         }
       ],
@@ -77,50 +81,54 @@
       "longitude":144.92,
       "latitude": -37.66,
       "rating": 5,
-      "review": [
+      "reviews": [
         {
-          "reviewId": 112224,
+          "reviewsId": 112224,
           "rating": 5,
           "userName": "John Doe",
+          "userId": 666,
           "comment": "Some Comment about the Attraction2",
           "timestamp": "1224523"
         },
         {
-          "reviewId": 112225,
+          "reviewsId": 112225,
           "rating": 4,
           "userName": "Jane Doe",
+          "userId": 666,
           "comment": "Some Comment about the Attraction2",
           "timestamp": "12245234"
         }
       ],
-      "photo": [
+      "photos": [
         {
-          "photoId": 112335,
-          "photoUrl": "imagelink1 here"
+          "photosId": 112335,
+          "photosUrl": "imagelink1 here"
         },
         {
-          "photoId": 111336,
-          "photoUrl": "imagelink2 here"
+          "photosId": 111336,
+          "photosUrl": "imagelink2 here"
         }
       ],
-      "event": [
+      "events": [
         {
-          "eventId": 111446,
-          "eventName": "Event Name1",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 111446,
+          "userId": 666,
+          "eventsName": "events Name1",
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": 180
         },
         {
-          "eventId": 111447,
-          "eventName": "Event Name2",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 111447,
+          "userId": 666,
+          "eventsName": "events Name2",
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": 240
         }
       ],
       "user": {
-        "userId": 667,
+        "userId": 666,
         "firstName": "John",
         "lastName": "Snow",
         "email": "johnsnow@gmail.com",
@@ -143,32 +151,33 @@
       "longitude":144.92,
       "latitude": -37.62,
       "rating": 2,
-      "review": [
+      "reviews": [
         {
-          "reviewId": 113226,
+          "reviewsId": 113226,
           "rating": 5,
           "userName": "John Doe",
+          "userId": 666,
           "comment": "Some Comment about the Attraction3",
           "timestamp": "1224553"
         }
       ],
-      "photo": [
+      "photos": [
         {
-          "photoId": 113337,
-          "photoUrl": "imagelink3 here"
+          "photosId": 113337,
+          "photosUrl": "imagelink3 here"
         }
       ],
-      "event": [
+      "events": [
         {
-          "eventId": 113448,
-          "eventName": "Event Name3",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 113448,
+          "eventsName": "events Name3",
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": "90"
         }
       ],
       "user": {
-        "userId": 668,
+        "userId": 666,
         "firstName": "Jane",
         "lastName": "Doe",
         "email": "janedoe@gmail.com",
@@ -191,27 +200,29 @@
       "longitude":144.93,
       "latitude": -37.66,
       "rating": 3.2,
-      "review": [
+      "reviews": [
         {
-          "reviewId": 114227,
+          "reviewsId": 114227,
           "rating": 4,
           "userName": "John Doe",
+          "userId": 666,
           "comment": "Some Comment about the Attraction4",
           "timestamp": "1224554"
         }
       ],
-      "photo": [
+      "photos": [
         {
-          "photoId": 114338,
-          "photoUrl": "imagelink4 here"
+          "photosId": 114338,
+          "photosUrl": "imagelink4 here"
         }
       ],
-      "event": [
+      "events": [
         {
-          "eventId": 114449,
-          "eventName": "Event Name4",
-          "description": "Event Description",
-          "eventDate": "1715480493",
+          "eventsId": 114449,
+          "userId": 666,
+          "eventsName": "events Name4",
+          "description": "events Description",
+          "eventsDate": "1715480493",
           "duration": "120"
         }
       ],

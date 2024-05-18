@@ -17,9 +17,9 @@ public class TouristAttraction {
 
     private User user;
 
-    private List<Review> review;
-    private List<Photo> photo;
-    private List<Event> event;
+    private List<Review> reviews;
+    private List<Photo> photos;
+    private List<Event> events;
 
 
     public TouristAttraction() {
@@ -38,7 +38,7 @@ public class TouristAttraction {
         this.rating = rating;
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> review, List<Photo> photo, List<Event> event) {
+    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> reviews, List<Photo> photos, List<Event> events) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -50,9 +50,9 @@ public class TouristAttraction {
         this.category = category;
         this.rating = rating;
         this.user = user;
-        this.review = review;
-        this.photo = photo;
-        this.event = event;
+        this.reviews = reviews;
+        this.photos = photos;
+        this.events = events;
     }
 
     public int getAttractionId() {
@@ -143,28 +143,28 @@ public class TouristAttraction {
         this.user = user;
     }
 
-    public List<Review> getReview() {
-        return review;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public List<Photo> getPhoto() {
-        return photo;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
-    public List<Event> getEvent() {
-        return event;
+    public List<Photo> getPhotos() {
+        return photos;
     }
 
-    public void setReview(List<Review> review) {
-        this.review = review;
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
-    public void setPhoto(List<Photo> photo) {
-        this.photo = photo;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setEvent(List<Event> event) {
-        this.event = event;
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
@@ -180,10 +180,9 @@ public class TouristAttraction {
                 ", latitude=" + latitude +
                 ", category='" + category + '\'' +
                 ", rating=" + rating +
-                ", user=" + user +
-                ", review=" + review +
-                ", photo=" + photo +
-                ", event=" + event +
+                ", reviews=" + reviews +
+                ", photos=" + photos +
+                ", events=" + events +
                 '}';
     }
 }

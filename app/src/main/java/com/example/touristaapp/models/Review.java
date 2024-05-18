@@ -7,25 +7,28 @@ public class Review {
     private Long timestamp;
     private String userName;
     private TouristAttraction touristAttraction;
+    private int userId;
 
     public Review() {
     }
 
-    public Review(int reviewId, int rating, String comment, Long timestamp, String userName) {
+    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, int userId) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
         this.timestamp = timestamp;
         this.userName = userName;
+        this.userId = userId;
     }
 
-    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, TouristAttraction touristAttraction) {
+    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, TouristAttraction touristAttraction, int userId) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
         this.timestamp = timestamp;
         this.userName = userName;
         this.touristAttraction = touristAttraction;
+        this.userId = userId;
     }
 
     public int getReviewId() {
@@ -74,6 +77,14 @@ public class Review {
         this.touristAttraction = touristAttraction;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Review{" +
@@ -83,6 +94,7 @@ public class Review {
                 ", timestamp=" + timestamp +
                 ", userName='" + userName + '\'' +
                 ", touristAttraction=" + touristAttraction +
+                ", userId=" + userId +
                 '}';
     }
 }

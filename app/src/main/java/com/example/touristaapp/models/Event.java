@@ -9,25 +9,29 @@ public class Event {
     private String description;
     private Long eventDate;
     private int duration;
+    private int userId;
+
     private TouristAttraction touristAttraction;
 
     public Event() {
     }
 
-    public Event(int eventId, String eventName, String description, Long eventDate, int duration) {
+    public Event(int eventId, String eventName, String description, Long eventDate, int duration, int userId) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.description = description;
         this.eventDate = eventDate;
         this.duration = duration;
+        this.userId = userId;
     }
 
-    public Event(int eventId, String eventName, String description, Long eventDate, int duration, TouristAttraction touristAttraction) {
+    public Event(int eventId, String eventName, String description, Long eventDate, int duration, int userId, TouristAttraction touristAttraction) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.description = description;
         this.eventDate = eventDate;
         this.duration = duration;
+        this.userId = userId;
         this.touristAttraction = touristAttraction;
     }
 
@@ -79,6 +83,14 @@ public class Event {
         this.touristAttraction = touristAttraction;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -87,6 +99,7 @@ public class Event {
                 ", description='" + description + '\'' +
                 ", eventDate=" + eventDate +
                 ", duration=" + duration +
+                ", userId=" + userId +
                 ", touristAttraction=" + touristAttraction +
                 '}';
     }

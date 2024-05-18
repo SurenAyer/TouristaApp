@@ -1,8 +1,10 @@
 package com.example.touristaapp.activities;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -18,6 +20,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContributeActivity extends BaseActivity {
     private MapsFragment mapFragment;
@@ -85,4 +91,5 @@ public class ContributeActivity extends BaseActivity {
             }
         });
     }
+
 }

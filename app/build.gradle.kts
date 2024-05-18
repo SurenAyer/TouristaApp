@@ -62,10 +62,10 @@ dependencies {
     // Declare the dependency for the App Indexing library and specify a version
     // This specified library version overrides the version designated in the BoM.
     implementation(libs.firebase.appindexing)
-    implementation("com.google.android.material:material:1.2.0")
+    implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.android.gms:play-services-maps:17.0.0")
     implementation ("com.google.code.gson:gson:2.8.8");
     implementation ("com.google.maps.android:android-maps-utils:2.2.6");
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.12.3")
-
+    implementation ("com.google.firebase:firebase-messaging:22.0.0")
 }

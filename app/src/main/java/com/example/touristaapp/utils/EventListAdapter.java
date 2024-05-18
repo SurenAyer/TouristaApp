@@ -1,4 +1,4 @@
-package com.example.touristaapp.activities;
+package com.example.touristaapp.utils;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -28,7 +28,6 @@ public class EventListAdapter extends ArrayAdapter<String> {
         this.name = name;
         this.description = description;
         this.rating = rating;
-
     }
 
     public View getView(int position, View view, ViewGroup parent) {

@@ -11,14 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
@@ -26,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
 import com.example.touristaapp.models.TouristAttraction;
+import com.example.touristaapp.utils.EventListAdapter;
+import com.example.touristaapp.utils.ReviewListAdapter;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -131,7 +131,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             placeOpenHours.setText(touristAttraction.getOpenHours());
             placeRating.setRating(touristAttraction.getRating());
             //btnViewReview.setOnClickListener(v -> openReviewActivity());
-            touristAttraction.getReview().forEach(review -> {
+            touristAttraction.getReviews().forEach(review -> {
                 reviewUserName.add(review.getUserName());
                 reviewText.add(review.getComment());
                 reviewRating.add((float) review.getRating());
@@ -198,6 +198,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
                 }
             }
         });
+
 
         // set the Event List
         EventListAdapter eventListAdapter = new EventListAdapter(this, reviewUserName, reviewText, reviewRating);

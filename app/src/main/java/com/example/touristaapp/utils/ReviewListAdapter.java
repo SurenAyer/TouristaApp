@@ -1,4 +1,4 @@
-package com.example.touristaapp.activities;
+package com.example.touristaapp.utils;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         //Get Currently Selected Category
         touristAttractionList=readData(categorySelected);
         trendingAttractionList=getTrendingAttraction(touristAttractionList);
-        Log.d("TESTTAG", "EventDate= "+trendingAttractionList.get(0).getEvent().get(0).getEventDate());
+        Log.d("TESTTAG", "EventDate= "+trendingAttractionList.get(0).getEvents().get(0).getEventDate());
         setTrendingAttraction();
         //((MapsFragment) mapFragment).onMapReady(map);
         Log.d(TAG, "CategorySelected= " + categorySelected);

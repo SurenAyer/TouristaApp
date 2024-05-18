@@ -1,6 +1,6 @@
 <resources>
-    <color name="colorPrimary">#ffaa66cc  </color> <!-- Amber 900 -->
-    <color name="colorPrimaryDark">#A953D5</color> <!-- Amber 900 Dark -->
+    <color name="colorPrimary">#A953D5  </color> <!-- Amber 900 -->
+    <color name="colorPrimaryDark">#ffaa66cc</color> <!-- Amber 900 Dark -->
     <color name="colorAccent">#64DD17</color> <!-- Light Green A700 -->
     <color name="grey">#808080</color>
     <color name="black">#FF000000</color>
