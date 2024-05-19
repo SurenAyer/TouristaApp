@@ -59,7 +59,7 @@
                 android:textStyle="bold"
                 />
                 <TextView
-                    android:id="@+id/eventDateTime"
+                    android:id="@+id/eventTimeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -71,7 +71,7 @@
                     android:textStyle="bold"
                     />
                 <TextView
-                    android:id="@+id/eventDuration"
+                    android:id="@+id/eventDurationTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

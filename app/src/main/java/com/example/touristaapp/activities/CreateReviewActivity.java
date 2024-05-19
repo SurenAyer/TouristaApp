@@ -32,7 +32,7 @@ public class CreateReviewActivity extends BaseActivity {
     private TouristAttraction touristAttraction;
     private Intent intent;
     private Gson gson;
-
+    private String TAG = "CREATEREVIEWTAG";
 
 
     @Override
@@ -59,16 +59,16 @@ public class CreateReviewActivity extends BaseActivity {
 
         // Initialize a new Gson object
         gson = new Gson();
-        Log.d("VIEWPLACETAG", "jsonData: " + jsonData);
+        Log.d(TAG, "jsonData: " + jsonData);
         touristAttraction = gson.fromJson(jsonData, TouristAttraction.class);
 
         // Check if touristAttraction is not null before using it
         if (touristAttraction != null) {
-            Log.d("CREATEREVIEWTTAG", "onCreateReview: " + touristAttraction.toString());
+            Log.d(TAG, "onCreateReview: " + touristAttraction.toString());
             userName.setText(touristAttraction.getUser().getFirstName()+" "+touristAttraction.getUser().getLastName());
             placeName.setText(touristAttraction.getName());
         } else {
-            Log.d("CREATEREVIEWTAG", "onCreateReview: touristAttraction is null");
+            Log.d(TAG, "onCreateReview: touristAttraction is null");
         }
 
         submitReview.setOnClickListener(new View.OnClickListener() {

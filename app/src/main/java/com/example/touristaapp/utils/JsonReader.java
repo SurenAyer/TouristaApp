@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class JsonReader {
 
-    static String TAG = "JsonReader";
+    private String TAG = "JsonReaderTAG";
     private User user;
 
     public static List<TouristAttraction> readJsonFile(Context context, String fileName, String category) {
@@ -165,14 +165,14 @@ public class JsonReader {
         try {
             jsonObject = new JSONObject(json);
             JSONArray touristAttractions = jsonObject.getJSONArray("tourist_attraction");
-            Log.d("USERDATA", "readJsonFile= " + touristAttractions.toString());
+            Log.d(TAG, "readJsonFile= " + touristAttractions.toString());
             for (int i = 0; i < touristAttractions.length(); i++) {
                 JSONObject attraction = touristAttractions.getJSONObject(i);
                 TouristAttraction touristAttraction = gson.fromJson(attraction.toString(), TouristAttraction.class);
                 touristAttractionList.add(touristAttraction);
             }
         } catch (JSONException e) {
-            Log.d("USERDATA", "readJsonFile: Error reading json file", e);
+            Log.e(TAG, "readJsonFile: Error reading json file", e);
             e.printStackTrace();
         }
         if (touristAttractionList != null ) {
@@ -183,7 +183,7 @@ public class JsonReader {
                         .collect(Collectors.toList()).get(0);
                 return attraction;
             } catch (Exception e) {
-                Log.d("USERDATA", "readJsonFile: Error filtering data", e);
+                Log.e(TAG, "readJsonFile: Error filtering data", e);
                 return null;
             }
         } else {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tourista App</string>
+    <string name="app_name">TOURISTA</string>
     <string name="google_maps_key">AIzaSyAWzwz431Weggjat5qYJpaSuF3ddBZAeSA</string>
     <string name="login">Login</string>
     <string name="email">Email</string>

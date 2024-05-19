@@ -68,4 +68,6 @@ dependencies {
     implementation ("com.google.maps.android:android-maps-utils:2.2.6");
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.12.3")
     implementation ("com.google.firebase:firebase-messaging:22.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 }

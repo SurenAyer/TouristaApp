@@ -29,13 +29,13 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextInputEditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
-    Button buttonRegister;
-    TextView signInLink;
+    private TextInputEditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
+    private Button buttonRegister;
+    private TextView signInLink;
     private FirebaseAuth mAuth;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static final String TAG = "RegisterActivity";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String TAG = "RegisterActivityTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.makeText(RegisterActivity.this, "Registration Failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }

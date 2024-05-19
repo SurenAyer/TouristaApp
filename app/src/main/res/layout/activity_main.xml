@@ -169,20 +169,9 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/card1rating"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:paddingRight="10dp"-->
-                <!--                    android:textAlignment="viewEnd"-->
-                <!--                    android:textAppearance="?attr/textAppearanceBody2"-->
-                <!--                    android:textColor="?android:attr/textColorSecondary"-->
-                <!--                    tools:ignore="RtlCompat" />-->
-                <RatingBar
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                  <RatingBar
                     android:id="@+id/card1rating"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
@@ -231,7 +220,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RatingBar
                     android:id="@+id/card2rating"
@@ -283,8 +273,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
                 <RatingBar
                     android:id="@+id/card3rating"
                     style="?android:attr/ratingBarStyleSmall"

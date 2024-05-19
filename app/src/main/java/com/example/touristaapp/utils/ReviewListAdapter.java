@@ -43,7 +43,5 @@ public class ReviewListAdapter extends ArrayAdapter<String> {
         ratingBar.setRating(rating.get(position));
         descriptionTV.setText(description.get(position));
         return rowView;
-    }
-
-    ;
+    };
 }
