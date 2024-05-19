@@ -8,7 +8,7 @@ public class TouristAttraction {
     private String name;
     private String description;
     private String address;
-    private int phoneNumber;
+    private long phoneNumber;
     private String openHours;
     private float longitude;
     private float latitude;
@@ -25,7 +25,7 @@ public class TouristAttraction {
     public TouristAttraction() {
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating) {
+    public TouristAttraction(int attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -38,7 +38,7 @@ public class TouristAttraction {
         this.rating = rating;
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, int phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> reviews, List<Photo> photos, List<Event> events) {
+    public TouristAttraction(int attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> reviews, List<Photo> photos, List<Event> events) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -87,11 +87,11 @@ public class TouristAttraction {
         this.address = address;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

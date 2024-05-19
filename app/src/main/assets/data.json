@@ -2,240 +2,240 @@
   "tourist_attraction": [
     {
       "attractionId": 111,
-      "name": "Attraction1 Name",
-      "address": "11 Nareen Ave, Coolaroo",
-      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
+      "name": "Coolaroo Adventure Park",
+      "address": "11 Nareen Ave, Coolaroo, Victoria, Australia",
+      "description": "Coolaroo Adventure Park offers a range of thrilling rides and activities suitable for all ages. Open daily from 9 AM to 5 PM, this family-friendly park also features a cozy cafe for snacks and refreshments.",
       "phoneNumber": 456278728,
       "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
-      "longitude":144.92,
+      "longitude": 144.92,
       "latitude": -37.65,
-      "rating": 4,
+      "rating": 4.3,
       "reviews": [
         {
-          "reviewsId": 111222,
+          "reviewId": 111222,
           "rating": 4,
-          "userName": "John Doe",
-          "userId": 666,
-          "comment": "Some Comment about the Attraction1",
-          "timestamp": "1224552"
+          "userName": "Alice Smith",
+          "userId": 101,
+          "comment": "Great place for kids and adults alike. Lots of fun rides.",
+          "timestamp": "1622558492"
         },
         {
-          "reviewsId": 111223,
+          "reviewId": 111223,
           "rating": 3,
-          "userId": 666,
-          "userName": "Jane Doe",
-          "comment": "Some Comment about the Attraction1",
-          "timestamp": 1224543
+          "userId": 102,
+          "userName": "Bob Johnson",
+          "comment": "Good park but a bit crowded during weekends.",
+          "timestamp": 1622562092
         }
       ],
       "photos": [
         {
-          "photosId": 111333,
-          "photosUrl": "imagelink1 here"
+          "photoId": 111333,
+          "photoUrl": "http://example.com/photo1.jpg"
         },
         {
-          "photosId": 111334,
-          "photosUrl": "imagelink2 here"
+          "photoId": 111334,
+          "photoUrl": "http://example.com/photo2.jpg"
         }
       ],
       "events": [
         {
-          "eventsId": 111444,
-          "eventsName": "events Name1",
-          "userId": 666,
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 111444,
+          "eventName": "Summer Festival",
+          "userId": 103,
+          "description": "A fun-filled summer festival with music, food, and games.",
+          "eventDate": "1715480493",
           "duration": "120"
         },
         {
-          "eventsId": 111445,
-          "userId": 666,
-          "eventsName": "events Name2",
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 111445,
+          "userId": 104,
+          "eventName": "Halloween Bash",
+          "description": "Spooky Halloween-themed event with costume contests and treats.",
+          "eventDate": "1715480493",
           "duration": 60
         }
       ],
       "user": {
-        "userId": 666,
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "johndoe@gmail.com",
-        "password": "xxxxx",
+        "userId": 105,
+        "firstName": "Charlie",
+        "lastName": "Brown",
+        "email": "charliebrown@example.com",
+        "password": "securepassword",
         "phoneNumber": 45362772,
         "interest": [
-          "iterest1",
-          "interest2"
+          "thrill rides",
+          "family activities"
         ]
       }
     },
     {
       "attractionId": 112,
-      "name": "Attraction2 Name",
-      "address": "Attraction2 Address",
-      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
+      "name": "Glenroy Funland",
+      "address": "123 Main St, Glenroy, Victoria, Australia",
+      "description": "Glenroy Funland is a top destination for families looking to enjoy a variety of attractions and rides. The park, open daily from 9 AM to 5 PM, also features a cafe for dining.",
       "phoneNumber": 456278243,
       "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
-      "longitude":144.92,
+      "longitude": 144.92,
       "latitude": -37.66,
-      "rating": 5,
+      "rating": 4.8,
       "reviews": [
         {
-          "reviewsId": 112224,
+          "reviewId": 112224,
           "rating": 5,
-          "userName": "John Doe",
-          "userId": 666,
-          "comment": "Some Comment about the Attraction2",
-          "timestamp": "1224523"
+          "userName": "David Miller",
+          "userId": 106,
+          "comment": "Amazing park with lots of fun activities!",
+          "timestamp": "1622558493"
         },
         {
-          "reviewsId": 112225,
+          "reviewId": 112225,
           "rating": 4,
-          "userName": "Jane Doe",
-          "userId": 666,
-          "comment": "Some Comment about the Attraction2",
-          "timestamp": "12245234"
+          "userName": "Emma Wilson",
+          "userId": 107,
+          "comment": "Had a great time, but the food options could be better.",
+          "timestamp": "1622562093"
         }
       ],
       "photos": [
         {
-          "photosId": 112335,
-          "photosUrl": "imagelink1 here"
+          "photoId": 112335,
+          "photoUrl": "http://example.com/photo3.jpg"
         },
         {
-          "photosId": 111336,
-          "photosUrl": "imagelink2 here"
+          "photoId": 111336,
+          "photoUrl": "http://example.com/photo4.jpg"
         }
       ],
       "events": [
         {
-          "eventsId": 111446,
-          "userId": 666,
-          "eventsName": "events Name1",
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 111446,
+          "userId": 108,
+          "eventName": "Music Fest",
+          "description": "A weekend of live music performances and entertainment.",
+          "eventDate": "1715480493",
           "duration": 180
         },
         {
-          "eventsId": 111447,
-          "userId": 666,
-          "eventsName": "events Name2",
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 111447,
+          "userId": 109,
+          "eventName": "Food Truck Rally",
+          "description": "Enjoy a variety of gourmet food trucks and local cuisines.",
+          "eventDate": "1715480493",
           "duration": 240
         }
       ],
       "user": {
-        "userId": 666,
-        "firstName": "John",
-        "lastName": "Snow",
-        "email": "johnsnow@gmail.com",
-        "password": "xxxxx",
+        "userId": 110,
+        "firstName": "Eva",
+        "lastName": "Green",
+        "email": "evagreen@example.com",
+        "password": "securepassword",
         "phoneNumber": 45672882,
         "interest": [
-          "iterest3",
-          "interest4"
+          "live music",
+          "food festivals"
         ]
       }
     },
     {
       "attractionId": 113,
-      "name": "Attraction3 Name",
-      "address": "Attraction3 Address",
-      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
+      "name": "Victoria Adventure Park",
+      "address": "456 Oak St, Victoria, Australia",
+      "description": "Victoria Adventure Park is a popular spot for thrill-seekers and families alike. The park, open from 9 AM to 5 PM, features a variety of rides, games, and a cafe.",
       "phoneNumber": 456278729,
       "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
-      "longitude":144.92,
+      "longitude": 144.92,
       "latitude": -37.62,
-      "rating": 2,
+      "rating": 3.5,
       "reviews": [
         {
-          "reviewsId": 113226,
+          "reviewId": 113226,
           "rating": 5,
-          "userName": "John Doe",
-          "userId": 666,
-          "comment": "Some Comment about the Attraction3",
-          "timestamp": "1224553"
+          "userName": "Frank Thomas",
+          "userId": 111,
+          "comment": "Absolutely loved it! Great rides and friendly staff.",
+          "timestamp": "1622558494"
         }
       ],
       "photos": [
         {
-          "photosId": 113337,
-          "photosUrl": "imagelink3 here"
+          "photoId": 113337,
+          "photoUrl": "http://example.com/photo5.jpg"
         }
       ],
       "events": [
         {
-          "eventsId": 113448,
-          "eventsName": "events Name3",
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 113448,
+          "eventName": "Spring Carnival",
+          "description": "Celebrate spring with a carnival full of games and fun.",
+          "eventDate": "1715480493",
           "duration": "90"
         }
       ],
       "user": {
-        "userId": 666,
-        "firstName": "Jane",
-        "lastName": "Doe",
-        "email": "janedoe@gmail.com",
-        "password": "xxxxx",
+        "userId": 112,
+        "firstName": "Grace",
+        "lastName": "Lee",
+        "email": "gracelee@example.com",
+        "password": "securepassword",
         "phoneNumber": 45362773,
         "interest": [
-          "interest5",
-          "interest6"
+          "outdoor activities",
+          "carnivals"
         ]
       }
     },
     {
       "attractionId": 114,
-      "name": "Attraction4 Name",
-      "address": "Attraction4 Address",
-      "description": "Fun Park Coolaroo is a great place to visit with your family and friends. It is a fun park with a lot of activities for kids and adults. The park is located in Glenroy, Victoria, Australia. The park is open from 9 am to 5 pm every day. The park has a lot of rides and attractions for kids and adults. The park also has a cafe where you can buy food and drinks. The park is a great place to spend a day with your family and friends.",
+      "name": "Glenroy Leisure Park",
+      "address": "789 Pine St, Glenroy, Victoria, Australia",
+      "description": "Glenroy Leisure Park is a wonderful destination for families, offering a range of activities and attractions. The park is open daily from 9 AM to 5 PM and includes a cafe for visitors.",
       "phoneNumber": 456278730,
       "openHours": "9:00AM-5:00PM(Mon-Sun)",
       "category": "Natural",
-      "longitude":144.93,
+      "longitude": 144.93,
       "latitude": -37.66,
-      "rating": 3.2,
+      "rating": 3.8,
       "reviews": [
         {
-          "reviewsId": 114227,
+          "reviewId": 114227,
           "rating": 4,
-          "userName": "John Doe",
-          "userId": 666,
-          "comment": "Some Comment about the Attraction4",
-          "timestamp": "1224554"
+          "userName": "Hannah White",
+          "userId": 113,
+          "comment": "Nice park with lots to do, but could use more seating areas.",
+          "timestamp": "1622558495"
         }
       ],
       "photos": [
         {
-          "photosId": 114338,
-          "photosUrl": "imagelink4 here"
+          "photoId": 114338,
+          "photoUrl": "http://example.com/photo6.jpg"
         }
       ],
       "events": [
         {
-          "eventsId": 114449,
-          "userId": 666,
-          "eventsName": "events Name4",
-          "description": "events Description",
-          "eventsDate": "1715480493",
+          "eventId": 114449,
+          "userId": 114,
+          "eventName": "Family Fun Day",
+          "description": "A day packed with fun activities for the whole family.",
+          "eventDate": "1715480493",
           "duration": "120"
         }
       ],
       "user": {
-        "userId": 669,
+        "userId": 115,
         "firstName": "Jack",
         "lastName": "Doe",
-        "email": "jackdoe@gmail.com",
-        "password": "xxxxx",
+        "email": "jackdoe@example.com",
+        "password": "securepassword",
         "phoneNumber": 45362774,
         "interest": [
-          "interest7",
-          "interest8"
+          "family event",
+          "leisure activities"
         ]
       }
     }

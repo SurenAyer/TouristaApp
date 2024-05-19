@@ -144,6 +144,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
                 eventDuration.add(event.getDuration());
                 eventDescription.add(event.getDescription());
             });
+            Log.d(TAG, "onCreate: "+touristAttraction.toString());
         } else {
             Log.e(TAG, "onViewPlace: touristAttraction is null");
         }
@@ -193,6 +194,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
         btnExpandEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
                 if (eventCardView.getVisibility() == View.VISIBLE) {
                     // Apply the animation
                     TransitionManager.beginDelayedTransition(reviewCardView, new AutoTransition());

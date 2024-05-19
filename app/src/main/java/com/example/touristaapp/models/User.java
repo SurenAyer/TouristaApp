@@ -9,7 +9,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private int phoneNumber;
+    private long phoneNumber;
     private List<String> interest;
 
     private List<TouristAttraction> touristAttractions;
@@ -21,7 +21,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String password, int phoneNumber, List<String> interest) {
+    public User(int userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +31,7 @@ public class User {
         this.interest = interest;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String password, int phoneNumber, List<String> interest, List<TouristAttraction> touristAttractions, List<Review> reviews, List<Event> events, List<Photo> photos) {
+    public User(int userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest, List<TouristAttraction> touristAttractions, List<Review> reviews, List<Event> events, List<Photo> photos) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -65,7 +65,7 @@ public class User {
         return password;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 

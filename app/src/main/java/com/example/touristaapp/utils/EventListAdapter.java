@@ -47,9 +47,12 @@ public class EventListAdapter extends ArrayAdapter<String> {
         TextView descriptionTV = (TextView) rowView.findViewById(R.id.eventDescriptionTV);
 
         nameView.setText(name.get(position));
-        dateView.setText(date.get(position).toString());
-        timeView.setText(time.get(position).toString());
-        durationView.setText(duration.get(position).toString());
+        //dateView.setText(date.get(position).toString());
+        //timeView.setText(time.get(position).toString());
+        dateView.setText("25/05/2024");
+        timeView.setText("25/05/2024");
+        float durationInHours = duration.get(position) / 60;
+        durationView.setText(durationInHours+" hrs");
         descriptionTV.setText(description.get(position));
         return rowView;
     };

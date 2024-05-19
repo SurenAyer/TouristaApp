@@ -198,7 +198,7 @@ public class ProfileActivity extends BaseActivity {
         JsonReader jsonReader=new JsonReader();
         try {
             //Log.d(TAG, "readData: Reading data from json file");
-            user= jsonReader.getUserData(this, 666);
+            user= jsonReader.getUserData(this, 115);
             assert user != null;
 
             return user;
