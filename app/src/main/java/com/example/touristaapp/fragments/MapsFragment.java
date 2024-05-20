@@ -170,10 +170,10 @@ public class MapsFragment extends Fragment
             public boolean onMarkerClick(Marker marker) {
                 if (getActivity().getClass() == MainActivity.class) {
                     Intent markerIntent = new Intent(getActivity(), ViewPlaceActivity.class);
-                    int attractionId = Integer.parseInt(marker.getTitle());
+                    String attractionId = marker.getTitle();
                     TouristAttraction attraction = null;
                     for (TouristAttraction ta : touristAttractionList) {
-                        if (ta.getAttractionId().equals(String.valueOf(attractionId))) {
+                        if (ta.getAttractionId().equals(attractionId)) {
                             attraction = ta;
                             break;
                         }

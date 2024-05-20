@@ -154,12 +154,13 @@
 
                 <!-- Media -->
                 <ImageView
+                    android:id="@+id/card1IV"
                     android:layout_width="50dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
+                    android:padding="10dp"
                     android:contentDescription="some description"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/pc_historical" />
+                    android:scaleType="fitStart" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
@@ -204,12 +205,13 @@
 
                 <!-- Media -->
                 <ImageView
+                    android:id="@+id/card2IV"
                     android:layout_width="50dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
+                    android:padding="10dp"
                     android:contentDescription="some description"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/pc_adventure" />
+                    android:scaleType="fitStart" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
@@ -256,12 +258,13 @@
 
                 <!-- Media -->
                 <ImageView
+                    android:id="@+id/card3IV"
                     android:layout_width="50dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
                     android:contentDescription="some description"
                     android:scaleType="fitStart"
-                    app:srcCompat="@drawable/pc_nature" />
+                    android:padding="10dp" />
 
                 <!-- Title, secondary and supporting text -->
                 <TextView

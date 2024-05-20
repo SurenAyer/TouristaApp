@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
 import com.example.touristaapp.models.TouristAttraction;
@@ -44,6 +46,9 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
     private CardView cardView1;
     private CardView cardView2;
     private CardView cardView3;
+    private ImageView card1IV;
+    private ImageView card2IV;
+    private ImageView card3IV;
     private Map<String, String> categoryMap;
     private String categorySelected = "Natural";
     private List<TouristAttraction> touristAttractionList;
@@ -74,6 +79,10 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         cardView1 = findViewById(R.id.card1);
         cardView2 = findViewById(R.id.card2);
         cardView3 = findViewById(R.id.card3);
+        card1IV = findViewById(R.id.card1IV);
+        card2IV = findViewById(R.id.card2IV);
+        card3IV = findViewById(R.id.card3IV);
+
         gson = new Gson();
         touristAttractionList = new ArrayList<>();
         trendingAttractionList = new ArrayList<>();
@@ -212,31 +221,41 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         if (trendingAttractionList != null) {
             card1TV.setText(trendingAttractionList.get(0).getName());
             card1Rating.setRating(trendingAttractionList.get(0).getRating());
+            Glide.with(this).load(trendingAttractionList.get(0).getPhotos().get(0).getPhotoUrl()).into(card1IV);
             if (trendingAttractionList.size() > 1) {
                 card2TV.setText(trendingAttractionList.get(1).getName());
                 card2Rating.setRating(trendingAttractionList.get(1).getRating());
+                Glide.with(this).load(trendingAttractionList.get(1).getPhotos().get(0).getPhotoUrl()).into(card2IV);
+
             } else {
                 card2TV.setText("No Data");
                 card2Rating.setRating(0.0F);
+                card2IV.setImageResource(R.drawable.ic_no_image);
                 cardView2.setClickable(false);
+
             }
             if (trendingAttractionList.size() > 2) {
                 card3TV.setText(trendingAttractionList.get(2).getName());
                 card3Rating.setRating(trendingAttractionList.get(2).getRating());
+                Glide.with(this).load(trendingAttractionList.get(2).getPhotos().get(0).getPhotoUrl()).into(card3IV);
             } else {
                 card3TV.setText("No Data");
                 card3Rating.setRating(0.0F);
+                card3IV.setImageResource(R.drawable.ic_no_image);
                 cardView3.setClickable(false);
             }
         } else {
             card1TV.setText("No Data");
             card1Rating.setRating(0.0F);
+            card1IV.setImageResource(R.drawable.ic_no_image);
             cardView1.setClickable(false);
             card2TV.setText("No Data");
             card2Rating.setRating(0.0F);
+            card2IV.setImageResource(R.drawable.ic_no_image);
             cardView2.setClickable(false);
             card3TV.setText("No Data");
             card3Rating.setRating(0.0F);
+            card3IV.setImageResource(R.drawable.ic_no_image);
             cardView3.setClickable(false);
         }
     }

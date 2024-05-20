@@ -1,6 +1,8 @@
 package com.example.touristaapp.models;
 
-import java.util.Arrays;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class TouristAttraction {
@@ -14,6 +16,7 @@ public class TouristAttraction {
     private float latitude;
     private String category;
     private Float rating= 0.0F;
+
     private User user;
 
     private List<Review> reviews;
@@ -134,6 +137,7 @@ public class TouristAttraction {
         this.rating = rating;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -166,10 +170,11 @@ public class TouristAttraction {
         this.events = events;
     }
 
+
     @Override
     public String toString() {
         return "TouristAttraction{" +
-                "attractionId=" + attractionId +
+                "attractionId='" + attractionId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", address='" + address + '\'' +
@@ -179,6 +184,7 @@ public class TouristAttraction {
                 ", latitude=" + latitude +
                 ", category='" + category + '\'' +
                 ", rating=" + rating +
+                ", user=" + user +
                 ", reviews=" + reviews +
                 ", photos=" + photos +
                 ", events=" + events +

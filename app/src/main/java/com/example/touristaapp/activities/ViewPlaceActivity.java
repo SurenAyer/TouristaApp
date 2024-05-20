@@ -21,8 +21,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
+import com.example.touristaapp.models.Photo;
 import com.example.touristaapp.models.TouristAttraction;
 import com.example.touristaapp.utils.EventListAdapter;
 import com.example.touristaapp.utils.ReviewListAdapter;
@@ -133,6 +135,7 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             placePhoneNumber.setText(String.valueOf(touristAttraction.getPhoneNumber()));
             placeOpenHours.setText(touristAttraction.getOpenHours());
             placeRating.setRating(touristAttraction.getRating());
+            Glide.with(this).load(touristAttraction.getPhotos().get(0).getPhotoUrl()).into(coverIV);
             try {
                 touristAttraction.getReviews().forEach(review -> {
                     reviewUserName.add(review.getUserName());
@@ -231,6 +234,18 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
                 }
             }
         });
+        coverIV.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(ViewPlaceActivity.this, FullScreenImageActivity.class);
+        ArrayList<String> imageUrls = new ArrayList<>();
+        for (Photo photo : touristAttraction.getPhotos()) {
+            imageUrls.add(photo.getPhotoUrl());
+        }
+        intent.putStringArrayListExtra("imageUrls", imageUrls);
+        startActivity(intent);
+    }
+});
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.touristaapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private UserRepository userRepository;
     private UserRepositoryImpl userRepositoryImpl;
     private Gson gson;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +72,12 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Signing Up...");
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 String email = Objects.requireNonNull(editTextEmail.getText()).toString();
                 String password = Objects.requireNonNull(editTextPassword.getText()).toString();
 
@@ -116,7 +120,11 @@ public class RegisterActivity extends AppCompatActivity {
                                                 editor.putBoolean("isLoggedIn", true);
                                                 editor.putString("user", userJson);
                                                 editor.apply();
+                                                progressDialog.dismiss();
+                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                startActivity(intent);
                                                 finish();
+
                                             } else {
                                                 Log.e(TAG, "Failed to add user to database", task.getException());
                                             }

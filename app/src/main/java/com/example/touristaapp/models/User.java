@@ -1,5 +1,7 @@
 package com.example.touristaapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -143,7 +145,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", interest=" + interest +
-                ", touristAttractions=" + touristAttractions +
                 ", reviews=" + reviews +
                 ", events=" + events +
                 ", photos=" + photos +

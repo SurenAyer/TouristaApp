@@ -1,5 +1,6 @@
 package com.example.touristaapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class CreateReviewActivity extends BaseActivity {
     private ReviewRepository reviewRepository;
     private TouristAttractionRepository touristAttractionRepository;
     private User user;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -68,6 +70,7 @@ public class CreateReviewActivity extends BaseActivity {
         reviewRepository = new ReviewRepositoryImpl();
         touristAttractionRepository = new TouristAttractionRepositoryImpl();
         intent = getIntent();
+
         // Retrieve the JSON string from the intent
         String jsonData = intent.getStringExtra("touristAttraction");
         String userJsonData= intent.getStringExtra("user");
@@ -87,9 +90,12 @@ public class CreateReviewActivity extends BaseActivity {
             Log.d(TAG, "onCreateReview: touristAttraction is null");
         }
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Submitting review...");
         submitReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 //String userName = reviewUserName.getText().toString();
                 float rating = reviewRating.getRating();
                 String comment = reviewComment.getText().toString();
@@ -119,6 +125,7 @@ public class CreateReviewActivity extends BaseActivity {
                             touristAttractionRepository.updateTouristAttraction(String.valueOf(touristAttraction.getAttractionId()), touristAttraction, updateTask -> {
                                 if (updateTask.isSuccessful()) {
                                     Log.d("CreatePlace", "Attraction updated successfully: " + touristAttraction);
+                                    progressDialog.dismiss();
                                     Intent intent = new Intent(CreateReviewActivity.this, ViewPlaceActivity.class);
                                     intent.putExtra("touristAttraction", gson.toJson(touristAttraction));
                                     startActivity(intent);

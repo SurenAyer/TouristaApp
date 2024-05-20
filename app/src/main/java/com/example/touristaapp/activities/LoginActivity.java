@@ -1,5 +1,6 @@
 package com.example.touristaapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivityTAG";
     private UserRepository userRepository;
     private Gson gson;
-
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +60,12 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Signing in...");
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 Log.d(TAG, "Sign In Button Clicked");
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
@@ -99,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.putBoolean("isLoggedIn", true);
                                             editor.putString("user", userJson);
                                             editor.apply();
-
+                                            progressDialog.dismiss();
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
