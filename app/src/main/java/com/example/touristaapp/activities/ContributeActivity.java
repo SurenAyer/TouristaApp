@@ -208,6 +208,7 @@ public class ContributeActivity extends BaseActivity {
                                                         });
                                                     });
                                         }
+                                        //Update the attraction with the added photos
                                         addedAttraction.setPhotos(addedPhotos);
                                         touristAttractionRepository.updateTouristAttraction(attraction_id, addedAttraction, updateTask -> {
                                             if (updateTask.isSuccessful()) {

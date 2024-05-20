@@ -33,7 +33,14 @@ public class TouristAttractionRepositoryImpl implements TouristAttractionReposit
 
     @Override
     public void updateTouristAttraction(String attractionId, TouristAttraction attraction, OnCompleteListener<Void> onCompleteListener) {
-
+        attractionsRef
+                .document(attractionId)
+                .set(attraction)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to update tourist attraction", e);
+                    onCompleteListener.onComplete(null);
+                });
     }
 
     @Override
