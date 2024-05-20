@@ -49,12 +49,12 @@ public class ProfileActivity extends BaseActivity {
     private Gson gson;
     private String TAG = "ProfileActivityTAG";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        gson = new Gson();
         // Retrieve the login state
         SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
@@ -65,7 +65,8 @@ public class ProfileActivity extends BaseActivity {
             finish();
             return;
         }
-
+        String userJson=sharedPreferences.getString("user", "");
+        User user = gson.fromJson(userJson, User.class);
 
         NavigationBarView navigation = findViewById(R.id.bottomNavigationView);
         setupNavigation(navigation, ViewPlaceActivity.class, R.id.profile);
@@ -73,6 +74,9 @@ public class ProfileActivity extends BaseActivity {
         userName = findViewById(R.id.userNameTV);
         userEmail = findViewById(R.id.userEmailTV);
         userPhone = findViewById(R.id.userPhoneTV);
+        userName.setText(user.getFirstName() + " " + user.getLastName());
+        userEmail.setText(user.getEmail());
+        userPhone.setText(String.valueOf(user.getPhoneNumber()));
         logOutButton = findViewById(R.id.logOut);
         notificationBtn = findViewById(R.id.notificationBtn);
         tabLayout = findViewById(R.id.myContributionTab);
@@ -99,6 +103,7 @@ public class ProfileActivity extends BaseActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putBoolean("isLoggedIn", false);
+                                editor.putString("user", "");
                                 editor.apply();
 
                                 // Navigate back to the login screen
@@ -186,9 +191,10 @@ public class ProfileActivity extends BaseActivity {
                 }
             }
         });
-        user = gerUserData(669);
-        setUserData(user);
-    }
+        user = gerUserData(user.getUserId());
+        if(user!=null) {
+            setUserData(user);
+        }}
 
 
 
@@ -198,8 +204,7 @@ public class ProfileActivity extends BaseActivity {
         JsonReader jsonReader=new JsonReader();
         try {
             //Log.d(TAG, "readData: Reading data from json file");
-            user= jsonReader.getUserData(this, 115);
-            assert user != null;
+            user= jsonReader.getUserData(this, userId);
 
             return user;
         } catch (Exception e) {

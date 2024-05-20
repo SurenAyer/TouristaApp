@@ -8,8 +8,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public interface UserRepository {
     void addUser(User user, OnCompleteListener<DocumentReference> onCompleteListener);
-    void updateUser(String userId, User user, OnCompleteListener<Void> onCompleteListener);
-    void deleteUser(String userId, OnCompleteListener<Void> onCompleteListener);
+    void updateUser(int userId, User user, OnCompleteListener<Void> onCompleteListener);
+    void deleteUser(int userId, OnCompleteListener<Void> onCompleteListener);
     void getAllUsers(OnCompleteListener<QuerySnapshot> onCompleteListener);
-    void getUserById(String userId, OnCompleteListener<DocumentSnapshot> onCompleteListener);
+    void getUserById(int userId, OnCompleteListener<DocumentSnapshot> onCompleteListener);
+    void getUserByEmail(String email, OnCompleteListener<QuerySnapshot> onCompleteListener);
 }

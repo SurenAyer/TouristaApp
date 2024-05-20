@@ -72,12 +72,12 @@ public class ContributeActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    public static int generateRandomUniqueInteger() {
-        UUID uuid = UUID.randomUUID();
-        long mostSignificantBits = uuid.getMostSignificantBits();
-        long leastSignificantBits = uuid.getLeastSignificantBits();
-        return (int) (mostSignificantBits ^ leastSignificantBits);
-    }
+  public static int generateRandomUniqueInteger() {
+    UUID uuid = UUID.randomUUID();
+    long mostSignificantBits = uuid.getMostSignificantBits();
+    long leastSignificantBits = uuid.getLeastSignificantBits();
+    return Math.abs((int) (mostSignificantBits ^ leastSignificantBits));
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +178,7 @@ public class ContributeActivity extends BaseActivity {
                                     TouristAttraction addedAttraction = documentTask.getResult().toObject(TouristAttraction.class);
                                     if (addedAttraction != null) {
                                         Log.d("CreatePlace", "DocumentSnapshot successfully written: " + addedAttraction);
+                                        List<Photo> addedPhotos=new ArrayList<>();
                                         for (String imageUri: selectedImages) {
                                             Uri fileUri = Uri.parse(imageUri);
                                             String fileName = UUID.randomUUID().toString();
@@ -193,9 +194,10 @@ public class ContributeActivity extends BaseActivity {
                                                             Photo photo = new Photo();
                                                             photo.setPhotoId(generateRandomUniqueInteger());
                                                             photo.setPhotoUrl(imageUrl);
-                                                            photo.setTouristAttraction(addedAttraction);
+                                                            //photo.setTouristAttraction(addedAttraction);
                                                             photoRepository.addPhoto(photo, photoTask -> {
                                                                 if (photoTask.isSuccessful()) {
+                                                                    addedPhotos.add(photo);
                                                                     Log.d("CreatePlace", "Photo added successfully: " + photo);
                                                                 } else {
                                                                     Log.e("CreatePlace", "Failed to add photo: " + photoTask.getException());
@@ -206,6 +208,14 @@ public class ContributeActivity extends BaseActivity {
                                                         });
                                                     });
                                         }
+                                        addedAttraction.setPhotos(addedPhotos);
+                                        touristAttractionRepository.updateTouristAttraction(attraction_id, addedAttraction, updateTask -> {
+                                            if (updateTask.isSuccessful()) {
+                                                Log.d("CreatePlace", "Attraction updated successfully: " + addedAttraction);
+                                            } else {
+                                                Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
+                                            }
+                                        });
                                     }
                                 } else {
                                     Log.w("CreatePlace", "Error getting document: ", documentTask.getException());
@@ -222,7 +232,7 @@ public class ContributeActivity extends BaseActivity {
         });
     }
 
-    private void getUserById(String userId) {
+    private void getUserById(int userId) {
         userRepository.getUserById(userId, task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "User: " + task.getResult().getData());

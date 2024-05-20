@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
     private static final String TAG = "UserRepositoryImpl";
     private final FirebaseFirestore db;
     private final CollectionReference usersRef;
@@ -20,16 +20,21 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public void addUser(User user, OnCompleteListener<DocumentReference> onCompleteListener) {
+        usersRef
+                .add(user)
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(e -> {
+                    onCompleteListener.onComplete(null);
+                });
+    }
+
+    @Override
+    public void updateUser(int userId, User user, OnCompleteListener<Void> onCompleteListener) {
 
     }
 
     @Override
-    public void updateUser(String userId, User user, OnCompleteListener<Void> onCompleteListener) {
-
-    }
-
-    @Override
-    public void deleteUser(String userId, OnCompleteListener<Void> onCompleteListener) {
+    public void deleteUser(int userId, OnCompleteListener<Void> onCompleteListener) {
 
     }
 
@@ -39,8 +44,15 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public void getUserById(String userId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
-        usersRef.document(userId)
+    public void getUserById(int userId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
+        usersRef.document(String.valueOf(userId))
+                .get()
+                .addOnCompleteListener(onCompleteListener);
+    }
+
+    @Override
+    public void getUserByEmail(String email, OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        usersRef.whereEqualTo("email", email)
                 .get()
                 .addOnCompleteListener(onCompleteListener);
     }

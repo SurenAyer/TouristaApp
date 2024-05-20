@@ -14,7 +14,6 @@ public class TouristAttraction {
     private float latitude;
     private String category;
     private Float rating= 0.0F;
-
     private User user;
 
     private List<Review> reviews;
