@@ -22,19 +22,29 @@ public class UserRepositoryImpl implements UserRepository {
     public void addUser(User user, OnCompleteListener<DocumentReference> onCompleteListener) {
         usersRef
                 .add(user)
-                .addOnCompleteListener(onCompleteListener)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentReference docRef = task.getResult();
+                        if (docRef != null) {
+                            String docId = docRef.getId();
+                            user.setUserId(docId);
+                            usersRef.document(docId).set(user);
+                        }
+                    }
+                    onCompleteListener.onComplete(task);
+                })
                 .addOnFailureListener(e -> {
                     onCompleteListener.onComplete(null);
                 });
     }
 
     @Override
-    public void updateUser(int userId, User user, OnCompleteListener<Void> onCompleteListener) {
+    public void updateUser(String userId, User user, OnCompleteListener<Void> onCompleteListener) {
 
     }
 
     @Override
-    public void deleteUser(int userId, OnCompleteListener<Void> onCompleteListener) {
+    public void deleteUser(String userId, OnCompleteListener<Void> onCompleteListener) {
 
     }
 
@@ -44,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void getUserById(int userId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
+    public void getUserById(String userId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
         usersRef.document(String.valueOf(userId))
                 .get()
                 .addOnCompleteListener(onCompleteListener);

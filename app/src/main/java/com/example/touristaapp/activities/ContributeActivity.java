@@ -75,12 +75,7 @@ public class ContributeActivity extends BaseActivity {
     private FirebaseUser currentUser;
     private User user;
     private Gson gson;
-  public static int generateRandomUniqueInteger() {
-    UUID uuid = UUID.randomUUID();
-    long mostSignificantBits = uuid.getMostSignificantBits();
-    long leastSignificantBits = uuid.getLeastSignificantBits();
-    return Math.abs((int) (mostSignificantBits ^ leastSignificantBits));
-}
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +149,6 @@ public class ContributeActivity extends BaseActivity {
                 firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageRef = firebaseStorage.getReference();
 
-                int attractionId = generateRandomUniqueInteger();
                 double latitude = lastMarkerPosition.latitude;
                 double longitude = lastMarkerPosition.longitude;
                 String name = placeName.getText().toString();
@@ -165,7 +159,7 @@ public class ContributeActivity extends BaseActivity {
                 String categoryText = placeCategory.getText().toString();
 
                 TouristAttraction touristAttraction = new TouristAttraction();
-                touristAttraction.setAttractionId(attractionId);
+                touristAttraction.setAttractionId(null);
                 touristAttraction.setLatitude((float) latitude);
                 touristAttraction.setLongitude((float) longitude);
                 touristAttraction.setName(name);
@@ -199,7 +193,7 @@ public class ContributeActivity extends BaseActivity {
                                                             Log.d("ImageDownloadUrl", "Download URL: " + imageUrl);
                                                             photoRepository = new PhotoRepositoryImpl();
                                                             Photo photo = new Photo();
-                                                            photo.setPhotoId(generateRandomUniqueInteger());
+                                                            photo.setPhotoId(null);
                                                             photo.setPhotoUrl(imageUrl);
                                                             //photo.setTouristAttraction(addedAttraction);
                                                             photoRepository.addPhoto(photo, photoTask -> {
@@ -241,7 +235,7 @@ public class ContributeActivity extends BaseActivity {
         });
     }
 
-    private void getUserById(int userId) {
+    private void getUserById(String userId) {
         userRepository.getUserById(userId, task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "User: " + task.getResult().getData());

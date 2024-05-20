@@ -198,7 +198,7 @@ public class ProfileActivity extends BaseActivity {
 
 
 
-    public User gerUserData(int userId){
+    public User gerUserData(String userId){
         // Get the user's data from the database
         user=new User();
         JsonReader jsonReader=new JsonReader();

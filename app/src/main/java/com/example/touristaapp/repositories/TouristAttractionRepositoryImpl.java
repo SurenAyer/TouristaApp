@@ -21,15 +21,25 @@ public class TouristAttractionRepositoryImpl implements TouristAttractionReposit
     }
 
     @Override
-    public void addTouristAttraction(TouristAttraction touristAttraction, OnCompleteListener<DocumentReference> onCompleteListener) {
-        attractionsRef
-                .add(touristAttraction)
-                .addOnCompleteListener(onCompleteListener)
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to add tourist attraction", e);
-                    onCompleteListener.onComplete(null);
-                });
-    }
+public void addTouristAttraction(TouristAttraction touristAttraction, OnCompleteListener<DocumentReference> onCompleteListener) {
+    attractionsRef
+            .add(touristAttraction)
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentReference docRef = task.getResult();
+                    if (docRef != null) {
+                        String docId = docRef.getId();
+                        touristAttraction.setAttractionId(docId);
+                        attractionsRef.document(docId).set(touristAttraction);
+                    }
+                }
+                onCompleteListener.onComplete(task);
+            })
+            .addOnFailureListener(e -> {
+                Log.e(TAG, "Failed to add tourist attraction", e);
+                onCompleteListener.onComplete(null);
+            });
+}
 
     @Override
     public void updateTouristAttraction(String attractionId, TouristAttraction attraction, OnCompleteListener<Void> onCompleteListener) {
@@ -50,7 +60,13 @@ public class TouristAttractionRepositoryImpl implements TouristAttractionReposit
 
     @Override
     public void getAllTouristAttractions(OnCompleteListener<QuerySnapshot> onCompleteListener) {
-
+        attractionsRef
+                .get()
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to get all tourist attractions", e);
+                    onCompleteListener.onComplete(null);
+                });
     }
 
     @Override

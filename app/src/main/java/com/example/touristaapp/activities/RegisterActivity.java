@@ -96,12 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser current_user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
-                                    int user_id = generateRandomUniqueInteger();
                                     String first_name = Objects.requireNonNull(editTextFirstName.getText().toString());
                                     String last_name = Objects.requireNonNull(editTextLastName.getText().toString());
                                     long phone_number = Long.parseLong(Objects.requireNonNull(editTextPhone.getText()).toString());
                                     User user = new User();
-                                    user.setUserId(user_id);
+                                    user.setUserId(null);
                                     user.setFirstName(first_name);
                                     user.setLastName(last_name);
                                     user.setEmail(email);
@@ -136,10 +135,5 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    public static int generateRandomUniqueInteger() {
-        UUID uuid = UUID.randomUUID();
-        long mostSignificantBits = uuid.getMostSignificantBits();
-        long leastSignificantBits = uuid.getLeastSignificantBits();
-        return Math.abs((int) (mostSignificantBits ^ leastSignificantBits));
-    }
+
 }

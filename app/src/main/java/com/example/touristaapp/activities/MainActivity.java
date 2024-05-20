@@ -187,8 +187,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
                         }
                     }
                 });
-
-            }
+}
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {

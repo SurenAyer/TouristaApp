@@ -1,29 +1,29 @@
 package com.example.touristaapp.models;
 
 public class Photo {
-    private int photoId;
+    private String photoId;
     private String photoUrl;
     private TouristAttraction touristAttraction;
 
     public Photo() {
     }
 
-    public Photo(int photoId, String photoUrl) {
+    public Photo(String photoId, String photoUrl) {
         this.photoId = photoId;
         this.photoUrl = photoUrl;
     }
 
-    public Photo(int photoId, String photoUrl, TouristAttraction touristAttraction) {
+    public Photo(String photoId, String photoUrl, TouristAttraction touristAttraction) {
         this.photoId = photoId;
         this.photoUrl = photoUrl;
         this.touristAttraction = touristAttraction;
     }
 
-    public int getPhotoId() {
+    public String getPhotoId() {
         return photoId;
     }
 
-    public void setPhotoId(int photoId) {
+    public void setPhotoId(String photoId) {
         this.photoId = photoId;
     }
 

@@ -173,7 +173,7 @@ public class MapsFragment extends Fragment
                     int attractionId = Integer.parseInt(marker.getTitle());
                     TouristAttraction attraction = null;
                     for (TouristAttraction ta : touristAttractionList) {
-                        if (ta.getAttractionId() == attractionId) {
+                        if (ta.getAttractionId().equals(String.valueOf(attractionId))) {
                             attraction = ta;
                             break;
                         }

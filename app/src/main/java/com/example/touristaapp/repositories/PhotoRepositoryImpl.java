@@ -24,7 +24,17 @@ public class PhotoRepositoryImpl implements PhotoRepository {
     public void addPhoto(Photo photo, OnCompleteListener<DocumentReference> onCompleteListener) {
         photosRef
                 .add(photo)
-                .addOnCompleteListener(onCompleteListener)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentReference docRef = task.getResult();
+                        if (docRef != null) {
+                            String docId = docRef.getId();
+                            photo.setPhotoId(docId);
+                            photosRef.document(docId).set(photo);
+                        }
+                    }
+                    onCompleteListener.onComplete(task);
+                })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Failed to add photo", e);
                     onCompleteListener.onComplete(null);

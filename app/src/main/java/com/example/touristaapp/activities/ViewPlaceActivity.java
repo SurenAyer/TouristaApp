@@ -243,8 +243,10 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             Intent intent = new Intent(ViewPlaceActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            String user=sharedPreferences.getString("user","");
             Intent reviewIntent = new Intent(ViewPlaceActivity.this, CreateReviewActivity.class);
             reviewIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+            reviewIntent.putExtra("user",user);
             startActivity(reviewIntent);
         }
     }

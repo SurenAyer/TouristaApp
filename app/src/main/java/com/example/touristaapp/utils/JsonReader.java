@@ -78,7 +78,7 @@ public class JsonReader {
 
     }
 
-    public  User getUserData(Context context,  int userId) {
+    public  User getUserData(Context context,  String userId) {
         Log.d("DATAREQUEST", "Data Request For: " + userId);
         String json = null;
         List<TouristAttraction> touristAttractionList = new ArrayList<>();
@@ -179,7 +179,7 @@ public class JsonReader {
             try {
                 TouristAttraction attraction;
                 attraction = touristAttractionList.stream()
-                        .filter(attraction1 -> attractionId==attraction1.getAttractionId())
+                        //.filter(attraction1 -> attractionId==attraction1.getAttractionId())
                         .collect(Collectors.toList()).get(0);
                 return attraction;
             } catch (Exception e) {
