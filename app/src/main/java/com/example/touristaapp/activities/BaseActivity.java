@@ -10,7 +10,7 @@ import com.example.touristaapp.R;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BaseActivity extends AppCompatActivity {
-    String TAG = "BASEACTIVITY";
+    private String TAG = "BASEACTIVITYTAG";
 
     protected void setupNavigation(NavigationBarView navigation, Class<?> currentActivityClass, @IdRes int selectedItemId) {
         int homeId = navigation.getMenu().findItem(R.id.home).getItemId();

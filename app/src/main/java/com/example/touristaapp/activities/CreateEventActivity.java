@@ -38,6 +38,7 @@ public class CreateEventActivity extends BaseActivity {
     private TouristAttraction touristAttraction;
     private Intent intent;
     private Gson gson;
+    private String TAG = "CREATEEVENTTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,7 @@ public class CreateEventActivity extends BaseActivity {
 
         // Initialize a new Gson object
         gson = new Gson();
-        Log.d("VIEWPLACETAG", "jsonData: " + jsonData);
+        Log.d(TAG, "jsonData: " + jsonData);
         touristAttraction = gson.fromJson(jsonData, TouristAttraction.class);
 
         // Check if touristAttraction is not null before using it

@@ -11,23 +11,29 @@ import android.widget.TextView;
 
 import com.example.touristaapp.R;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class EventListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final List<String> name;
+    private final List<String> date;
+    private final List<String> time;
+    private final List<Integer> duration;
     private final List<String> description;
-    private final List<Float> rating;
 
-    public EventListAdapter(Activity context, List<String> name, List<String> description, List<Float> rating) {
+    public EventListAdapter(Activity context, List<String> name, List<Long> date, List<Integer> duration,List<String> description) {
         super(context, R.layout.event_list, name);
         // TODO Auto-generated constructor stub
 
         this.context = context;
         this.name = name;
+        this.date = null;
+        this.time = null;
+        this.duration = duration;
         this.description = description;
-        this.rating = rating;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -35,14 +41,19 @@ public class EventListAdapter extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.event_list, null, true);
 
         TextView nameView = (TextView) rowView.findViewById(R.id.eventNameTV);
+        TextView dateView = (TextView) rowView.findViewById(R.id.eventDateTV);
+        TextView timeView = (TextView) rowView.findViewById(R.id.eventTimeTV);
+        TextView durationView = (TextView) rowView.findViewById(R.id.eventDurationTV);
         TextView descriptionTV = (TextView) rowView.findViewById(R.id.eventDescriptionTV);
-        //RatingBar ratingBar = (RatingBar) rowView.findViewById(R.id.eventRating);
 
         nameView.setText(name.get(position));
-        //ratingBar.setRating(rating.get(position));
+        //dateView.setText(date.get(position).toString());
+        //timeView.setText(time.get(position).toString());
+        dateView.setText("25/05/2024");
+        timeView.setText("25/05/2024");
+        float durationInHours = duration.get(position) / 60;
+        durationView.setText(durationInHours+" hrs");
         descriptionTV.setText(description.get(position));
         return rowView;
-    }
-
-    ;
+    };
 }

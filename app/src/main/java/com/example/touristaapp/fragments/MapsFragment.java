@@ -77,8 +77,7 @@ public class MapsFragment extends Fragment
     private Location userLocation;
     private List<TouristAttraction> touristAttractionList;
 
-    private LocationRequest locationRequest;
-    private LocationCallback locationCallback;
+    private String TAG = "MapsFragmentTAG";
 
     public void setOnMapReadyListener(OnMapReadyListener onMapReadyListener) {
         this.onMapReadyListener = onMapReadyListener;
@@ -130,11 +129,6 @@ public class MapsFragment extends Fragment
 
             }
         });
-// Initialize LocationRequest and LocationCallback
-        //initLocationRequestAndCallback();
-
-        // Request location updates
-        //requestLocationUpdates();
     }
 
     @SuppressLint("PotentialBehaviorOverride")
@@ -142,13 +136,13 @@ public class MapsFragment extends Fragment
         touristAttractionList = touristAttractions;
         if (map != null) {
             map.clear(); // Clear old markers
-            Log.d("MAPTAG", "addMarker: " + category + "PLACE=" + touristAttractionList.size());
             for (TouristAttraction attraction : touristAttractionList) {
                 // Inflate the custom marker layout
                 View markerView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
                 TextView markerTitle = markerView.findViewById(R.id.marker_title);
                 markerTitle.setText(attraction.getName()); // Set the title
                 ImageView imageView = markerView.findViewById(R.id.marker_icon);
+                Log.d(TAG, "addMarker: " + category);
                 int resourceId = context.getResources().getIdentifier("pin_" + category.toLowerCase(), "drawable", context.getPackageName());
                 imageView.setImageResource(resourceId);
 
@@ -167,10 +161,9 @@ public class MapsFragment extends Fragment
                 map.addMarker(markerOptions);
             }
         } else {
-            Log.d("MAPTAG", "addMarker: map is null");
+            Log.d(TAG, "addMarker: map is null");
         }
         //Focus on Marker
-        Log.d("MAPTAGACTIVITY", "activity=" + getActivity().getLocalClassName());
         // Set an OnMarkerClickListener
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -186,9 +179,7 @@ public class MapsFragment extends Fragment
                         }
                     }
                     String placeJson = gson.toJson(attraction);
-                    Log.d("MARKER", "onClick: " + placeJson);
                     markerIntent.putExtra("touristAttraction", placeJson);
-                    Log.d("MARKER", "DataSent: " + markerIntent.getStringExtra("touristAttraction"));
                     startActivity(markerIntent);
                 } else {
                     //Add address here
@@ -234,7 +225,7 @@ public class MapsFragment extends Fragment
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(touristAttractionList.get(0).getLatitude(), touristAttractionList.get(0).getLongitude()), 14));
                                 }
                             } else {
-                                Log.d("MapsFragment", "Failed to get location.");
+                                Log.d(TAG, "Failed to get location.");
                             }
                         }
                     });
@@ -247,7 +238,6 @@ public class MapsFragment extends Fragment
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        //Toast.makeText(getActivity(), "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -273,36 +263,6 @@ public class MapsFragment extends Fragment
 
     }
 
-    private BitmapDescriptor
-    BitmapFromVector(Context context, int vectorResId) {
-        // below line is use to generate a drawable.
-        Drawable vectorDrawable = ContextCompat.getDrawable(
-                context, vectorResId);
-
-        // below line is use to set bounds to our vector
-        // drawable.
-        vectorDrawable.setBounds(
-                0, 0, vectorDrawable.getIntrinsicWidth(),
-                vectorDrawable.getIntrinsicHeight());
-
-        // below line is use to create a bitmap for our
-        // drawable which we have added.
-        Bitmap bitmap = Bitmap.createBitmap(
-                vectorDrawable.getIntrinsicWidth(),
-                vectorDrawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
-
-        // below line is use to add bitmap in our canvas.
-        Canvas canvas = new Canvas(bitmap);
-
-        // below line is use to draw our
-        // vector drawable in canvas.
-        vectorDrawable.draw(canvas);
-
-        // after generating our bitmap we are returning our
-        // bitmap.
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
 
     public void focusOnUserLocation() {
         // Get the current user location
@@ -332,44 +292,6 @@ public class MapsFragment extends Fragment
 
 
     }
-
-    /*
-    public void showPathToMarker(Float markerLatitude, Float markerLongitude){
-        // Get the current user location
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(getActivity(), permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
-
-            fusedLocationClient.getLastLocation()
-                    .addOnCompleteListener(new OnCompleteListener<Location>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Location> task) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                userLocation = task.getResult();
-                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 13));
-                                Toast.makeText(getActivity(), "User Location", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.d("MapsFragment", "Failed to get location.");
-                            }
-                        }
-                    });
-            return;
-        }
-        else{
-            Toast.makeText(getActivity(), "Kindly allow location permission", Toast.LENGTH_LONG).show();
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-        Log.d("ShowPath", "showPathToMarker: " + userLocation);
-
-        if (userLocation != null) {
-
-        } else {
-            Toast.makeText(getActivity(), "Unable to get current location", Toast.LENGTH_SHORT).show();
-        }
-    }
-    */
 
 
     public LatLng getLastMarkerPosition() {

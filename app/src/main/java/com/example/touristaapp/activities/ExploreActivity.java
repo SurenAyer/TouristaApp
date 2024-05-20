@@ -28,11 +28,11 @@ public class ExploreActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private AttractionAdapter adapter;
+    private String TAG = "EXPLOREATTRACTIONTAG";
 
     private Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toast.makeText(this, "Welcome to Explore Activity", Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
 

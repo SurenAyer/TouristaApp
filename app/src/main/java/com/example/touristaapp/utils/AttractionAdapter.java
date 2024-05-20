@@ -1,19 +1,15 @@
 package com.example.touristaapp.utils;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.touristaapp.R;
-import com.example.touristaapp.activities.MainActivity;
-import com.example.touristaapp.activities.ProfileActivity;
 import com.example.touristaapp.activities.ViewPlaceActivity;
 import com.example.touristaapp.models.TouristAttraction;
 import com.google.gson.Gson;

@@ -23,11 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextInputEditText editTextEmail, editTextPassword;
-    Button signInBtn;
-    TextView signUp;
+    private TextInputEditText editTextEmail, editTextPassword;
+    private Button signInBtn;
+    private TextView signUp;
 
     private FirebaseAuth mAuth;
+    private static final String TAG = "LoginActivityTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("LoginActivityTAG", "Sign In Button Clicked");
+                Log.d(TAG, "Sign In Button Clicked");
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
@@ -70,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d("LoginActivityTAG", "Sign In Complete");
+                                Log.d(TAG, "Sign In Complete");
                                 if (task.isSuccessful()) {
-                                    Log.d("LoginActivityTAG", "Sign In Successful");
+                                    Log.d(TAG, "Sign In Successful");
                                     // Store the login state
                                     SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                    startActivity(intent);
                                     finish();
                                 } else {
-                                    Log.d("LoginActivityTAG", "Sign In Failed");
+                                    Log.d(TAG, "Sign In Failed");
                                     Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                                 }
                             }

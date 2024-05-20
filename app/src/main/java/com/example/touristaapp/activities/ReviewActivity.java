@@ -22,17 +22,16 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 
 public class ReviewActivity extends BaseActivity {
-    Intent intent;
-    Gson gson;
-    TouristAttraction touristAttraction;
-    Fragment mapFragment;
-    TextView placeName;
-    TextView placeAddress;
-    TextView placePhoneNumber;
-    TextView placeOpenHours;
-    RatingBar placeRating;
-    Button btnViewReview;
-    Button btnViewEvents;
+    private Intent intent;
+    private Gson gson;
+    private TouristAttraction touristAttraction;
+    private Fragment mapFragment;
+    private TextView placeName;
+    private TextView placeAddress;
+    private TextView placePhoneNumber;
+    private TextView placeOpenHours;
+    private RatingBar placeRating;
+    private String TAG = "REVIEWACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +45,11 @@ public class ReviewActivity extends BaseActivity {
         placePhoneNumber = findViewById(R.id.contactTV);
         placeOpenHours = findViewById(R.id.openHoursTV);
         placeRating = findViewById(R.id.rating);
-//        btnViewReview = findViewById(R.id.reviewButton);
-//        btnViewEvents = findViewById(R.id.eventButton);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-
 
         // Get the intent that started this activity
         intent = getIntent();
@@ -68,7 +63,7 @@ public class ReviewActivity extends BaseActivity {
 
         // Check if touristAttraction is not null before using it
         if (touristAttraction != null) {
-            Log.d("VIEWPLACETAG", "onCreatePlace: " + touristAttraction.toString());
+            Log.d(TAG, "onCreatePlace: " + touristAttraction.toString());
             placeName.setText(touristAttraction.getName());
             placeAddress.setText(touristAttraction.getAddress());
             placePhoneNumber.setText(String.valueOf(touristAttraction.getPhoneNumber()));
@@ -76,7 +71,7 @@ public class ReviewActivity extends BaseActivity {
             placeRating.setRating(touristAttraction.getRating());
             //btnViewReview.setOnClickListener(v -> openReviewActivity());
         } else {
-            Log.d("VIEWPLACETAG", "onCreatePlace: touristAttraction is null");
+            Log.d(TAG, "onCreatePlace: touristAttraction is null");
         }
     }
 }

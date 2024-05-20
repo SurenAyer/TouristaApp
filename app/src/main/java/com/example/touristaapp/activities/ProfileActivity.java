@@ -45,9 +45,10 @@ public class ProfileActivity extends BaseActivity {
     private ListView profilePlaceList;
     private ListView profileReviewList;
     private ListView profileEventList;
-    private AttractionAdapter attractionListAdapter;
     private SharedPreferences notificationSharedPreferences;
     private Gson gson;
+    private String TAG = "ProfileActivityTAG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class ProfileActivity extends BaseActivity {
        notificationSharedPreferences = getSharedPreferences("Notification", MODE_PRIVATE);
         Boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
 
-        Log.d("PROFILENOTIFICATIONDATA", "onCreate: New message received: " + newMessageReceived);
+        Log.d(TAG, "onCreate: New message received: " + newMessageReceived);
         if(newMessageReceived){
             notificationBtn.setVisibility(View.VISIBLE);
         }
@@ -148,7 +149,6 @@ public class ProfileActivity extends BaseActivity {
                 // Do something when a tab is reselected, if needed
             }
         });
-       // Log.d("PROFILEDATA", "onCreateProfile: "+user.toString());
         notificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,8 +198,7 @@ public class ProfileActivity extends BaseActivity {
         JsonReader jsonReader=new JsonReader();
         try {
             //Log.d(TAG, "readData: Reading data from json file");
-            user= jsonReader.getUserData(this, 666);
-            Log.d("PROFILEDATA", "readData: User data: " + user.toString());
+            user= jsonReader.getUserData(this, 115);
             assert user != null;
 
             return user;
@@ -240,10 +239,11 @@ public class ProfileActivity extends BaseActivity {
 
     private void setMyEvents(List<Event> events) {
         // set the Event List
-        List<String> eventUserName = events.stream().map(event -> user.getFirstName() + " " + user.getLastName()).collect(Collectors.toList());
+        List<String> eventName = events.stream().map(event -> event.getEventName()).collect(Collectors.toList());
+        List<Long> eventDate = events.stream().map(Event::getEventDate).collect(Collectors.toList());
+        List<Integer> eventDuration = events.stream().map(Event::getDuration).collect(Collectors.toList());
         List<String> eventDescription = events.stream().map(Event::getDescription).collect(Collectors.toList());
-        List<Float> reviewRating = events.stream().map(event -> 3.5f).collect(Collectors.toList());
-        EventListAdapter eventListAdapter = new EventListAdapter(this, eventUserName, eventDescription, reviewRating);
+        EventListAdapter eventListAdapter = new EventListAdapter(this, eventName,eventDate, eventDuration, eventDescription);
         ListView eventList = (ListView) findViewById(R.id.profileEventList);
         eventList.setAdapter(eventListAdapter);
     }
