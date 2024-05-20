@@ -57,4 +57,16 @@ public class TouristAttractionRepositoryImpl implements TouristAttractionReposit
     public void getTouristAttractionById(String attractionId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
 
     }
+
+    @Override
+    public void getTouristAttractionsByCategory(String category, OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        attractionsRef
+                .whereEqualTo("category", category)
+                .get()
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to get tourist attractions by category", e);
+                    onCompleteListener.onComplete(null);
+                });
+    }
 }

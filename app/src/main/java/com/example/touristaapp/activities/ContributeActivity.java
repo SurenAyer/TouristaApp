@@ -25,6 +25,7 @@ import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
 import com.example.touristaapp.models.Photo;
 import com.example.touristaapp.models.TouristAttraction;
+import com.example.touristaapp.models.User;
 import com.example.touristaapp.repositories.PhotoRepository;
 import com.example.touristaapp.repositories.PhotoRepositoryImpl;
 import com.example.touristaapp.repositories.TouristAttractionRepository;
@@ -42,6 +43,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +73,8 @@ public class ContributeActivity extends BaseActivity {
     public static final String TAG = "ContributeActivity";
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-
+    private User user;
+    private Gson gson;
   public static int generateRandomUniqueInteger() {
     UUID uuid = UUID.randomUUID();
     long mostSignificantBits = uuid.getMostSignificantBits();
@@ -92,8 +95,11 @@ public class ContributeActivity extends BaseActivity {
             finish();
             return;
         }
+        gson = new Gson();
         // Retrieve the login state
         SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+        String userJson=sharedPreferences.getString("user", "");
+        user = gson.fromJson(userJson, User.class);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
         // If the user is not logged in, redirect to LoginActivity
         if (!isLoggedIn) {
@@ -118,6 +124,7 @@ public class ContributeActivity extends BaseActivity {
         btnSelectImages = findViewById(R.id.selectImageBtn);
         recyclerView = findViewById(R.id.recyclerView);
         imageAdapter = new ImageAdapter(selectedImages);
+
         int numberOfColumns = 3;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing);
@@ -210,6 +217,7 @@ public class ContributeActivity extends BaseActivity {
                                         }
                                         //Update the attraction with the added photos
                                         addedAttraction.setPhotos(addedPhotos);
+                                        addedAttraction.setUser(user);
                                         touristAttractionRepository.updateTouristAttraction(attraction_id, addedAttraction, updateTask -> {
                                             if (updateTask.isSuccessful()) {
                                                 Log.d("CreatePlace", "Attraction updated successfully: " + addedAttraction);

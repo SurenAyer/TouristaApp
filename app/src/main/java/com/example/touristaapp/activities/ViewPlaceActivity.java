@@ -133,22 +133,32 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             placePhoneNumber.setText(String.valueOf(touristAttraction.getPhoneNumber()));
             placeOpenHours.setText(touristAttraction.getOpenHours());
             placeRating.setRating(touristAttraction.getRating());
-            touristAttraction.getReviews().forEach(review -> {
-                reviewUserName.add(review.getUserName());
-                reviewText.add(review.getComment());
-                reviewRating.add((float) review.getRating());
-            });
-            touristAttraction.getEvents().forEach(event -> {
-                eventName.add(event.getEventName());
-                eventDateTime.add(event.getEventDate());
-                eventDuration.add(event.getDuration());
-                eventDescription.add(event.getDescription());
-            });
-            Log.d(TAG, "onCreate: "+touristAttraction.toString());
-        } else {
-            Log.e(TAG, "onViewPlace: touristAttraction is null");
-        }
+            try {
+                touristAttraction.getReviews().forEach(review -> {
+                    reviewUserName.add(review.getUserName());
+                    reviewText.add(review.getComment());
+                    reviewRating.add((float) review.getRating());
+                });
+            } catch (Exception e) {
+                reviewUserName.add("No Reviews");
+                reviewText.add("");
+                reviewRating.add(0.0f);
+            }
 
+            try {
+                touristAttraction.getEvents().forEach(event -> {
+                    eventName.add(event.getEventName());
+                    eventDateTime.add(event.getEventDate());
+                    eventDuration.add(event.getDuration());
+                    eventDescription.add(event.getDescription());
+                });
+            } catch (Exception e) {
+                eventName.add("No Events");
+                eventDateTime.add(0L);
+                eventDuration.add(0);
+                eventDescription.add("");
+            }
+        }
         btnAddReview.setOnClickListener(v -> addReviewActivity());
         btnAddEvent.setOnClickListener(v -> addEventActivity());
 

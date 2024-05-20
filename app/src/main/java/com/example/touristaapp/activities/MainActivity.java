@@ -7,15 +7,20 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
 import com.example.touristaapp.models.TouristAttraction;
-import com.example.touristaapp.utils.JsonReader;
+import com.example.touristaapp.repositories.TouristAttractionRepository;
+import com.example.touristaapp.repositories.TouristAttractionRepositoryImpl;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends BaseActivity implements MapsFragment.OnMapReadyListener {
 
-    private String TAG = "MAINACTIVITY";
+    private String TAG = "MAINACTIVITYTAG";
     private TextView card1TV;
     private RatingBar card1Rating;
     private TextView card2TV;
@@ -44,6 +49,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
     private List<TouristAttraction> touristAttractionList;
     private List<TouristAttraction> trendingAttractionList;
     private Gson gson;
+    private TouristAttractionRepository touristAttractionRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         gson = new Gson();
         touristAttractionList = new ArrayList<>();
         trendingAttractionList = new ArrayList<>();
+        touristAttractionRepository = new TouristAttractionRepositoryImpl();
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,13 +111,20 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         getcategorySelected();
         //Display Map and Trending Based on category
         //Get Currently Selected Category
-        touristAttractionList = readData(categorySelected);
-        trendingAttractionList = getTrendingAttraction(touristAttractionList);
-        Log.d(TAG, "EventDate= " + trendingAttractionList.get(0).getEvents().get(0).getEventDate());
-        setTrendingAttraction();
-        //((MapsFragment) mapFragment).onMapReady(map);
-        Log.d(TAG, "CategorySelected= " + categorySelected);
-    }
+        getAttractionsByCategory(categorySelected, new OnCompleteListener<QuerySnapshot>() {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    touristAttractionList = task.getResult().toObjects(TouristAttraction.class);
+                    Log.d(TAG, "onCreate: " + touristAttractionList.size());
+                    // Continue processing here...
+                    trendingAttractionList = getTrendingAttraction(touristAttractionList);
+                    setTrendingAttraction(trendingAttractionList);
+                    Log.d(TAG, "CategorySelected= " + categorySelected);
+                }
+            }
+        });
+
+}
 
     private void viewPlaceIntent(TouristAttraction touristAttraction) {
         Intent cardIntent = new Intent(MainActivity.this, ViewPlaceActivity.class);
@@ -152,10 +166,28 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
                         categorySelected = "Natural";
                         break;
                 }
-                touristAttractionList = readData(categorySelected);
-                trendingAttractionList = getTrendingAttraction(touristAttractionList);
-                setTrendingAttraction();
-                addNewMarkers();
+//                touristAttractionList = getAttractionsByCategory(categorySelected, new OnCompleteListener<List<TouristAttraction>>() {
+//
+//                    @Override
+//                    public void onComplete(@NonNull Task<List<TouristAttraction>> task) {
+//
+//                    }
+//                });
+                Log.d(TAG, "onCreate: " + touristAttractionList.size());
+                getAttractionsByCategory(categorySelected, new OnCompleteListener<QuerySnapshot>() {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            touristAttractionList = task.getResult().toObjects(TouristAttraction.class);
+                            Log.d(TAG, "onCreate: " + touristAttractionList.size());
+                            // Continue processing here...
+                            trendingAttractionList = getTrendingAttraction(touristAttractionList);
+                            setTrendingAttraction(trendingAttractionList);
+                            addNewMarkers();
+                            Log.d(TAG, "CategorySelected= " + categorySelected);
+                        }
+                    }
+                });
+
             }
 
             @Override
@@ -174,7 +206,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         ((MapsFragment) mapFragment).addMarker(MainActivity.this, touristAttractionList, categorySelected);
     }
 
-    private void setTrendingAttraction() {
+    private void setTrendingAttraction(List<TouristAttraction> trendingAttractionList) {
         cardView1.setClickable(true);
         cardView2.setClickable(true);
         cardView3.setClickable(true);
@@ -210,20 +242,27 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         }
     }
 
-    private List<TouristAttraction> readData(String category) {
+
+    private void getAttractionsByCategory(String category, OnCompleteListener<QuerySnapshot> callback) {
         List<TouristAttraction> touristAttractionList = new ArrayList<>();
         try {
-            //Log.d(TAG, "readData: Reading data from json file");
-            touristAttractionList = JsonReader.readJsonFile(this, "data.json", category);
-            assert touristAttractionList != null;
-            return touristAttractionList;
+            touristAttractionRepository.getTouristAttractionsByCategory(category, task -> {
+                if (task.isSuccessful()) {
+                    touristAttractionList.addAll(task.getResult().toObjects(TouristAttraction.class));
+                    callback.onComplete(task);
+                } else {
+                    Log.d(TAG, "getAttractionsByCategory: Error getting data", task.getException());
+                    callback.onComplete(task);
+                }
+            });
+
         } catch (Exception e) {
             Log.d(TAG, "readData: Error reading data from json file", e);
-            return null;
         }
     }
 
     private List<TouristAttraction> getTrendingAttraction(List<TouristAttraction> touristAttractionList) {
+        Log.d(TAG, "getTrendingAttraction: " + touristAttractionList.size());
         List<TouristAttraction> topAttractionList = new ArrayList<>();
         if (!touristAttractionList.isEmpty()) {
             topAttractionList = touristAttractionList.stream()
@@ -242,4 +281,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         addNewMarkers();
     }
 
+
+
 }
+

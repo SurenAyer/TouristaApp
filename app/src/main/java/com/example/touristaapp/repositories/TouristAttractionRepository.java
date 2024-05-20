@@ -12,4 +12,5 @@ public interface TouristAttractionRepository {
     void deleteTouristAttraction(String attractionId, OnCompleteListener<Void> onCompleteListener);
     void getAllTouristAttractions(OnCompleteListener<QuerySnapshot> onCompleteListener);
     void getTouristAttractionById(String attractionId, OnCompleteListener<DocumentSnapshot> onCompleteListener);
+    void getTouristAttractionsByCategory(String category, OnCompleteListener<QuerySnapshot> onCompleteListener);
 }
