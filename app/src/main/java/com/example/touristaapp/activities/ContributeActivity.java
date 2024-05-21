@@ -79,7 +79,7 @@ public class ContributeActivity extends BaseActivity {
     private Gson gson;
     private ProgressDialog progressDialog;
 
-
+    // Create the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,7 +144,7 @@ public class ContributeActivity extends BaseActivity {
         }
         touristAttractionRepository = new TouristAttractionRepositoryImpl();
         userRepository = new UserRepositoryImpl();
-
+        // Get the user by ID
         btnSelectImages.setOnClickListener(v -> pickMultipleImages());
         btnCreatePlace.setOnClickListener(v -> {
             LatLng lastMarkerPosition = mapFragment.getLastMarkerPosition();
@@ -252,6 +252,7 @@ public class ContributeActivity extends BaseActivity {
         });
     }
 
+    // Update the attraction with the added photos
     private void updateAttraction(TouristAttraction addedAttraction) {
         //Update the attraction with the added photos
         addedAttraction.setUser(user);
@@ -268,6 +269,7 @@ public class ContributeActivity extends BaseActivity {
             }
         });
     }
+    // Pick multiple images from gallery
     private void pickMultipleImages() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Action");

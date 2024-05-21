@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class BaseActivity extends AppCompatActivity {
     private String TAG = "BASEACTIVITYTAG";
 
+    // Setup the navigation bar
     protected void setupNavigation(NavigationBarView navigation, Class<?> currentActivityClass, @IdRes int selectedItemId) {
         int homeId = navigation.getMenu().findItem(R.id.home).getItemId();
         int exploreId = navigation.getMenu().findItem(R.id.explore).getItemId();

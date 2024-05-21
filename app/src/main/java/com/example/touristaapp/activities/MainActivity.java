@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         categoryMap.put("category4", "Religious");
         categoryMap.put("category5", "Entertainment");
         categoryMap.put("category6", "Adventure");
-
+        // Set up bottom navigation
         navigation = findViewById(R.id.bottomNavigationView);
         setupNavigation(navigation, MainActivity.class, R.id.home);
         card1TV = findViewById(R.id.card1tv);
@@ -87,6 +87,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         touristAttractionList = new ArrayList<>();
         trendingAttractionList = new ArrayList<>();
         touristAttractionRepository = new TouristAttractionRepositoryImpl();
+        // Set up click listeners
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,6 +136,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
 
 }
 
+// Start View Place Intent
     private void viewPlaceIntent(TouristAttraction touristAttraction) {
         Intent cardIntent = new Intent(MainActivity.this, ViewPlaceActivity.class);
         String placeJson = gson.toJson(touristAttraction);
@@ -175,13 +177,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
                         categorySelected = "Natural";
                         break;
                 }
-//                touristAttractionList = getAttractionsByCategory(categorySelected, new OnCompleteListener<List<TouristAttraction>>() {
-//
-//                    @Override
-//                    public void onComplete(@NonNull Task<List<TouristAttraction>> task) {
-//
-//                    }
-//                });
+
                 Log.d(TAG, "onCreate: " + touristAttractionList.size());
                 getAttractionsByCategory(categorySelected, new OnCompleteListener<QuerySnapshot>() {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -210,10 +206,12 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         });
     }
 
+    // Add new markers to the map
     private void addNewMarkers() {
         ((MapsFragment) mapFragment).addMarker(MainActivity.this, touristAttractionList, categorySelected);
     }
 
+    // Set the trending attractions
     private void setTrendingAttraction(List<TouristAttraction> trendingAttractionList) {
         cardView1.setClickable(true);
         cardView2.setClickable(true);
@@ -261,6 +259,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
     }
 
 
+    // Get attractions by category
     private void getAttractionsByCategory(String category, OnCompleteListener<QuerySnapshot> callback) {
         List<TouristAttraction> touristAttractionList = new ArrayList<>();
         try {
@@ -279,6 +278,7 @@ public class MainActivity extends BaseActivity implements MapsFragment.OnMapRead
         }
     }
 
+    // Get the top 3 trending attractions
     private List<TouristAttraction> getTrendingAttraction(List<TouristAttraction> touristAttractionList) {
         Log.d(TAG, "getTrendingAttraction: " + touristAttractionList.size());
         List<TouristAttraction> topAttractionList = new ArrayList<>();
