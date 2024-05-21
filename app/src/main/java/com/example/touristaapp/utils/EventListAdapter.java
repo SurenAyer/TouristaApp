@@ -50,7 +50,7 @@ public class EventListAdapter extends ArrayAdapter<String> {
         //dateView.setText(date.get(position).toString());
         //timeView.setText(time.get(position).toString());
         dateView.setText("25/05/2024");
-        timeView.setText("25/05/2024");
+        timeView.setText("10:30AM");
         float durationInHours = duration.get(position) / 60;
         durationView.setText(durationInHours+" hrs");
         descriptionTV.setText(description.get(position));

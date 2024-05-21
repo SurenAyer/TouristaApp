@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -92,8 +94,8 @@ public class ProfileActivity extends BaseActivity {
         profileEventList = findViewById(R.id.profileEventList);
 
         touristAttractionRepository = new TouristAttractionRepositoryImpl();
-        notificationSharedPreferences = getSharedPreferences("Notification", MODE_PRIVATE);
-        Boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
+        notificationSharedPreferences = getSharedPreferences("NotificationMessage", MODE_PRIVATE);
+        boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
 
         if (newMessageReceived) {
             notificationBtn.setVisibility(View.VISIBLE);
@@ -165,35 +167,28 @@ public class ProfileActivity extends BaseActivity {
                 // Retrieve the stored message
 
                 Boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
-                int attractionId = notificationSharedPreferences.getInt("AttractionId", 0);
+                String attractionId = notificationSharedPreferences.getString("AttractionId", "");
                 String title = notificationSharedPreferences.getString("Title", "New Tourist Attraction");
-                JsonReader jsonReader = new JsonReader();
-                TouristAttraction touristAttraction = jsonReader.getAttractionData(ProfileActivity.this, attractionId);
+                Log.d(TAG, "Notification: " + newMessageReceived + " " + attractionId + " " + title);
+                touristAttractionRepository.getTouristAttractionById(attractionId, task1 -> {
+                    if (task1.isSuccessful()) {
+                        Log.d(TAG, "Tourist Attraction Retrieved");
+                        DocumentSnapshot document = task1.getResult();
+                        TouristAttraction attraction = new TouristAttraction();
+                        if (document.exists()) {
+                            attraction = document.toObject(TouristAttraction.class);
+                            showNotification(attraction, title);
+                        }
 
-                if (newMessageReceived) {
-                    // Show the notification
-                    // Create and show a dialog
-                    new AlertDialog.Builder(ProfileActivity.this)
-                            .setTitle(title)
-                            .setMessage(touristAttraction.getName() + " just got added.")
-                            .setPositiveButton("Check out", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Navigate to the details of the new attraction
-                                    Intent intent = new Intent(ProfileActivity.this, ViewPlaceActivity.class);
-                                    String placeJson = gson.toJson(touristAttraction);
-                                    intent.putExtra("touristAttraction", placeJson);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("Not Now", null)
-                            .show();
+                    }else {
+                        Log.e(TAG, "Error getting data", task1.getException());
 
-                    // Reset the newMessageReceived flag
-                    SharedPreferences.Editor editor = notificationSharedPreferences.edit();
-                    editor.putBoolean("newMessageReceived", false);
-                    editor.apply();
-                    notificationBtn.setVisibility(View.GONE);
-                }
+                    }
+                });
+
+
+
+
             }
         });
         getAllTouristAttractions(user.getUserId());
@@ -201,6 +196,32 @@ public class ProfileActivity extends BaseActivity {
 
     }
 
+    public void showNotification(TouristAttraction touristAttraction,String title){
+        Log.d(TAG, "Notification3: " + touristAttraction.toString());
+            // Show the notification
+            // Create and show a dialog
+            new AlertDialog.Builder(ProfileActivity.this)
+                    .setTitle(title)
+                    .setMessage(touristAttraction.getName() + " just got added.")
+                    .setPositiveButton("Check out", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Navigate to the details of the new attraction
+                            Intent intent = new Intent(ProfileActivity.this, ViewPlaceActivity.class);
+                            String placeJson = gson.toJson(touristAttraction);
+                            intent.putExtra("touristAttraction", placeJson);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Not Now", null)
+                    .show();
+
+            // Reset the newMessageReceived flag
+            SharedPreferences.Editor editor = notificationSharedPreferences.edit();
+            editor.putBoolean("newMessageReceived", false);
+            editor.apply();
+            notificationBtn.setVisibility(View.GONE);
+
+    }
 
     public void getAllTouristAttractions(String userId) {
         // Get all the tourist attractions

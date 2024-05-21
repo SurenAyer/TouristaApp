@@ -71,7 +71,14 @@ public void addTouristAttraction(TouristAttraction touristAttraction, OnComplete
 
     @Override
     public void getTouristAttractionById(String attractionId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
-
+        attractionsRef
+                .document(attractionId)
+                .get()
+                .addOnCompleteListener(onCompleteListener)
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to get tourist attraction by ID", e);
+                    onCompleteListener.onComplete(null);
+                });
     }
 
     @Override
