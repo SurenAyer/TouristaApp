@@ -1,5 +1,6 @@
 package com.example.touristaapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,27 +16,37 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.touristaapp.R;
+import com.example.touristaapp.models.User;
+import com.example.touristaapp.repositories.UserRepository;
+import com.example.touristaapp.repositories.UserRepositoryImpl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
+    private TextInputEditText editTextFirstName, editTextLastName, editTextEmail, editTextPhone, editTextPassword;
     private Button buttonRegister;
     private TextView signInLink;
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "RegisterActivityTAG";
+    private UserRepository userRepository;
+    private UserRepositoryImpl userRepositoryImpl;
+    private Gson gson;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         editTextFirstName = findViewById(R.id.firstName);
         editTextLastName = findViewById(R.id.lastName);
-        editTextEmail = findViewById (R.id.email);
-        editTextPassword = findViewById (R.id.password);
-        buttonRegister = findViewById (R.id.signupBtn);
+        editTextEmail = findViewById(R.id.email);
+        editTextPhone = findViewById(R.id.phone);
+        editTextPassword = findViewById(R.id.password);
+        buttonRegister = findViewById(R.id.signupBtn);
         signInLink = findViewById(R.id.signIn);
-
+        userRepository = new UserRepositoryImpl();
+        gson = new Gson();
         signInLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,10 +72,12 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Signing Up...");
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 String email = Objects.requireNonNull(editTextEmail.getText()).toString();
                 String password = Objects.requireNonNull(editTextPassword.getText()).toString();
 
@@ -85,22 +100,38 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser current_user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
-                                    String user_id = Objects.requireNonNull(current_user.getUid());
                                     String first_name = Objects.requireNonNull(editTextFirstName.getText().toString());
                                     String last_name = Objects.requireNonNull(editTextLastName.getText().toString());
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("first_name", first_name);
-                                    user.put("last_name", last_name);
-                                    user.put("email", email);
+                                    long phone_number = Long.parseLong(Objects.requireNonNull(editTextPhone.getText()).toString());
+                                    User user = new User();
+                                    user.setUserId(null);
+                                    user.setFirstName(first_name);
+                                    user.setLastName(last_name);
+                                    user.setEmail(email);
+                                    user.setPhoneNumber(phone_number);
+                                    userRepository.addUser(user, new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User added to database");
+                                                String userJson = gson.toJson(user);
+                                                SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putBoolean("isLoggedIn", true);
+                                                editor.putString("user", userJson);
+                                                editor.apply();
+                                                progressDialog.dismiss();
+                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
 
-                                    db.collection("users").document(user_id)
-                                            .set(user)
-                                            .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + user_id));
-                                    SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean("isLoggedIn", true);
-                                    editor.apply();
-                                    finish();
+                                            } else {
+                                                Log.e(TAG, "Failed to add user to database", task.getException());
+                                            }
+                                        }
+                                    });
+//
+//
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(RegisterActivity.this, "Registration Failed.",
@@ -110,5 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                         });
             }
         });
+
     }
+
 }

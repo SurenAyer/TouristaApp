@@ -1,10 +1,12 @@
 package com.example.touristaapp.models;
 
-import java.util.Arrays;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class TouristAttraction {
-    private int attractionId;
+    private String attractionId;
     private String name;
     private String description;
     private String address;
@@ -25,7 +27,7 @@ public class TouristAttraction {
     public TouristAttraction() {
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating) {
+    public TouristAttraction(String attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -38,7 +40,7 @@ public class TouristAttraction {
         this.rating = rating;
     }
 
-    public TouristAttraction(int attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> reviews, List<Photo> photos, List<Event> events) {
+    public TouristAttraction(String attractionId, String name, String description, String address, long phoneNumber, String openHours, float longitude, float latitude, String category, Float rating, User user, List<Review> reviews, List<Photo> photos, List<Event> events) {
         this.attractionId = attractionId;
         this.name = name;
         this.description = description;
@@ -55,11 +57,11 @@ public class TouristAttraction {
         this.events = events;
     }
 
-    public int getAttractionId() {
+    public String getAttractionId() {
         return attractionId;
     }
 
-    public void setAttractionId(int attractionId) {
+    public void setAttractionId(String attractionId) {
         this.attractionId = attractionId;
     }
 
@@ -135,6 +137,7 @@ public class TouristAttraction {
         this.rating = rating;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -167,10 +170,11 @@ public class TouristAttraction {
         this.events = events;
     }
 
+
     @Override
     public String toString() {
         return "TouristAttraction{" +
-                "attractionId=" + attractionId +
+                "attractionId='" + attractionId + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", address='" + address + '\'' +
@@ -180,6 +184,7 @@ public class TouristAttraction {
                 ", latitude=" + latitude +
                 ", category='" + category + '\'' +
                 ", rating=" + rating +
+                ", user=" + user +
                 ", reviews=" + reviews +
                 ", photos=" + photos +
                 ", events=" + events +

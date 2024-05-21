@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,8 @@ import com.example.touristaapp.models.Event;
 import com.example.touristaapp.models.Review;
 import com.example.touristaapp.models.TouristAttraction;
 import com.example.touristaapp.models.User;
+import com.example.touristaapp.repositories.TouristAttractionRepository;
+import com.example.touristaapp.repositories.TouristAttractionRepositoryImpl;
 import com.example.touristaapp.services.MyFirebaseMessagingService;
 import com.example.touristaapp.utils.AttractionAdapter;
 import com.example.touristaapp.utils.EventListAdapter;
@@ -28,8 +31,12 @@ import com.example.touristaapp.utils.ReviewListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,6 +55,7 @@ public class ProfileActivity extends BaseActivity {
     private SharedPreferences notificationSharedPreferences;
     private Gson gson;
     private String TAG = "ProfileActivityTAG";
+    private TouristAttractionRepository touristAttractionRepository;
 
 
     @Override
@@ -55,6 +63,7 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        gson = new Gson();
         // Retrieve the login state
         SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
@@ -65,7 +74,8 @@ public class ProfileActivity extends BaseActivity {
             finish();
             return;
         }
-
+        String userJson = sharedPreferences.getString("user", "");
+        User user = gson.fromJson(userJson, User.class);
 
         NavigationBarView navigation = findViewById(R.id.bottomNavigationView);
         setupNavigation(navigation, ViewPlaceActivity.class, R.id.profile);
@@ -73,6 +83,9 @@ public class ProfileActivity extends BaseActivity {
         userName = findViewById(R.id.userNameTV);
         userEmail = findViewById(R.id.userEmailTV);
         userPhone = findViewById(R.id.userPhoneTV);
+        userName.setText(user.getFirstName() + " " + user.getLastName());
+        userEmail.setText(user.getEmail());
+        userPhone.setText(String.valueOf(user.getPhoneNumber()));
         logOutButton = findViewById(R.id.logOut);
         notificationBtn = findViewById(R.id.notificationBtn);
         tabLayout = findViewById(R.id.myContributionTab);
@@ -80,12 +93,11 @@ public class ProfileActivity extends BaseActivity {
         profileReviewList = findViewById(R.id.profileReviewList);
         profileEventList = findViewById(R.id.profileEventList);
 
-        gson = new Gson();
-       notificationSharedPreferences = getSharedPreferences("Notification", MODE_PRIVATE);
-        Boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
+        touristAttractionRepository = new TouristAttractionRepositoryImpl();
+        notificationSharedPreferences = getSharedPreferences("NotificationMessage", MODE_PRIVATE);
+        boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
 
-        Log.d(TAG, "onCreate: New message received: " + newMessageReceived);
-        if(newMessageReceived){
+        if (newMessageReceived) {
             notificationBtn.setVisibility(View.VISIBLE);
         }
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +111,7 @@ public class ProfileActivity extends BaseActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putBoolean("isLoggedIn", false);
+                                editor.putString("user", "");
                                 editor.apply();
 
                                 // Navigate back to the login screen
@@ -115,7 +128,6 @@ public class ProfileActivity extends BaseActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.d(TAG,"onTabSelected: "+tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0:
                         profilePlaceList.setVisibility(View.VISIBLE);
@@ -123,7 +135,7 @@ public class ProfileActivity extends BaseActivity {
                         profileEventList.setVisibility(View.GONE);
                         break;
                     case 1:
-                         profilePlaceList.setVisibility(View.GONE);
+                        profilePlaceList.setVisibility(View.GONE);
                         profileReviewList.setVisibility(View.VISIBLE);
                         profileEventList.setVisibility(View.GONE);
                         break;
@@ -155,57 +167,131 @@ public class ProfileActivity extends BaseActivity {
                 // Retrieve the stored message
 
                 Boolean newMessageReceived = notificationSharedPreferences.getBoolean("newMessageReceived", false);
-                int attractionId = notificationSharedPreferences.getInt("AttractionId", 0);
+                String attractionId = notificationSharedPreferences.getString("AttractionId", "");
                 String title = notificationSharedPreferences.getString("Title", "New Tourist Attraction");
-                JsonReader jsonReader=new JsonReader();
-                TouristAttraction touristAttraction=jsonReader.getAttractionData(ProfileActivity.this, attractionId);
+                Log.d(TAG, "Notification: " + newMessageReceived + " " + attractionId + " " + title);
+                touristAttractionRepository.getTouristAttractionById(attractionId, task1 -> {
+                    if (task1.isSuccessful()) {
+                        Log.d(TAG, "Tourist Attraction Retrieved");
+                        DocumentSnapshot document = task1.getResult();
+                        TouristAttraction attraction = new TouristAttraction();
+                        if (document.exists()) {
+                            attraction = document.toObject(TouristAttraction.class);
+                            showNotification(attraction, title);
+                        }
 
-                if (newMessageReceived) {
-                    // Show the notification
-                    // Create and show a dialog
-                    new AlertDialog.Builder(ProfileActivity.this)
-                            .setTitle(title)
-                            .setMessage(touristAttraction.getName()+" just got added.")
-                            .setPositiveButton("Check out", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Navigate to the details of the new attraction
-                                    Intent intent = new Intent(ProfileActivity.this, ViewPlaceActivity.class);
-                                    String placeJson = gson.toJson(touristAttraction);
-                                    intent.putExtra("touristAttraction", placeJson);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("Not Now", null)
-                            .show();
+                    }else {
+                        Log.e(TAG, "Error getting data", task1.getException());
 
-                    // Reset the newMessageReceived flag
-                    SharedPreferences.Editor editor = notificationSharedPreferences.edit();
-                    editor.putBoolean("newMessageReceived", false);
-                    editor.apply();
-                    notificationBtn.setVisibility(View.GONE);
-                }
+                    }
+                });
+
+
+
+
             }
         });
-        user = gerUserData(669);
-        setUserData(user);
+        getAllTouristAttractions(user.getUserId());
+
+
+    }
+
+    public void showNotification(TouristAttraction touristAttraction,String title){
+        Log.d(TAG, "Notification3: " + touristAttraction.toString());
+            // Show the notification
+            // Create and show a dialog
+            new AlertDialog.Builder(ProfileActivity.this)
+                    .setTitle(title)
+                    .setMessage(touristAttraction.getName() + " just got added.")
+                    .setPositiveButton("Check out", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Navigate to the details of the new attraction
+                            Intent intent = new Intent(ProfileActivity.this, ViewPlaceActivity.class);
+                            String placeJson = gson.toJson(touristAttraction);
+                            intent.putExtra("touristAttraction", placeJson);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Not Now", null)
+                    .show();
+
+            // Reset the newMessageReceived flag
+            SharedPreferences.Editor editor = notificationSharedPreferences.edit();
+            editor.putBoolean("newMessageReceived", false);
+            editor.apply();
+            notificationBtn.setVisibility(View.GONE);
+
+    }
+
+    public void getAllTouristAttractions(String userId) {
+        // Get all the tourist attractions
+        List<TouristAttraction> touristAttractionList = new ArrayList<>();
+        try {
+            touristAttractionRepository.getAllTouristAttractions(task -> {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        TouristAttraction attraction = new TouristAttraction();
+                        Log.d(TAG, "getAttractionsBEFORE: " + attraction.toString());
+                        attraction = document.toObject(TouristAttraction.class);
+                        User user = document.get("user", User.class);
+                        assert attraction != null;
+                        attraction.setUser(user);
+                        //   Log.d(TAG, "getAttractions: " + attraction.toString());
+                        touristAttractionList.add(attraction);
+                    }
+                    user = gerUserData(userId, touristAttractionList);
+                    if (user != null) {
+                        setUserData(user);
+                    }
+                } else {
+                    Log.e(TAG, "getAttractionsByCategory: Error getting data", task.getException());
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "readData: Error reading data from json file", e);
+        }
     }
 
 
-
-    public User gerUserData(int userId){
+    public User gerUserData(String userId, List<TouristAttraction> touristAttractionList) {
+        Log.d(TAG, "getAttractionsUser: " + userId);
         // Get the user's data from the database
-        user=new User();
-        JsonReader jsonReader=new JsonReader();
-        try {
-            //Log.d(TAG, "readData: Reading data from json file");
-            user= jsonReader.getUserData(this, 115);
-            assert user != null;
+        List<TouristAttraction> filteredAttractionList = new ArrayList<>();
+        List<Review> reviewList = new ArrayList<>();
+        List<Event> eventList = new ArrayList<>();
+        if (touristAttractionList != null) {
+            Log.d(TAG, "getAttractionsUser START: " + touristAttractionList.toString());
 
-            return user;
-        } catch (Exception e) {
-            Log.d(TAG, "readData: Error reading data from json file", e);
-            return null;
+            try {
+                filteredAttractionList = touristAttractionList.stream()
+                        .filter(attraction -> attraction.getUser() != null && attraction.getUser().getUserId().equals(userId))
+                        .collect(Collectors.toList());
+                reviewList = touristAttractionList.stream()
+                        .filter(attraction -> attraction.getReviews() != null)
+                        .flatMap(attraction -> attraction.getReviews().stream())
+                        .filter(review -> review.getUserId().equals(userId))
+                        .collect(Collectors.toList());
+
+                eventList = touristAttractionList.stream()
+                        .filter(attraction -> attraction.getEvents() != null)
+                        .flatMap(attraction -> attraction.getEvents().stream())
+                        .filter(event -> event.getUserId().equals(userId))
+                        .collect(Collectors.toList());
+
+                if (!filteredAttractionList.isEmpty()) {
+                    user = filteredAttractionList.get(0).getUser();
+                    user.setTouristAttractions(filteredAttractionList);
+                    user.setReviews(reviewList);
+                    user.setEvents(eventList);
+                }
+                Log.d(TAG, "getAttractionsUser: " + user.toString());
+                return user;
+            } catch (Exception e) {
+                Log.e(TAG, "getAttractionsUser: Error filtering data", e);
+            }
+
         }
+        return null;
     }
 
 
@@ -219,14 +305,13 @@ public class ProfileActivity extends BaseActivity {
     }
 
 
-
-
     private void setMyTouristAttractions(List<TouristAttraction> touristAttractions) {
         // Show the user's created places
         PlaceListAdapter placeListAdapter = new PlaceListAdapter(this, touristAttractions);
         ListView placeListView = (ListView) findViewById(R.id.profilePlaceList);
         placeListView.setAdapter(placeListAdapter);
     }
+
     private void setMyReviews(List<Review> reviewList) {
         // set the Review List
         List<String> reviewUserName = reviewList.stream().map(Review::getUserName).collect(Collectors.toList());
@@ -243,7 +328,7 @@ public class ProfileActivity extends BaseActivity {
         List<Long> eventDate = events.stream().map(Event::getEventDate).collect(Collectors.toList());
         List<Integer> eventDuration = events.stream().map(Event::getDuration).collect(Collectors.toList());
         List<String> eventDescription = events.stream().map(Event::getDescription).collect(Collectors.toList());
-        EventListAdapter eventListAdapter = new EventListAdapter(this, eventName,eventDate, eventDuration, eventDescription);
+        EventListAdapter eventListAdapter = new EventListAdapter(this, eventName, eventDate, eventDuration, eventDescription);
         ListView eventList = (ListView) findViewById(R.id.profileEventList);
         eventList.setAdapter(eventListAdapter);
     }

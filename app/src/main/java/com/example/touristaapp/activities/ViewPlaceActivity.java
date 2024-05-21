@@ -21,8 +21,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.touristaapp.R;
 import com.example.touristaapp.fragments.MapsFragment;
+import com.example.touristaapp.models.Photo;
 import com.example.touristaapp.models.TouristAttraction;
 import com.example.touristaapp.utils.EventListAdapter;
 import com.example.touristaapp.utils.ReviewListAdapter;
@@ -133,22 +135,33 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             placePhoneNumber.setText(String.valueOf(touristAttraction.getPhoneNumber()));
             placeOpenHours.setText(touristAttraction.getOpenHours());
             placeRating.setRating(touristAttraction.getRating());
-            touristAttraction.getReviews().forEach(review -> {
-                reviewUserName.add(review.getUserName());
-                reviewText.add(review.getComment());
-                reviewRating.add((float) review.getRating());
-            });
-            touristAttraction.getEvents().forEach(event -> {
-                eventName.add(event.getEventName());
-                eventDateTime.add(event.getEventDate());
-                eventDuration.add(event.getDuration());
-                eventDescription.add(event.getDescription());
-            });
-            Log.d(TAG, "onCreate: "+touristAttraction.toString());
-        } else {
-            Log.e(TAG, "onViewPlace: touristAttraction is null");
-        }
+            Glide.with(this).load(touristAttraction.getPhotos().get(0).getPhotoUrl()).into(coverIV);
+            try {
+                touristAttraction.getReviews().forEach(review -> {
+                    reviewUserName.add(review.getUserName());
+                    reviewText.add(review.getComment());
+                    reviewRating.add((float) review.getRating());
+                });
+            } catch (Exception e) {
+                reviewUserName.add("No Reviews");
+                reviewText.add("");
+                reviewRating.add(0.0f);
+            }
 
+            try {
+                touristAttraction.getEvents().forEach(event -> {
+                    eventName.add(event.getEventName());
+                    eventDateTime.add(event.getEventDate());
+                    eventDuration.add(event.getDuration());
+                    eventDescription.add(event.getDescription());
+                });
+            } catch (Exception e) {
+                eventName.add("No Events");
+                eventDateTime.add(0L);
+                eventDuration.add(0);
+                eventDescription.add("");
+            }
+        }
         btnAddReview.setOnClickListener(v -> addReviewActivity());
         btnAddEvent.setOnClickListener(v -> addEventActivity());
 
@@ -221,6 +234,18 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
                 }
             }
         });
+        coverIV.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(ViewPlaceActivity.this, FullScreenImageActivity.class);
+        ArrayList<String> imageUrls = new ArrayList<>();
+        for (Photo photo : touristAttraction.getPhotos()) {
+            imageUrls.add(photo.getPhotoUrl());
+        }
+        intent.putStringArrayListExtra("imageUrls", imageUrls);
+        startActivity(intent);
+    }
+});
     }
 
 
@@ -233,8 +258,10 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             Intent intent = new Intent(ViewPlaceActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            String user=sharedPreferences.getString("user","");
             Intent reviewIntent = new Intent(ViewPlaceActivity.this, CreateReviewActivity.class);
             reviewIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+            reviewIntent.putExtra("user",user);
             startActivity(reviewIntent);
         }
     }
@@ -250,8 +277,10 @@ public class ViewPlaceActivity extends BaseActivity implements MapsFragment.OnMa
             Intent intent = new Intent(ViewPlaceActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            String user=sharedPreferences.getString("user","");
             Intent eventIntent = new Intent(ViewPlaceActivity.this, CreateEventActivity.class);
             eventIntent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+            eventIntent.putExtra("user",user);
             startActivity(eventIntent);
         }
     }

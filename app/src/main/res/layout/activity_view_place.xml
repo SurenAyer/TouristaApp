@@ -41,7 +41,6 @@
                     android:id="@+id/coverIV"
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
-                    android:contentDescription="content_description_media"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/pc_entertainment" />
 

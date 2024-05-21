@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.touristaapp.R;
 import com.example.touristaapp.models.TouristAttraction;
+import com.example.touristaapp.repositories.TouristAttractionRepository;
+import com.example.touristaapp.repositories.TouristAttractionRepositoryImpl;
 import com.example.touristaapp.utils.AttractionAdapter;
 import com.example.touristaapp.utils.JsonReader;
 import com.google.android.material.navigation.NavigationBarView;
@@ -29,8 +31,9 @@ public class ExploreActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private AttractionAdapter adapter;
     private String TAG = "EXPLOREATTRACTIONTAG";
-
+    private TouristAttractionRepository touristAttractionRepository;
     private Gson gson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +41,27 @@ public class ExploreActivity extends BaseActivity {
 
         NavigationBarView navigation = findViewById(R.id.bottomNavigationView);
         setupNavigation(navigation, ExploreActivity.class, R.id.explore);
+        recyclerView = findViewById(R.id.recyclerView);
+        touristAttractionList= new ArrayList<>();
+        touristAttractionRepository = new TouristAttractionRepositoryImpl();
 
-        gson= new Gson();
+        //Log.d(TAG, "readData: Reading data from json file");
         try {
-            //Log.d(TAG, "readData: Reading data from json file");
-            touristAttractionList = JsonReader.readJsonFile(this, "data.json", null);
-            assert touristAttractionList != null;
-            Log.d(TAG, "readData: Data read successfully");
+            touristAttractionRepository.getAllTouristAttractions(task -> {
+                if (task.isSuccessful()) {
+                    touristAttractionList.addAll(task.getResult().toObjects(TouristAttraction.class));
+                    adapter = new AttractionAdapter(touristAttractionList);
+                    recyclerView.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "getAttractionsByCategory: Error getting data", task.getException());
+                }
+            });
+
         } catch (Exception e) {
             Log.d(TAG, "readData: Error reading data from json file", e);
         }
-        recyclerView = findViewById(R.id.recyclerView);
-        adapter = new AttractionAdapter(touristAttractionList);
-        recyclerView.setAdapter(adapter);
+
 
         searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -1,10 +1,12 @@
 package com.example.touristaapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class User {
-    private int userId;
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -21,7 +23,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest) {
+    public User(String userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +33,7 @@ public class User {
         this.interest = interest;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest, List<TouristAttraction> touristAttractions, List<Review> reviews, List<Event> events, List<Photo> photos) {
+    public User(String userId, String firstName, String lastName, String email, String password, long phoneNumber, List<String> interest, List<TouristAttraction> touristAttractions, List<Review> reviews, List<Event> events, List<Photo> photos) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,7 +47,7 @@ public class User {
         this.photos = photos;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -89,7 +91,7 @@ public class User {
         return photos;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -109,7 +111,7 @@ public class User {
         this.password = password;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -143,7 +145,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", interest=" + interest +
-                ", touristAttractions=" + touristAttractions +
                 ", reviews=" + reviews +
                 ", events=" + events +
                 ", photos=" + photos +

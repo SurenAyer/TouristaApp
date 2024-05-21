@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 public class Event {
-    private int eventId;
+    private String eventId;
     private String eventName;
     private String description;
     private Long eventDate;
     private int duration;
-    private int userId;
+    private String userId;
 
     private TouristAttraction touristAttraction;
 
     public Event() {
     }
 
-    public Event(int eventId, String eventName, String description, Long eventDate, int duration, int userId) {
+    public Event(String eventId, String eventName, String description, Long eventDate, int duration, String userId) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.description = description;
@@ -25,7 +25,7 @@ public class Event {
         this.userId = userId;
     }
 
-    public Event(int eventId, String eventName, String description, Long eventDate, int duration, int userId, TouristAttraction touristAttraction) {
+    public Event(String eventId, String eventName, String description, Long eventDate, int duration, String userId, TouristAttraction touristAttraction) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.description = description;
@@ -35,7 +35,7 @@ public class Event {
         this.touristAttraction = touristAttraction;
     }
 
-    public int getEventId() {
+    public String getEventId() {
         return eventId;
     }
 
@@ -59,7 +59,7 @@ public class Event {
         return touristAttraction;
     }
 
-    public void setEventId(int eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
@@ -83,11 +83,11 @@ public class Event {
         this.touristAttraction = touristAttraction;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

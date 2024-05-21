@@ -1,18 +1,18 @@
 package com.example.touristaapp.models;
 
 public class Review {
-    private int reviewId;
-    private int rating;
+    private String reviewId;
+    private float rating;
     private String comment;
     private Long timestamp;
     private String userName;
     private TouristAttraction touristAttraction;
-    private int userId;
+    private String userId;
 
     public Review() {
     }
 
-    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, int userId) {
+    public Review(String reviewId, float rating, String comment, Long timestamp, String userName, String userId) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
@@ -21,7 +21,7 @@ public class Review {
         this.userId = userId;
     }
 
-    public Review(int reviewId, int rating, String comment, Long timestamp, String userName, TouristAttraction touristAttraction, int userId) {
+    public Review(String reviewId, float rating, String comment, Long timestamp, String userName, TouristAttraction touristAttraction, String userId) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.comment = comment;
@@ -31,19 +31,19 @@ public class Review {
         this.userId = userId;
     }
 
-    public int getReviewId() {
+    public String getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(int reviewId) {
+    public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -77,11 +77,11 @@ public class Review {
         this.touristAttraction = touristAttraction;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

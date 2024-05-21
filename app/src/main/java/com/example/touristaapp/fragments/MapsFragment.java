@@ -142,6 +142,7 @@ public class MapsFragment extends Fragment
                 TextView markerTitle = markerView.findViewById(R.id.marker_title);
                 markerTitle.setText(attraction.getName()); // Set the title
                 ImageView imageView = markerView.findViewById(R.id.marker_icon);
+                Log.d(TAG, "addMarker: " + category);
                 int resourceId = context.getResources().getIdentifier("pin_" + category.toLowerCase(), "drawable", context.getPackageName());
                 imageView.setImageResource(resourceId);
 
@@ -169,10 +170,10 @@ public class MapsFragment extends Fragment
             public boolean onMarkerClick(Marker marker) {
                 if (getActivity().getClass() == MainActivity.class) {
                     Intent markerIntent = new Intent(getActivity(), ViewPlaceActivity.class);
-                    int attractionId = Integer.parseInt(marker.getTitle());
+                    String attractionId = marker.getTitle();
                     TouristAttraction attraction = null;
                     for (TouristAttraction ta : touristAttractionList) {
-                        if (ta.getAttractionId() == attractionId) {
+                        if (ta.getAttractionId().equals(attractionId)) {
                             attraction = ta;
                             break;
                         }
