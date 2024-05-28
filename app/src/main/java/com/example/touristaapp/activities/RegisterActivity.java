@@ -34,17 +34,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private TextInputEditText editTextFirstName, editTextLastName, editTextEmail, editTextPhone, editTextPassword;
     private Button buttonRegister;
     private TextView signInLink;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "RegisterActivityTAG";
     private UserRepository userRepository;
-    private UserRepositoryImpl userRepositoryImpl;
     private Gson gson;
     private ProgressDialog progressDialog;
 
@@ -91,57 +89,64 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser current_user = mAuth.getCurrentUser();
-                                    Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                performSignUp(email, password);
 
-                                    String first_name = Objects.requireNonNull(editTextFirstName.getText().toString());
-                                    String last_name = Objects.requireNonNull(editTextLastName.getText().toString());
-                                    long phone_number = Long.parseLong(Objects.requireNonNull(editTextPhone.getText()).toString());
-                                    User user = new User();
-                                    user.setUserId(null);
-                                    user.setFirstName(first_name);
-                                    user.setLastName(last_name);
-                                    user.setEmail(email);
-                                    user.setPhoneNumber(phone_number);
-                                    userRepository.addUser(user, new OnCompleteListener<DocumentReference>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "User added to database");
-                                                String userJson = gson.toJson(user);
-                                                SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-                                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                editor.putBoolean("isLoggedIn", true);
-                                                editor.putString("user", userJson);
-                                                editor.apply();
-                                                progressDialog.dismiss();
-                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                startActivity(intent);
-                                                finish();
-
-                                            } else {
-                                                Log.e(TAG, "Failed to add user to database", task.getException());
-                                            }
-                                        }
-                                    });
-//
-//
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegisterActivity.this, "Registration Failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
             }
         });
 
     }
 
+    public void performSignUp(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "createUserWithEmail:success");
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser current_user = mAuth.getCurrentUser();
+                            Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+
+                            String first_name = Objects.requireNonNull(editTextFirstName.getText().toString());
+                            String last_name = Objects.requireNonNull(editTextLastName.getText().toString());
+                            long phone_number = Long.parseLong(Objects.requireNonNull(editTextPhone.getText()).toString());
+                            User user = new User();
+                            user.setUserId(null);
+                            user.setFirstName(first_name);
+                            user.setLastName(last_name);
+                            user.setEmail(email);
+                            user.setPhoneNumber(phone_number);
+
+                            userRepository.addUser(user, new OnCompleteListener<DocumentReference>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User added to database");
+                                        String userJson = gson.toJson(user);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean("isLoggedIn", true);
+                                        editor.putString("user", userJson);
+                                        editor.apply();
+                                        progressDialog.dismiss();
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    } else {
+                                        Log.e(TAG, "Failed to add user to database", task.getException());
+                                    }
+                                }
+                            });
+//
+//
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(RegisterActivity.this, "Registration Failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 }

@@ -69,15 +69,15 @@ public class ContributeActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
     private FirebaseStorage firebaseStorage;
-    private TouristAttractionRepository touristAttractionRepository;
+    TouristAttractionRepository touristAttractionRepository;
     private UserRepository userRepository;
     private PhotoRepository photoRepository;
     public static final String TAG = "ContributeActivityTAG";
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private User user;
-    private Gson gson;
-    private ProgressDialog progressDialog;
+    Gson gson;
+    ProgressDialog progressDialog;
 
     // Create the activity
     @Override
@@ -96,7 +96,7 @@ public class ContributeActivity extends BaseActivity {
         gson = new Gson();
         // Retrieve the login state
         SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-        String userJson=sharedPreferences.getString("user", "");
+        String userJson = sharedPreferences.getString("user", "");
         user = gson.fromJson(userJson, User.class);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
         // If the user is not logged in, redirect to LoginActivity
@@ -172,103 +172,103 @@ public class ContributeActivity extends BaseActivity {
                 touristAttraction.setPhoneNumber(contact);
                 touristAttraction.setOpenHours(openHoursText);
                 touristAttraction.setCategory(categoryText);
-                // Initialize a CountDownLatch with the number of images to upload
-                touristAttractionRepository.addTouristAttraction(touristAttraction, task -> {
-                    if (task.isSuccessful()) {
-                        DocumentReference documentReference = task.getResult();
-                        if (documentReference != null) {
-                            String attraction_id = documentReference.getId();
-                            documentReference.get().addOnCompleteListener(documentTask -> {
-                                if (documentTask.isSuccessful() && documentTask.getResult() != null) {
-                                    TouristAttraction addedAttraction = documentTask.getResult().toObject(TouristAttraction.class);
-                                    if (addedAttraction != null) {
-                                        Log.d("CreatePlace", "DocumentSnapshot successfully written: " + addedAttraction);
-                                        List<Photo> addedPhotos=new ArrayList<>();
-                                        CountDownLatch latch = new CountDownLatch(selectedImages.size());
-                                        Log.d(TAG, "Selected Images Size Count: " + selectedImages.size());
-                                        int count = 0;
-                                        for (String imageUri: selectedImages) {
-                                            Log.d(TAG, "Image URI: " + imageUri);
-                                            Uri fileUri = Uri.parse(imageUri);
-                                            String fileName = UUID.randomUUID().toString();
-                                            StorageReference imageRef = storageRef.child("attractions/" + fileName);
 
-                                            imageRef.putFile(fileUri)
-                                                    .addOnSuccessListener(taskSnapshot -> {
-                                                        Log.d(TAG, "Image uploaded successfully: " + imageUri);
-                                                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                                                            String imageUrl = uri.toString();
-                                                            Log.d(TAG, "Download URL: " + imageUrl);
-                                                            photoRepository = new PhotoRepositoryImpl();
-                                                            Photo photo = new Photo();
-                                                            photo.setPhotoId(null);
-                                                            photo.setPhotoUrl(imageUrl);
-                                                            //photo.setTouristAttraction(addedAttraction);
-
-                                                            photoRepository.addPhoto(photo, photoTask -> {
-                                                                if (photoTask.isSuccessful()) {
-                                                                    DocumentReference photoReference = photoTask.getResult();
-                                                                    photo.setPhotoId(photoReference.getId());
-                                                                    addedPhotos.add(photo);
-                                                                    latch.countDown();
-                                                                    if(latch.getCount() == 0){
-                                                                        addedAttraction.setPhotos(addedPhotos);
-                                                                        updateAttraction(addedAttraction);
-                                                                    }
-
-                                                                    Log.d("CreatePlace", "Photo added successfully: " + photo);
-                                                                } else {
-                                                                    Log.e("CreatePlace", "Failed to add photo: " + photoTask.getException());
-                                                                }
-                                                            });
-                                                        }).addOnFailureListener(e -> {
-                                                            Log.e("ImageDownloadUrl", "Failed to get download URL: " + e.getMessage());
-                                                        });
-                                                    });
-                                        }
-
-
-                                    }
-                                } else {
-                                    Log.w("CreatePlace", "Error getting document: ", documentTask.getException());
-                                }
-                            });
-                            Log.d(TAG, "Attraction ID: " + attraction_id);
-                        }
-                    }
-                });
-            }
-            else {
+                addTouristAttraction(touristAttraction, storageRef);
+            } else {
                 Log.d("CreatePlace", "Marker Position is null");
             }
         });
     }
 
-    private void getUserById(String userId) {
-        userRepository.getUserById(userId, task -> {
+
+    void addTouristAttraction(TouristAttraction touristAttraction, StorageReference storageRef) {
+        touristAttractionRepository.addTouristAttraction(touristAttraction, task -> {
             if (task.isSuccessful()) {
-                Log.d(TAG, "User: " + task.getResult().getData());
+                DocumentReference documentReference = task.getResult();
+                if (documentReference != null) {
+                    String attraction_id = documentReference.getId();
+                    documentReference.get().addOnCompleteListener(documentTask -> {
+                        if (documentTask.isSuccessful() && documentTask.getResult() != null) {
+                            TouristAttraction addedAttraction = documentTask.getResult().toObject(TouristAttraction.class);
+                            if (addedAttraction != null) {
+                                Log.d("CreatePlace", "DocumentSnapshot successfully written: " + addedAttraction);
+                                List<Photo> addedPhotos = new ArrayList<>();
+                                CountDownLatch latch = new CountDownLatch(selectedImages.size());
+                                Log.d(TAG, "Selected Images Size Count: " + selectedImages.size());
+                                int count = 0;
+                                for (String imageUri : selectedImages) {
+                                    Log.d(TAG, "Image URI: " + imageUri);
+                                    Uri fileUri = Uri.parse(imageUri);
+                                    String fileName = UUID.randomUUID().toString();
+                                    StorageReference imageRef = storageRef.child("attractions/" + fileName);
+
+                                    imageRef.putFile(fileUri)
+                                            .addOnSuccessListener(taskSnapshot -> {
+                                                Log.d(TAG, "Image uploaded successfully: " + imageUri);
+                                                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                                    String imageUrl = uri.toString();
+                                                    Log.d(TAG, "Download URL: " + imageUrl);
+                                                    photoRepository = new PhotoRepositoryImpl();
+                                                    Photo photo = new Photo();
+                                                    photo.setPhotoId(null);
+                                                    photo.setPhotoUrl(imageUrl);
+                                                    //photo.setTouristAttraction(addedAttraction);
+
+                                                    photoRepository.addPhoto(photo, photoTask -> {
+                                                        if (photoTask.isSuccessful()) {
+                                                            DocumentReference photoReference = photoTask.getResult();
+                                                            photo.setPhotoId(photoReference.getId());
+                                                            addedPhotos.add(photo);
+                                                            latch.countDown();
+                                                            if (latch.getCount() == 0) {
+                                                                addedAttraction.setPhotos(addedPhotos);
+                                                                Intent intent = new Intent(ContributeActivity.this, ViewPlaceActivity.class);
+                                                                updateAttraction(addedAttraction,intent);
+                                                            }
+
+                                                            Log.d("CreatePlace", "Photo added successfully: " + photo);
+                                                        } else {
+                                                            Log.e("CreatePlace", "Failed to add photo: " + photoTask.getException());
+                                                        }
+                                                    });
+                                                }).addOnFailureListener(e -> {
+                                                    Log.e("ImageDownloadUrl", "Failed to get download URL: " + e.getMessage());
+                                                });
+                                            });
+                                }
+
+
+                            }
+                        } else {
+                            Log.w("CreatePlace", "Error getting document: ", documentTask.getException());
+                        }
+                    });
+                    Log.d(TAG, "Attraction ID: " + attraction_id);
+                }
             }
         });
     }
 
     // Update the attraction with the added photos
-    private void updateAttraction(TouristAttraction addedAttraction) {
+    void updateAttraction(TouristAttraction addedAttraction, Intent intent) {
         //Update the attraction with the added photos
-        addedAttraction.setUser(user);
+        if (addedAttraction != null)
+            addedAttraction.setUser(user);
         touristAttractionRepository.updateTouristAttraction(addedAttraction.getAttractionId(), addedAttraction, updateTask -> {
             if (updateTask.isSuccessful()) {
                 Log.d("CreatePlace", "Attraction updated successfully: " + addedAttraction);
                 progressDialog.dismiss();
-                Intent intent = new Intent(ContributeActivity.this, ViewPlaceActivity.class);
                 intent.putExtra("touristAttraction", gson.toJson(addedAttraction));
-                startActivity(intent);
+                if (this != null) {
+                    startActivity(intent);
+                }
                 finish();
             } else {
                 Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
             }
         });
     }
+
     // Pick multiple images from gallery
     private void pickMultipleImages() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

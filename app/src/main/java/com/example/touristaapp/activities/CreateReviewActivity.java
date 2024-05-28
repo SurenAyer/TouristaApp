@@ -43,14 +43,14 @@ public class CreateReviewActivity extends BaseActivity {
     private RatingBar reviewRating;
     private EditText reviewComment;
     private Button submitReview;
-    private TouristAttraction touristAttraction;
+    TouristAttraction touristAttraction;
     private Intent intent;
-    private Gson gson;
+    Gson gson;
     private String TAG = "CREATEREVIEWTAG";
-    private ReviewRepository reviewRepository;
-    private TouristAttractionRepository touristAttractionRepository;
+    ReviewRepository reviewRepository;
+    TouristAttractionRepository touristAttractionRepository;
     private User user;
-    private ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -106,41 +106,46 @@ public class CreateReviewActivity extends BaseActivity {
                 review.setUserName(user.getFirstName()+" "+user.getLastName());
                 review.setTimestamp(System.currentTimeMillis());
                 // Save in Database
-                reviewRepository.addReview(review, new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Review Created");
-                            if(touristAttraction.getReviews()==null){
-                                List<Review> reviews=new ArrayList<>();
-                                reviews.add(review);
-                                touristAttraction.setReviews(reviews);
-                                touristAttraction.setRating(rating);
-                                }
-                            else {
-                                touristAttraction.getReviews().add(review);
-                                float averageRating=touristAttraction.getReviews().stream().map(Review::getRating).reduce(0.0f, Float::sum)/touristAttraction.getReviews().size();
-                                touristAttraction.setRating(averageRating);
-                            }
-                            touristAttractionRepository.updateTouristAttraction(String.valueOf(touristAttraction.getAttractionId()), touristAttraction, updateTask -> {
-                                if (updateTask.isSuccessful()) {
-                                    Log.d("CreatePlace", "Attraction updated successfully: " + touristAttraction);
-                                    progressDialog.dismiss();
-                                    Intent intent = new Intent(CreateReviewActivity.this, ViewPlaceActivity.class);
-                                    intent.putExtra("touristAttraction", gson.toJson(touristAttraction));
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
-                                }
-                            });
+                Intent intent = new Intent(CreateReviewActivity.this, ViewPlaceActivity.class);
 
-                        } else {
-                            Log.e(TAG, "Failed to add review to database", task.getException());
-                        }
-                    }
-                });
+                saveReview(review, rating, intent);
                  }
+        });
+    }
+
+    public void saveReview(Review review, float rating, Intent intent){
+        reviewRepository.addReview(review, new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Review Created");
+                    if(touristAttraction.getReviews()==null){
+                        List<Review> reviews=new ArrayList<>();
+                        reviews.add(review);
+                        touristAttraction.setReviews(reviews);
+                        touristAttraction.setRating(rating);
+                    }
+                    else {
+                        touristAttraction.getReviews().add(review);
+                        float averageRating=touristAttraction.getReviews().stream().map(Review::getRating).reduce(0.0f, Float::sum)/touristAttraction.getReviews().size();
+                        touristAttraction.setRating(averageRating);
+                    }
+                    touristAttractionRepository.updateTouristAttraction(String.valueOf(touristAttraction.getAttractionId()), touristAttraction, updateTask -> {
+                        if (updateTask.isSuccessful()) {
+                            Log.d("CreatePlace", "Attraction updated successfully: " + touristAttraction);
+                            progressDialog.dismiss();
+                            intent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
+                        }
+                    });
+
+                } else {
+                    Log.e(TAG, "Failed to add review to database", task.getException());
+                }
+            }
         });
     }
     @Override

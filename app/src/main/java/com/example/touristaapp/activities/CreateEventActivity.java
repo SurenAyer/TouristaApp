@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -22,7 +21,6 @@ import androidx.appcompat.app.ActionBar;
 
 import com.example.touristaapp.R;
 import com.example.touristaapp.models.Event;
-import com.example.touristaapp.models.Review;
 import com.example.touristaapp.models.TouristAttraction;
 import com.example.touristaapp.models.User;
 import com.example.touristaapp.repositories.EventRepository;
@@ -49,13 +47,13 @@ public class CreateEventActivity extends BaseActivity {
     private NumberPicker eventDurationDays;
     private NumberPicker eventDurationHours;
     private Button submitEvent;
-    private TouristAttraction touristAttraction;
+    TouristAttraction touristAttraction;
     private Intent intent;
-    private Gson gson;
+    Gson gson;
     private String TAG = "CREATEEVENTTAG";
-    private EventRepository eventRepository;
-    private TouristAttractionRepository touristAttractionRepository;
-    private ProgressDialog progressDialog;
+    EventRepository eventRepository;
+    TouristAttractionRepository touristAttractionRepository;
+    ProgressDialog progressDialog;
     private User user;
 
 
@@ -171,48 +169,20 @@ public class CreateEventActivity extends BaseActivity {
                 String time = eventTime.getText().toString();
                 int durationDays = eventDurationDays.getValue();
                 int durationHours = eventDurationHours.getValue();
-                Long dateTime=Long.valueOf(date.split("/")[0])*24*60*60*1000+Long.valueOf(date.split("/")[1])*30*24*60*60*1000+Long.valueOf(date.split("/")[2])*365*24*60*60*1000;
-                Event event=new Event();
+                Long dateTime = Long.valueOf(date.split("/")[0]) * 24 * 60 * 60 * 1000 + Long.valueOf(date.split("/")[1]) * 30 * 24 * 60 * 60 * 1000 + Long.valueOf(date.split("/")[2]) * 365 * 24 * 60 * 60 * 1000;
+                Event event = new Event();
                 event.setEventName(name);
                 event.setDescription(description);
                 event.setEventDate(Long.valueOf(dateTime));
                 event.setUserId(user.getUserId());
-                event.setDuration(durationDays*24+durationHours);
+                event.setDuration(durationDays * 24 + durationHours);
 
                 progressDialog.show();
+                Intent intent = new Intent(CreateEventActivity.this, ViewPlaceActivity.class);
 
-                eventRepository.addEvent(event, new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Review Created");
-                            if(touristAttraction.getEvents()==null){
-                                List<Event> events=new ArrayList<>();
-                                events.add(event);
-                                touristAttraction.setEvents(events);
-                            }
-                            else {
-                                touristAttraction.getEvents().add(event);
-                            }
-                            touristAttractionRepository.updateTouristAttraction(String.valueOf(touristAttraction.getAttractionId()), touristAttraction, updateTask -> {
-                                if (updateTask.isSuccessful()) {
-                                    Log.d("CreatePlace", "Attraction updated successfully: " + touristAttraction);
-                                    progressDialog.dismiss();
-                                    Intent intent = new Intent(CreateEventActivity.this, ViewPlaceActivity.class);
-                                    intent.putExtra("touristAttraction", gson.toJson(touristAttraction));
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
-                                }
-                            });
-
-                        } else {
-                            Log.e(TAG, "Failed to add review to database", task.getException());
-                        }
-                    }
-                });
+                saveEvent(event, intent);
             }
+
         });
     }
     @Override
@@ -224,4 +194,37 @@ public class CreateEventActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void saveEvent(Event event, Intent intent){
+            eventRepository.addEvent(event, new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Review Created");
+                        if (touristAttraction.getEvents() == null) {
+                            List<Event> events = new ArrayList<>();
+                            events.add(event);
+                            touristAttraction.setEvents(events);
+                        } else {
+                            touristAttraction.getEvents().add(event);
+                        }
+                        touristAttractionRepository.updateTouristAttraction(String.valueOf(touristAttraction.getAttractionId()), touristAttraction, updateTask -> {
+                            if (updateTask.isSuccessful()) {
+                                Log.d("CreatePlace", "Attraction updated successfully: " + touristAttraction);
+                                progressDialog.dismiss();
+                                intent.putExtra("touristAttraction", gson.toJson(touristAttraction));
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Log.e("CreatePlace", "Failed to update attraction: " + updateTask.getException());
+                            }
+                        });
+
+                    } else {
+                        Log.e(TAG, "Failed to add review to database", task.getException());
+                    }
+                }
+            });
+
+        }
 }

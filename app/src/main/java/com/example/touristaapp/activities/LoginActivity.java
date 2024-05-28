@@ -28,17 +28,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
-    private TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword;
     private Button signInBtn;
     private TextView signUp;
 
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     private static final String TAG = "LoginActivityTAG";
     private UserRepository userRepository;
     private Gson gson;
-    private ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
+                if (!isFinishing()) {
+                    progressDialog.show();
+                }
                 Log.d(TAG, "Sign In Button Clicked");
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
@@ -78,52 +80,54 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "Sign In Complete");
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "Sign In Successful");
-                                    // Store the login state
-                                    //DB Call get User Object
-                                    userRepository.getUserByEmail(email, task1 -> {
-                                        if (task1.isSuccessful()) {
-                                            Log.d(TAG, "User Retrieved");
-                                            QuerySnapshot document = task1.getResult();
-                                            User user = new User();
-                                            if (!document.getDocuments().isEmpty()) {
-                                                user = document.getDocuments().get(0).toObject(User.class);
-                                            }
-                                            String userJson = gson.toJson(user);
-                                            SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putBoolean("isLoggedIn", true);
-                                            editor.putString("user", userJson);
-                                            editor.apply();
-                                            progressDialog.dismiss();
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            Log.d(TAG, "User Not Found");
-                                            Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Log.d(TAG, "Sign In Failed");
-                                    Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                performSignIn(email, password);
             }
         });
+    }
+    public void performSignIn(String email,String password) {
+
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "Sign In Complete");
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Sign In Successful");
+                            // Store the login state
+                            //DB Call get User Object
+                            userRepository.getUserByEmail(email, task1 -> {
+                                Log.d(TAG, "User Retrieved ok");
+                                if (task1.isSuccessful()) {
+                                    Log.d(TAG, "User Retrieved");
+                                    QuerySnapshot document = task1.getResult();
+                                    User user = new User();
+                                    if (!document.getDocuments().isEmpty()) {
+                                        user = document.getDocuments().get(0).toObject(User.class);
+                                    }
+                                    String userJson = gson.toJson(user);
+                                    SharedPreferences sharedPreferences = getSharedPreferences("user_details", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("isLoggedIn", true);
+                                    editor.putString("user", userJson);
+                                    editor.apply();
+                                    Log.d(TAG, "User Details Stored");
+                                    progressDialog.dismiss();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Log.d(TAG, "User Not Found");
+                                    Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } else {
+                            Log.d(TAG, "Sign In Failed");
+                            Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 }

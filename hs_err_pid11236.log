@@ -1,0 +1,960 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 395488 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (arena.cpp:191), pid=11236, tid=25820
+#
+# JRE version: OpenJDK Runtime Environment (17.0.9) (build 17.0.9+0--11185874)
+# Java VM: OpenJDK 64-Bit Server VM (17.0.9+0--11185874, mixed mode, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Djava.awt.headless=true -Djava.util.logging.config.file=C:\Users\Suren Ayer\.android\utp\logging6191933369893784448properties -Dfile.encoding=UTF-8 com.google.testing.platform.launcher.Launcher C:\Users\Suren Ayer\.gradle\caches\modules-2\files-2.1\com.google.testing.platform\core\0.0.9-alpha02\8d72767495b76dfdfe1a4f02bab67cb035da816d\core-0.0.9-alpha02.jar --proto_config=C:\Users\Suren Ayer\.android\utp\runnerConfig6018640527249620858.pb --proto_server_config=C:\Users\Suren Ayer\.android\utp\serverConfig3611740391464538084.pb
+
+Host: Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz, 8 cores, 15G,  Windows 10 , 64 bit Build 19041 (10.0.19041.3636)
+Time: Mon May 27 00:19:02 2024 AUS Eastern Standard Time elapsed time: 73.550697 seconds (0d 0h 1m 13s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002057d5da510):  JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=25820, stack(0x0000001632b00000,0x0000001632c00000)]
+
+
+Current CompileTask:
+C2:  73550 2476   !   4       sun.nio.ch.SocketChannelImpl::read (314 bytes)
+
+Stack: [0x0000001632b00000,0x0000001632c00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6886e9]
+V  [jvm.dll+0x841e4a]
+V  [jvm.dll+0x843a8e]
+V  [jvm.dll+0x8440f3]
+V  [jvm.dll+0x24c14f]
+V  [jvm.dll+0xac44c]
+V  [jvm.dll+0xaca9c]
+V  [jvm.dll+0x36c1f7]
+V  [jvm.dll+0x33651a]
+V  [jvm.dll+0x3359ba]
+V  [jvm.dll+0x21ddb1]
+V  [jvm.dll+0x21d1d1]
+V  [jvm.dll+0x1a674d]
+V  [jvm.dll+0x22d088]
+V  [jvm.dll+0x22b1c0]
+V  [jvm.dll+0x7f62f7]
+V  [jvm.dll+0x7f06aa]
+V  [jvm.dll+0x687565]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17344]
+C  [ntdll.dll+0x526b1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00000205044d7570, length=19, elements={
+0x000002055eb2d880, 0x000002057d587050, 0x000002057d587de0, 0x000002057d5bdaa0,
+0x000002057d5cdf80, 0x000002057d5d0e50, 0x000002057d5d1810, 0x000002057d5da510,
+0x000002057d5de410, 0x000002057d5f3200, 0x000002057d74abd0, 0x000002057d7607a0,
+0x000002057f2bf0c0, 0x000002057f095bb0, 0x000002057f094770, 0x000002057f094c80,
+0x000002057f092400, 0x000002057f094260, 0x000002057f095190
+}
+
+Java Threads: ( => current thread )
+  0x000002055eb2d880 JavaThread "main" [_thread_blocked, id=24924, stack(0x0000001631e00000,0x0000001631f00000)]
+  0x000002057d587050 JavaThread "Reference Handler" daemon [_thread_blocked, id=18184, stack(0x0000001632500000,0x0000001632600000)]
+  0x000002057d587de0 JavaThread "Finalizer" daemon [_thread_blocked, id=12756, stack(0x0000001632600000,0x0000001632700000)]
+  0x000002057d5bdaa0 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=7984, stack(0x0000001632700000,0x0000001632800000)]
+  0x000002057d5cdf80 JavaThread "Attach Listener" daemon [_thread_blocked, id=26348, stack(0x0000001632800000,0x0000001632900000)]
+  0x000002057d5d0e50 JavaThread "Service Thread" daemon [_thread_blocked, id=6104, stack(0x0000001632900000,0x0000001632a00000)]
+  0x000002057d5d1810 JavaThread "Monitor Deflation Thread" daemon [_thread_blocked, id=28600, stack(0x0000001632a00000,0x0000001632b00000)]
+=>0x000002057d5da510 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=25820, stack(0x0000001632b00000,0x0000001632c00000)]
+  0x000002057d5de410 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=18544, stack(0x0000001632c00000,0x0000001632d00000)]
+  0x000002057d5f3200 JavaThread "Sweeper thread" daemon [_thread_blocked, id=25480, stack(0x0000001632d00000,0x0000001632e00000)]
+  0x000002057d74abd0 JavaThread "Notification Thread" daemon [_thread_blocked, id=4840, stack(0x0000001632e00000,0x0000001632f00000)]
+  0x000002057d7607a0 JavaThread "Common-Cleaner" daemon [_thread_blocked, id=21928, stack(0x0000001633000000,0x0000001633100000)]
+  0x000002057f2bf0c0 JavaThread "grpc-nio-worker-ELG-1-1" daemon [_thread_in_native, id=23700, stack(0x0000001633a00000,0x0000001633b00000)]
+  0x000002057f095bb0 JavaThread "Monitor" [_thread_in_native, id=23772, stack(0x0000001633e00000,0x0000001633f00000)]
+  0x000002057f094770 JavaThread "grpc-nio-worker-ELG-1-2" daemon [_thread_in_native, id=27524, stack(0x0000001634000000,0x0000001634100000)]
+  0x000002057f094c80 JavaThread "Device List Monitor" [_thread_in_native, id=14840, stack(0x0000001633f00000,0x0000001634000000)]
+  0x000002057f092400 JavaThread "DefaultDispatcher-worker-1" daemon [_thread_blocked, id=14020, stack(0x0000001634200000,0x0000001634300000)]
+  0x000002057f094260 JavaThread "DefaultDispatcher-worker-2" daemon [_thread_blocked, id=8504, stack(0x0000001634300000,0x0000001634400000)]
+  0x000002057f095190 JavaThread "kotlinx.coroutines.DefaultExecutor" daemon [_thread_blocked, id=24416, stack(0x0000001634400000,0x0000001634500000)]
+
+Other Threads:
+  0x000002057d3f3010 VMThread "VM Thread" [stack: 0x0000001632400000,0x0000001632500000] [id=17680]
+  0x000002057d74b6c0 WatcherThread [stack: 0x0000001632f00000,0x0000001633000000] [id=16720]
+  0x000002055eb973f0 GCTaskThread "GC Thread#0" [stack: 0x0000001631f00000,0x0000001632000000] [id=14076]
+  0x000002057decc5f0 GCTaskThread "GC Thread#1" [stack: 0x0000001633100000,0x0000001633200000] [id=3996]
+  0x000002057dd66030 GCTaskThread "GC Thread#2" [stack: 0x0000001633200000,0x0000001633300000] [id=12612]
+  0x000002057dd662f0 GCTaskThread "GC Thread#3" [stack: 0x0000001633300000,0x0000001633400000] [id=14888]
+  0x000002057dd665b0 GCTaskThread "GC Thread#4" [stack: 0x0000001633400000,0x0000001633500000] [id=13944]
+  0x000002057dd2c220 GCTaskThread "GC Thread#5" [stack: 0x0000001633500000,0x0000001633600000] [id=12240]
+  0x000002057dee4d40 GCTaskThread "GC Thread#6" [stack: 0x0000001633600000,0x0000001633700000] [id=28844]
+  0x000002057dee4240 GCTaskThread "GC Thread#7" [stack: 0x0000001633800000,0x0000001633900000] [id=23452]
+  0x000002055eba97f0 ConcurrentGCThread "G1 Main Marker" [stack: 0x0000001632000000,0x0000001632100000] [id=18124]
+  0x000002055ebaa210 ConcurrentGCThread "G1 Conc#0" [stack: 0x0000001632100000,0x0000001632200000] [id=18692]
+  0x000002057dee5580 ConcurrentGCThread "G1 Conc#1" [stack: 0x0000001633900000,0x0000001633a00000] [id=12104]
+  0x000002055ebed900 ConcurrentGCThread "G1 Refine#0" [stack: 0x0000001632200000,0x0000001632300000] [id=14684]
+  0x000002055ebee330 ConcurrentGCThread "G1 Service" [stack: 0x0000001632300000,0x0000001632400000] [id=23540]
+
+Threads with active compile tasks:
+C2 CompilerThread0    73611 2476   !   4       sun.nio.ch.SocketChannelImpl::read (314 bytes)
+
+VM state: not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap address: 0x0000000703000000, size: 4048 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) not mapped
+Compressed class space mapped at: 0x0000000800000000-0x0000000840000000, reserved size: 1073741824
+Narrow klass base: 0x0000000800000000, Narrow klass shift: 0, Narrow klass range: 0x40000000
+
+GC Precious Log:
+ CPUs: 8 total, 8 available
+ Memory: 16190M
+ Large Page Support: Disabled
+ NUMA Support: Disabled
+ Compressed Oops: Enabled (Zero based)
+ Heap Region Size: 2M
+ Heap Min Capacity: 8M
+ Heap Initial Capacity: 254M
+ Heap Max Capacity: 4048M
+ Pre-touch: Disabled
+ Parallel Workers: 8
+ Concurrent Workers: 2
+ Concurrent Refinement Workers: 8
+ Periodic GC: Disabled
+
+Heap:
+ garbage-first heap   total 40960K, used 21352K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 4 young (8192K), 1 survivors (2048K)
+ Metaspace       used 40036K, committed 40384K, reserved 1114112K
+  class space    used 4504K, committed 4672K, reserved 1048576K
+
+Heap Regions: E=young(eden), S=young(survivor), O=old, HS=humongous(starts), HC=humongous(continues), CS=collection set, F=free, OA=open archive, CA=closed archive, TAMS=top-at-mark-start (previous, next)
+|   0|0x0000000703000000, 0x0000000703200000, 0x0000000703200000|100%| O|  |TAMS 0x0000000703200000, 0x0000000703000000| Untracked 
+|   1|0x0000000703200000, 0x0000000703400000, 0x0000000703400000|100%| O|  |TAMS 0x0000000703400000, 0x0000000703200000| Untracked 
+|   2|0x0000000703400000, 0x0000000703548000, 0x0000000703600000| 64%| O|  |TAMS 0x0000000703400000, 0x0000000703400000| Untracked 
+|   3|0x0000000703600000, 0x0000000703800000, 0x0000000703800000|100%| O|  |TAMS 0x0000000703800000, 0x0000000703600000| Untracked 
+|   4|0x0000000703800000, 0x0000000703a00000, 0x0000000703a00000|100%| O|  |TAMS 0x0000000703a00000, 0x0000000703800000| Untracked 
+|   5|0x0000000703a00000, 0x0000000703c00000, 0x0000000703c00000|100%| O|  |TAMS 0x0000000703b6f000, 0x0000000703a00000| Untracked 
+|   6|0x0000000703c00000, 0x0000000703e00000, 0x0000000703e00000|100%|HS|  |TAMS 0x0000000703e00000, 0x0000000703c00000| Complete 
+|   7|0x0000000703e00000, 0x0000000704000000, 0x0000000704000000|100%|HC|  |TAMS 0x0000000704000000, 0x0000000703e00000| Complete 
+|   8|0x0000000704000000, 0x0000000704000000, 0x0000000704200000|  0%| F|  |TAMS 0x0000000704000000, 0x0000000704000000| Untracked 
+|   9|0x0000000704200000, 0x0000000704200000, 0x0000000704400000|  0%| F|  |TAMS 0x0000000704200000, 0x0000000704200000| Untracked 
+|  10|0x0000000704400000, 0x0000000704400000, 0x0000000704600000|  0%| F|  |TAMS 0x0000000704400000, 0x0000000704400000| Untracked 
+|  11|0x0000000704600000, 0x0000000704792210, 0x0000000704800000| 78%| S|CS|TAMS 0x0000000704600000, 0x0000000704600000| Complete 
+|  12|0x0000000704800000, 0x0000000704800000, 0x0000000704a00000|  0%| F|  |TAMS 0x0000000704800000, 0x0000000704800000| Untracked 
+|  13|0x0000000704a00000, 0x0000000704a00000, 0x0000000704c00000|  0%| F|  |TAMS 0x0000000704a00000, 0x0000000704a00000| Untracked 
+|  14|0x0000000704c00000, 0x0000000704c00000, 0x0000000704e00000|  0%| F|  |TAMS 0x0000000704c00000, 0x0000000704c00000| Untracked 
+|  15|0x0000000704e00000, 0x0000000704e00000, 0x0000000705000000|  0%| F|  |TAMS 0x0000000704e00000, 0x0000000704e00000| Untracked 
+|  16|0x0000000705000000, 0x0000000705000000, 0x0000000705200000|  0%| F|  |TAMS 0x0000000705000000, 0x0000000705000000| Untracked 
+| 117|0x0000000711a00000, 0x0000000711affc70, 0x0000000711c00000| 49%| E|  |TAMS 0x0000000711a00000, 0x0000000711a00000| Complete 
+| 118|0x0000000711c00000, 0x0000000711e00000, 0x0000000711e00000|100%| E|CS|TAMS 0x0000000711c00000, 0x0000000711c00000| Complete 
+| 126|0x0000000712c00000, 0x0000000712e00000, 0x0000000712e00000|100%| E|CS|TAMS 0x0000000712c00000, 0x0000000712c00000| Complete 
+
+Card table byte_map: [0x0000020571b30000,0x0000020572320000] _byte_map_base: 0x000002056e318000
+
+Marking Bits (Prev, Next): (CMBitMap*) 0x000002055eb98a20, (CMBitMap*) 0x000002055eb98a60
+ Prev Bits: [0x0000020572b10000, 0x0000020576a50000)
+ Next Bits: [0x0000020576a50000, 0x000002057a990000)
+
+Polling page: 0x000002055e2f0000
+
+Metaspace:
+
+Usage:
+  Non-class:     34.70 MB used.
+      Class:      4.40 MB used.
+       Both:     39.10 MB used.
+
+Virtual space:
+  Non-class space:       64.00 MB reserved,      34.88 MB ( 54%) committed,  1 nodes.
+      Class space:        1.00 GB reserved,       4.56 MB ( <1%) committed,  1 nodes.
+             Both:        1.06 GB reserved,      39.44 MB (  4%) committed. 
+
+Chunk freelists:
+   Non-Class:  13.03 MB
+       Class:  11.27 MB
+        Both:  24.30 MB
+
+MaxMetaspaceSize: unlimited
+CompressedClassSpaceSize: 1.00 GB
+Initial GC threshold: 21.00 MB
+Current GC threshold: 59.19 MB
+CDS: off
+MetaspaceReclaimPolicy: balanced
+ - commit_granule_bytes: 65536.
+ - commit_granule_words: 8192.
+ - virtual_space_node_default_size: 8388608.
+ - enlarge_chunks_in_place: 1.
+ - new_chunks_are_fully_committed: 0.
+ - uncommit_free_chunks: 1.
+ - use_allocation_guard: 0.
+ - handle_deallocations: 1.
+
+
+Internal statistics:
+
+num_allocs_failed_limit: 6.
+num_arena_births: 212.
+num_arena_deaths: 0.
+num_vsnodes_births: 2.
+num_vsnodes_deaths: 0.
+num_space_committed: 631.
+num_space_uncommitted: 0.
+num_chunks_returned_to_freelist: 6.
+num_chunks_taken_from_freelist: 1246.
+num_chunk_merges: 0.
+num_chunk_splits: 838.
+num_chunks_enlarged: 564.
+num_inconsistent_stats: 0.
+
+CodeHeap 'non-profiled nmethods': size=120000Kb used=1236Kb max_used=1236Kb free=118763Kb
+ bounds [0x0000020569ae0000, 0x0000020569d50000, 0x0000020571010000]
+CodeHeap 'profiled nmethods': size=120000Kb used=4464Kb max_used=4464Kb free=115536Kb
+ bounds [0x0000020562010000, 0x0000020562470000, 0x0000020569540000]
+CodeHeap 'non-nmethods': size=5760Kb used=1299Kb max_used=1389Kb free=4460Kb
+ bounds [0x0000020569540000, 0x00000205697b0000, 0x0000020569ae0000]
+ total_blobs=3070 nmethods=2446 adapters=537
+ compilation: enabled
+              stopped_count=0, restarted_count=0
+ full_count=0
+
+Compilation events (20 events):
+Event: 56.624 Thread 0x000002057d5de410 nmethod 2466 0x0000020562467410 code [0x00000205624675c0, 0x0000020562467738]
+Event: 56.624 Thread 0x000002057d5de410 2467       3       sun.nio.cs.StreamEncoder::implWrite (137 bytes)
+Event: 56.627 Thread 0x000002057d5de410 nmethod 2467 0x0000020562467810 code [0x0000020562467a40, 0x0000020562468288]
+Event: 56.627 Thread 0x000002057d5de410 2468       3       sun.nio.cs.StreamEncoder::writeBytes (139 bytes)
+Event: 56.628 Thread 0x000002057d5de410 nmethod 2468 0x0000020562468510 code [0x0000020562468780, 0x0000020562469218]
+Event: 56.650 Thread 0x000002057d5de410 2469       3       java.io.OutputStreamWriter::flush (8 bytes)
+Event: 56.651 Thread 0x000002057d5de410 nmethod 2469 0x0000020562469590 code [0x00000205624697a0, 0x0000020562469e28]
+Event: 56.651 Thread 0x000002057d5de410 2470   !   3       sun.nio.cs.StreamEncoder::flush (26 bytes)
+Event: 56.652 Thread 0x000002057d5de410 nmethod 2470 0x000002056246a190 code [0x000002056246a380, 0x000002056246a968]
+Event: 56.652 Thread 0x000002057d5de410 2471       3       sun.nio.cs.StreamEncoder::implFlush (19 bytes)
+Event: 56.652 Thread 0x000002057d5de410 nmethod 2471 0x000002056246ac90 code [0x000002056246ae60, 0x000002056246b198]
+Event: 56.652 Thread 0x000002057d5de410 2472       3       sun.nio.cs.StreamEncoder::implFlushBuffer (15 bytes)
+Event: 56.652 Thread 0x000002057d5de410 nmethod 2472 0x000002056246b310 code [0x000002056246b4c0, 0x000002056246b668]
+Event: 57.576 Thread 0x000002057d5de410 2473       3       java.util.concurrent.CountDownLatch$Sync::tryReleaseShared (37 bytes)
+Event: 57.576 Thread 0x000002057d5de410 nmethod 2473 0x000002056246b710 code [0x000002056246b8c0, 0x000002056246bba8]
+Event: 57.576 Thread 0x000002057d5de410 2474       3       java.lang.System$2::encodeASCII (11 bytes)
+Event: 57.576 Thread 0x000002057d5de410 nmethod 2474 0x000002056246bc90 code [0x000002056246be20, 0x000002056246bf68]
+Event: 57.654 Thread 0x000002057d5da510 2475       4       java.lang.StringCoding::implEncodeAsciiArray (47 bytes)
+Event: 57.665 Thread 0x000002057d5da510 nmethod 2475 0x0000020569c14a90 code [0x0000020569c14c00, 0x0000020569c15018]
+Event: 73.463 Thread 0x000002057d5da510 2476   !   4       sun.nio.ch.SocketChannelImpl::read (314 bytes)
+
+GC Heap History (14 events):
+Event: 1.690 GC heap before
+{Heap before GC invocations=0 (full 0):
+ garbage-first heap   total 260096K, used 20480K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 11 young (22528K), 0 survivors (0K)
+ Metaspace       used 16476K, committed 16640K, reserved 1114112K
+  class space    used 1677K, committed 1728K, reserved 1048576K
+}
+Event: 1.696 GC heap after
+{Heap after GC invocations=1 (full 0):
+ garbage-first heap   total 260096K, used 4967K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 2 young (4096K), 2 survivors (4096K)
+ Metaspace       used 16476K, committed 16640K, reserved 1114112K
+  class space    used 1677K, committed 1728K, reserved 1048576K
+}
+Event: 2.489 GC heap before
+{Heap before GC invocations=1 (full 0):
+ garbage-first heap   total 260096K, used 17255K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 10 young (20480K), 2 survivors (4096K)
+ Metaspace       used 21264K, committed 21504K, reserved 1114112K
+  class space    used 2164K, committed 2304K, reserved 1048576K
+}
+Event: 2.496 GC heap after
+{Heap after GC invocations=2 (full 0):
+ garbage-first heap   total 260096K, used 7507K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 2 young (4096K), 2 survivors (4096K)
+ Metaspace       used 21264K, committed 21504K, reserved 1114112K
+  class space    used 2164K, committed 2304K, reserved 1048576K
+}
+Event: 3.545 GC heap before
+{Heap before GC invocations=3 (full 0):
+ garbage-first heap   total 40960K, used 25939K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 12 young (24576K), 2 survivors (4096K)
+ Metaspace       used 28037K, committed 28224K, reserved 1114112K
+  class space    used 3019K, committed 3072K, reserved 1048576K
+}
+Event: 3.553 GC heap after
+{Heap after GC invocations=4 (full 0):
+ garbage-first heap   total 40960K, used 9787K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 2 young (4096K), 2 survivors (4096K)
+ Metaspace       used 28037K, committed 28224K, reserved 1114112K
+  class space    used 3019K, committed 3072K, reserved 1048576K
+}
+Event: 3.591 GC heap before
+{Heap before GC invocations=4 (full 0):
+ garbage-first heap   total 40960K, used 11835K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 3 young (6144K), 2 survivors (4096K)
+ Metaspace       used 28649K, committed 28864K, reserved 1114112K
+  class space    used 3100K, committed 3200K, reserved 1048576K
+}
+Event: 3.595 GC heap after
+{Heap after GC invocations=5 (full 0):
+ garbage-first heap   total 40960K, used 10026K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 1 young (2048K), 1 survivors (2048K)
+ Metaspace       used 28649K, committed 28864K, reserved 1114112K
+  class space    used 3100K, committed 3200K, reserved 1048576K
+}
+Event: 4.175 GC heap before
+{Heap before GC invocations=5 (full 0):
+ garbage-first heap   total 40960K, used 26410K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 9 young (18432K), 1 survivors (2048K)
+ Metaspace       used 34338K, committed 34560K, reserved 1114112K
+  class space    used 3813K, committed 3904K, reserved 1048576K
+}
+Event: 4.180 GC heap after
+{Heap after GC invocations=6 (full 0):
+ garbage-first heap   total 40960K, used 11644K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 1 young (2048K), 1 survivors (2048K)
+ Metaspace       used 34338K, committed 34560K, reserved 1114112K
+  class space    used 3813K, committed 3904K, reserved 1048576K
+}
+Event: 4.310 GC heap before
+{Heap before GC invocations=6 (full 0):
+ garbage-first heap   total 40960K, used 19836K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 4 young (8192K), 1 survivors (2048K)
+ Metaspace       used 35969K, committed 36224K, reserved 1114112K
+  class space    used 4010K, committed 4096K, reserved 1048576K
+}
+Event: 4.314 GC heap after
+{Heap after GC invocations=7 (full 0):
+ garbage-first heap   total 40960K, used 16076K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 2 young (4096K), 2 survivors (4096K)
+ Metaspace       used 35969K, committed 36224K, reserved 1114112K
+  class space    used 4010K, committed 4096K, reserved 1048576K
+}
+Event: 16.380 GC heap before
+{Heap before GC invocations=8 (full 0):
+ garbage-first heap   total 40960K, used 26316K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 8 young (16384K), 2 survivors (4096K)
+ Metaspace       used 38885K, committed 39360K, reserved 1114112K
+  class space    used 4394K, committed 4608K, reserved 1048576K
+}
+Event: 16.385 GC heap after
+{Heap after GC invocations=9 (full 0):
+ garbage-first heap   total 40960K, used 17256K [0x0000000703000000, 0x0000000800000000)
+  region size 2048K, 1 young (2048K), 1 survivors (2048K)
+ Metaspace       used 38885K, committed 39360K, reserved 1114112K
+  class space    used 4394K, committed 4608K, reserved 1048576K
+}
+
+Dll operation events (2 events):
+Event: 0.027 Loaded shared library C:\Program Files\Android\Android Studio\jbr\bin\java.dll
+Event: 0.661 Loaded shared library C:\Program Files\Android\Android Studio\jbr\bin\verify.dll
+
+Deoptimization events (20 events):
+Event: 17.078 Thread 0x000002057f094260 Uncommon trap: trap_request=0xffffff45 fr.pc=0x0000020569beb788 relative=0x00000000000002c8
+Event: 17.078 Thread 0x000002057f094260 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000020569beb788 method=sun.nio.ch.Util$BufferCache.get(I)Ljava/nio/ByteBuffer; @ 47 c2
+Event: 17.078 Thread 0x000002057f094260 DEOPT PACKING pc=0x0000020569beb788 sp=0x00000016343fe340
+Event: 17.078 Thread 0x000002057f094260 DEOPT UNPACKING pc=0x00000205695969a3 sp=0x00000016343fe288 mode 2
+Event: 26.913 Thread 0x000002057f094770 Uncommon trap: trap_request=0xffffff45 fr.pc=0x0000020569bfd100 relative=0x0000000000000820
+Event: 26.913 Thread 0x000002057f094770 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000020569bfd100 method=sun.nio.ch.IOUtil.write(Ljava/io/FileDescriptor;Ljava/nio/ByteBuffer;JZZILsun/nio/ch/NativeDispatcher;)I @ 4 c2
+Event: 26.913 Thread 0x000002057f094770 DEOPT PACKING pc=0x0000020569bfd100 sp=0x00000016340fdfe0
+Event: 26.913 Thread 0x000002057f094770 DEOPT UNPACKING pc=0x00000205695969a3 sp=0x00000016340fdfe8 mode 2
+Event: 27.239 Thread 0x000002057f092400 DEOPT PACKING pc=0x00000205623c798d sp=0x00000016342fe400
+Event: 27.239 Thread 0x000002057f092400 DEOPT UNPACKING pc=0x0000020569597143 sp=0x00000016342fd8b0 mode 0
+Event: 57.654 Thread 0x000002057f092400 DEOPT PACKING pc=0x0000020562448703 sp=0x00000016342fdea0
+Event: 57.654 Thread 0x000002057f092400 DEOPT UNPACKING pc=0x0000020569597143 sp=0x00000016342fd310 mode 0
+Event: 63.606 Thread 0x000002050471e050 Uncommon trap: trap_request=0xffffffde fr.pc=0x0000020569b8f498 relative=0x00000000000011f8
+Event: 63.607 Thread 0x000002050471e050 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000020569b8f498 method=java.util.concurrent.ConcurrentHashMap.putVal(Ljava/lang/Object;Ljava/lang/Object;Z)Ljava/lang/Object; @ 242 c2
+Event: 63.607 Thread 0x000002050471e050 DEOPT PACKING pc=0x0000020569b8f498 sp=0x0000001633cfddb0
+Event: 63.608 Thread 0x000002050471e050 DEOPT UNPACKING pc=0x00000205695969a3 sp=0x0000001633cfdd20 mode 2
+Event: 63.609 Thread 0x000002050471e050 Uncommon trap: trap_request=0xffffff45 fr.pc=0x0000020569b8f1e0 relative=0x0000000000000f40
+Event: 63.609 Thread 0x000002050471e050 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000020569b8f1e0 method=java.util.concurrent.ConcurrentHashMap.putVal(Ljava/lang/Object;Ljava/lang/Object;Z)Ljava/lang/Object; @ 97 c2
+Event: 63.609 Thread 0x000002050471e050 DEOPT PACKING pc=0x0000020569b8f1e0 sp=0x0000001633cfdb40
+Event: 63.610 Thread 0x000002050471e050 DEOPT UNPACKING pc=0x00000205695969a3 sp=0x0000001633cfdac8 mode 2
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (20 events):
+Event: 2.652 Thread 0x000002055eb2d880 Exception <a 'java/lang/ClassNotFoundException'{0x0000000704e49628}: org/eclipse/jetty/npn/NextProtoNego> (0x0000000704e49628) 
+thrown [s\src\hotspot\share\classfile\systemDictionary.cpp, line 256]
+Event: 2.652 Thread 0x000002055eb2d880 Exception <a 'java/lang/ClassNotFoundException'{0x0000000704e49be8}: org/eclipse/jetty/alpn/ALPN> (0x0000000704e49be8) 
+thrown [s\src\hotspot\share\classfile\systemDictionary.cpp, line 256]
+Event: 2.652 Thread 0x000002055eb2d880 Exception <a 'java/lang/ClassNotFoundException'{0x0000000704e4a1b0}: org/eclipse/jetty/npn/NextProtoNego> (0x0000000704e4a1b0) 
+thrown [s\src\hotspot\share\classfile\systemDictionary.cpp, line 256]
+Event: 2.984 Thread 0x000002055eb2d880 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704b1bf10}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, java.lang.Object, java.lang.Object)'> (0x0000000704b1bf10) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.541 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x0000000704162150}> (0x0000000704162150) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.541 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x0000000704162a70}> (0x0000000704162a70) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.542 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x00000007041675b8}> (0x00000007041675b8) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.543 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x0000000704167ed8}> (0x0000000704167ed8) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.544 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x000000070416fd88}> (0x000000070416fd88) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.545 Thread 0x000002055eb2d880 Exception <a 'sun/nio/fs/WindowsException'{0x00000007041706a8}> (0x00000007041706a8) 
+thrown [s\src\hotspot\share\prims\jni.cpp, line 517]
+Event: 3.818 Thread 0x000002057ee59f90 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704d896b0}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.invokeStaticInit(java.lang.Object, java.lang.Object, long, java.lang.Object)'> (0x0000000704d896b0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.819 Thread 0x000002057ee59f90 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704d8fe48}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(java.lang.Object, java.lang.Object, long)'> (0x0000000704d8fe48) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.821 Thread 0x000002057ee59f90 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704d94138}: 'java.lang.Object java.lang.invoke.Invokers$Holder.linkToTargetMethod(java.lang.Object, long, java.lang.Object)'> (0x0000000704d94138) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.900 Thread 0x000002055eb2d880 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704bb4390}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'> (0x0000000704bb4390) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.916 Thread 0x000002057f093330 Exception <a 'java/lang/NoSuchMethodError'{0x000000070481cbe8}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, long)'> (0x000000070481cbe8) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 3.917 Thread 0x000002057f093330 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704822118}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(java.lang.Object, long)'> (0x0000000704822118) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 4.063 Thread 0x000002055eb2d880 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704bf91e0}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.invokeInterface(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'> (0x0000000704bf91e0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 4.672 Thread 0x000002057f092910 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704ce9868}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.invokeSpecial(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, int)'> (0x0000000704ce9868) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 4.676 Thread 0x000002057f092910 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704ced188}: 'java.lang.Object java.lang.invoke.Invokers$Holder.linkToTargetMethod(java.lang.Object, java.lang.Object, int, java.lang.Object)'> (0x0000000704ced188) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+Event: 5.254 Thread 0x000002057f092400 Exception <a 'java/lang/NoSuchMethodError'{0x0000000704b89bd0}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(java.lang.Object, java.lang.Object, java.lang.Object, int, java.lang.Object)'> (0x0000000704b89bd0) 
+thrown [s\src\hotspot\share\interpreter\linkResolver.cpp, line 771]
+
+VM Operations (20 events):
+Event: 16.379 Executing VM operation: G1CollectForAllocation
+Event: 16.386 Executing VM operation: G1CollectForAllocation done
+Event: 18.396 Executing VM operation: Cleanup
+Event: 18.396 Executing VM operation: Cleanup done
+Event: 19.396 Executing VM operation: Cleanup
+Event: 19.396 Executing VM operation: Cleanup done
+Event: 27.399 Executing VM operation: Cleanup
+Event: 27.399 Executing VM operation: Cleanup done
+Event: 37.404 Executing VM operation: Cleanup
+Event: 37.404 Executing VM operation: Cleanup done
+Event: 46.408 Executing VM operation: Cleanup
+Event: 46.408 Executing VM operation: Cleanup done
+Event: 51.411 Executing VM operation: Cleanup
+Event: 51.411 Executing VM operation: Cleanup done
+Event: 57.415 Executing VM operation: Cleanup
+Event: 57.415 Executing VM operation: Cleanup done
+Event: 60.184 Executing VM operation: HandshakeAllThreads
+Event: 60.184 Executing VM operation: HandshakeAllThreads done
+Event: 63.664 Executing VM operation: HandshakeAllThreads
+Event: 63.665 Executing VM operation: HandshakeAllThreads done
+
+Events (20 events):
+Event: 5.226 loading class java/util/ArrayList$SubList$1
+Event: 5.226 loading class java/util/ArrayList$SubList$1 done
+Event: 5.240 loading class java/util/zip/DataFormatException
+Event: 5.240 loading class java/util/zip/DataFormatException done
+Event: 5.246 loading class java/nio/InvalidMarkException
+Event: 5.246 loading class java/nio/InvalidMarkException done
+Event: 5.653 Thread 0x000002057e72cbb0 Thread exited: 0x000002057e72cbb0
+Event: 5.697 loading class jdk/internal/misc/ScopedMemoryAccess$Scope$Handle
+Event: 5.697 loading class jdk/internal/misc/ScopedMemoryAccess$Scope$Handle done
+Event: 5.704 Thread 0x0000020505c26a40 Thread added: 0x0000020505c26a40
+Event: 5.720 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$Node
+Event: 5.720 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$Node done
+Event: 9.423 Thread 0x0000020505c26a40 Thread exited: 0x0000020505c26a40
+Event: 16.363 loading class java/io/FileOutputStream$1
+Event: 16.363 loading class java/io/FileOutputStream$1 done
+Event: 63.619 Thread 0x000002050471e050 Thread exited: 0x000002050471e050
+Event: 63.620 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ExclusiveNode
+Event: 63.641 loading class java/util/concurrent/locks/AbstractQueuedSynchronizer$ExclusiveNode done
+Event: 63.667 Thread 0x000002057f093840 Thread exited: 0x000002057f093840
+Event: 65.369 Thread 0x000002057ee59f90 Thread exited: 0x000002057ee59f90
+
+
+Dynamic libraries:
+0x00007ff6d48f0000 - 0x00007ff6d48fa000 	C:\Program Files\Android\Android Studio\jbr\bin\java.exe
+0x00007ffe6ebb0000 - 0x00007ffe6eda8000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffe6e440000 - 0x00007ffe6e4fd000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffe6c490000 - 0x00007ffe6c786000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffe6c360000 - 0x00007ffe6c460000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffe40590000 - 0x00007ffe405a7000 	C:\Program Files\Android\Android Studio\jbr\bin\jli.dll
+0x00007ffe69720000 - 0x00007ffe6973b000 	C:\Program Files\Android\Android Studio\jbr\bin\VCRUNTIME140.dll
+0x00007ffe6cbe0000 - 0x00007ffe6cd7f000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffe4fba0000 - 0x00007ffe4fe3a000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16\COMCTL32.dll
+0x00007ffe6c460000 - 0x00007ffe6c482000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffe6e8f0000 - 0x00007ffe6e98e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffe6d550000 - 0x00007ffe6d57b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffe6c930000 - 0x00007ffe6ca47000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffe6c890000 - 0x00007ffe6c92d000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffe6e640000 - 0x00007ffe6e672000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffe53280000 - 0x00007ffe5328c000 	C:\Program Files\Android\Android Studio\jbr\bin\vcruntime140_1.dll
+0x00007ffe2d1c0000 - 0x00007ffe2d24d000 	C:\Program Files\Android\Android Studio\jbr\bin\msvcp140.dll
+0x00007ffdc89f0000 - 0x00007ffdc9673000 	C:\Program Files\Android\Android Studio\jbr\bin\server\jvm.dll
+0x00007ffe6e510000 - 0x00007ffe6e5c0000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffe6cd80000 - 0x00007ffe6ce20000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffe6d3a0000 - 0x00007ffe6d4c3000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffe6cbb0000 - 0x00007ffe6cbd7000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007ffe65fb0000 - 0x00007ffe65fba000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffe6c000000 - 0x00007ffe6c04b000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ffe52ff0000 - 0x00007ffe53017000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffe532e0000 - 0x00007ffe532e9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffe6d4e0000 - 0x00007ffe6d54b000 	C:\WINDOWS\System32\ws2_32.DLL
+0x00007ffe6bfe0000 - 0x00007ffe6bff2000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ffe6a0a0000 - 0x00007ffe6a0b2000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffe69710000 - 0x00007ffe6971a000 	C:\Program Files\Android\Android Studio\jbr\bin\jimage.dll
+0x00007ffe572f0000 - 0x00007ffe574d4000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffe4b310000 - 0x00007ffe4b344000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffe6c2d0000 - 0x00007ffe6c352000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffe42440000 - 0x00007ffe42465000 	C:\Program Files\Android\Android Studio\jbr\bin\java.dll
+0x00007ffe50640000 - 0x00007ffe50658000 	C:\Program Files\Android\Android Studio\jbr\bin\zip.dll
+0x00007ffe6dac0000 - 0x00007ffe6e22b000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ffe6a2a0000 - 0x00007ffe6aa3d000 	C:\WINDOWS\SYSTEM32\windows.storage.dll
+0x00007ffe6ce80000 - 0x00007ffe6d1d3000 	C:\WINDOWS\System32\combase.dll
+0x00007ffe6bad0000 - 0x00007ffe6bafe000 	C:\WINDOWS\SYSTEM32\Wldp.dll
+0x00007ffe6e680000 - 0x00007ffe6e74d000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffe6eac0000 - 0x00007ffe6eb6d000 	C:\WINDOWS\System32\SHCORE.dll
+0x00007ffe6e2c0000 - 0x00007ffe6e315000 	C:\WINDOWS\System32\shlwapi.dll
+0x00007ffe6c190000 - 0x00007ffe6c1b4000 	C:\WINDOWS\SYSTEM32\profapi.dll
+0x00007ffe46040000 - 0x00007ffe46059000 	C:\Program Files\Android\Android Studio\jbr\bin\net.dll
+0x00007ffe643c0000 - 0x00007ffe644ca000 	C:\WINDOWS\SYSTEM32\WINHTTP.dll
+0x00007ffe6b8b0000 - 0x00007ffe6b91a000 	C:\WINDOWS\system32\mswsock.dll
+0x00007ffe42420000 - 0x00007ffe42436000 	C:\Program Files\Android\Android Studio\jbr\bin\nio.dll
+0x00007ffe54dc0000 - 0x00007ffe54dd0000 	C:\Program Files\Android\Android Studio\jbr\bin\verify.dll
+0x00007ffe675a0000 - 0x00007ffe675a9000 	C:\Program Files\Android\Android Studio\jbr\bin\management.dll
+0x00007ffe67300000 - 0x00007ffe6730b000 	C:\Program Files\Android\Android Studio\jbr\bin\management_ext.dll
+0x00007ffe6d4d0000 - 0x00007ffe6d4d8000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffe68010000 - 0x00007ffe68017000 	C:\WINDOWS\system32\wshunix.dll
+0x00007ffe6bb10000 - 0x00007ffe6bb28000 	C:\WINDOWS\SYSTEM32\CRYPTSP.dll
+0x00007ffe6b1f0000 - 0x00007ffe6b224000 	C:\WINDOWS\system32\rsaenh.dll
+0x00007ffe6c100000 - 0x00007ffe6c12e000 	C:\WINDOWS\SYSTEM32\USERENV.dll
+0x00007ffe6ba40000 - 0x00007ffe6ba4c000 	C:\WINDOWS\SYSTEM32\CRYPTBASE.dll
+0x00007ffe6b5b0000 - 0x00007ffe6b5eb000 	C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
+0x00007ffe6d1e0000 - 0x00007ffe6d1e8000 	C:\WINDOWS\System32\NSI.dll
+0x00007ffe64a50000 - 0x00007ffe64a67000 	C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL
+0x00007ffe653d0000 - 0x00007ffe653ed000 	C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL
+0x00007ffe6b5f0000 - 0x00007ffe6b6bb000 	C:\WINDOWS\SYSTEM32\DNSAPI.dll
+0x00007ffe56510000 - 0x00007ffe5651a000 	C:\Windows\System32\rasadhlp.dll
+0x00007ffe5b370000 - 0x00007ffe5b3f0000 	C:\WINDOWS\System32\fwpuclnt.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Android\Android Studio\jbr\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16;C:\Program Files\Android\Android Studio\jbr\bin\server
+
+VM Arguments:
+jvm_args: -Djava.awt.headless=true -Djava.util.logging.config.file=C:\Users\Suren Ayer\.android\utp\logging6191933369893784448properties -Dfile.encoding=UTF-8 
+java_command: com.google.testing.platform.launcher.Launcher C:\Users\Suren Ayer\.gradle\caches\modules-2\files-2.1\com.google.testing.platform\core\0.0.9-alpha02\8d72767495b76dfdfe1a4f02bab67cb035da816d\core-0.0.9-alpha02.jar --proto_config=C:\Users\Suren Ayer\.android\utp\runnerConfig6018640527249620858.pb --proto_server_config=C:\Users\Suren Ayer\.android\utp\serverConfig3611740391464538084.pb
+java_class_path (initial): C:\Users\Suren Ayer\.gradle\caches\modules-2\files-2.1\com.google.testing.platform\launcher\0.0.9-alpha02\f43549bd43bd4df370cfa9bcf93793e7b9cb217\launcher-0.0.9-alpha02.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 266338304                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4244635648                                {product} {ergonomic}
+   size_t MaxNewSize                               = 2545942528                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 4244635648                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_202
+PATH=C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Users\Suren Ayer\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_202\bin;C:\maven\apache-maven-3.9.6\bin;C:\msys64\ucrt64\bin;C:\Users\Suren Ayer\AppData\Roaming\npm
+USERNAME=Suren Ayer
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
+TMP=C:\Users\SURENA~1\AppData\Local\Temp
+TEMP=C:\Users\SURENA~1\AppData\Local\Temp
+
+
+
+Periodic native trim disabled
+
+JNI global refs:
+JNI global refs: 16, weak refs: 0
+
+JNI global refs memory usage: 843, weak refs: 209
+
+OOME stack traces (most recent first):
+Classloader memory used:
+Loader bootstrap                                                                       : 2383K
+Loader java.net.URLClassLoader                                                         : 1583K
+Loader jdk.internal.loader.ClassLoaders$AppClassLoader                                 : 987K
+Loader jdk.internal.loader.ClassLoaders$PlatformClassLoader                            : 47493B
+Loader jdk.internal.reflect.DelegatingClassLoader                                      : 3862B
+
+Classes loaded by more than one classloader:
+Class com.google.testing.platform.lib.logging.jvm.LoggerExtKt                         : loaded 8 times (x 69B)
+Class com.google.testing.platform.runtime.android.controller.ext.AndroidDeviceControllerExtKt: loaded 4 times (x 69B)
+Class com.google.testing.platform.api.context.ContextExtKt                            : loaded 4 times (x 69B)
+Class com.google.testing.platform.runtime.android.controller.ext.AndroidDeviceControllerExtKt$logger$2: loaded 4 times (x 76B)
+Class dagger.internal.Factory                                                         : loaded 3 times (x 68B)
+Class dagger.internal.Preconditions                                                   : loaded 3 times (x 69B)
+Class javax.inject.Provider                                                           : loaded 3 times (x 68B)
+Class com.android.tools.utp.plugins.common.HostPluginAdapter                          : loaded 3 times (x 85B)
+Class io.netty.util.internal.PlatformDependent$1                                      : loaded 2 times (x 72B)
+Class io.netty.util.internal.PlatformDependent$2                                      : loaded 2 times (x 72B)
+Class io.netty.util.internal.shaded.org.jctools.util.UnsafeAccess                     : loaded 2 times (x 69B)
+Class io.netty.util.IntSupplier                                                       : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent$4                                      : loaded 2 times (x 73B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueue: loaded 2 times (x 186B)
+Class io.grpc.ProxyDetector                                                           : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.ProgressivePromise                                     : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.ProgressiveFuture                                      : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueue   : loaded 2 times (x 172B)
+Class io.netty.util.concurrent.FutureListener                                         : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.DefaultPromise                                         : loaded 2 times (x 149B)
+Class io.netty.util.internal.logging.JdkLogger                                        : loaded 2 times (x 159B)
+Class io.netty.util.concurrent.SingleThreadEventExecutor                              : loaded 2 times (x 280B)
+Class io.netty.util.concurrent.DefaultThreadFactory                                   : loaded 2 times (x 75B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueue    : loaded 2 times (x 181B)
+Class [Lio.grpc.MethodDescriptor$MethodType;                                          : loaded 2 times (x 67B)
+Class io.netty.util.NettyRuntime                                                      : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueueProducerNodeRef : loaded 2 times (x 169B)
+Class io.netty.util.internal.PlatformDependent                                        : loaded 2 times (x 69B)
+Class io.grpc.internal.SharedResourceHolder$1                                         : loaded 2 times (x 73B)
+Class io.netty.util.concurrent.MultithreadEventExecutorGroup                          : loaded 2 times (x 164B)
+Class io.grpc.Metadata                                                                : loaded 2 times (x 70B)
+Class io.grpc.MethodDescriptor                                                        : loaded 2 times (x 70B)
+Class io.grpc.internal.ProxyDetectorImpl$1                                            : loaded 2 times (x 73B)
+Class io.grpc.internal.ProxyDetectorImpl$2                                            : loaded 2 times (x 77B)
+Class io.netty.util.internal.logging.Log4J2LoggerFactory                              : loaded 2 times (x 70B)
+Class io.grpc.TlsChannelCredentials$Feature                                           : loaded 2 times (x 77B)
+Class io.grpc.internal.SharedResourceHolder$Instance                                  : loaded 2 times (x 70B)
+Class io.netty.util.internal.shaded.org.jctools.util.RangeUtil                        : loaded 2 times (x 69B)
+Class io.netty.util.internal.CleanerJava9$1                                           : loaded 2 times (x 73B)
+Class io.netty.channel.SingleThreadEventLoop                                          : loaded 2 times (x 367B)
+Class io.grpc.Codec$Gzip                                                              : loaded 2 times (x 79B)
+Class io.netty.channel.socket.nio.NioSocketChannel                                    : loaded 2 times (x 231B)
+Class io.grpc.Metadata$Key                                                            : loaded 2 times (x 74B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueColdProducerFields: loaded 2 times (x 150B)
+Class [Lio.netty.util.concurrent.EventExecutor;                                       : loaded 2 times (x 67B)
+Class io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller                          : loaded 2 times (x 80B)
+Class io.grpc.Attributes                                                              : loaded 2 times (x 70B)
+Class io.netty.util.internal.PlatformDependent$ThreadLocalRandomProvider              : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent$Mpsc$1                                 : loaded 2 times (x 72B)
+Class io.grpc.StreamTracer                                                            : loaded 2 times (x 78B)
+Class io.netty.util.concurrent.ScheduledFuture                                        : loaded 2 times (x 68B)
+Class io.grpc.internal.TransportTracer                                                : loaded 2 times (x 71B)
+Class io.netty.util.internal.ReferenceCountUpdater                                    : loaded 2 times (x 72B)
+Class io.grpc.HttpConnectProxiedSocketAddress                                         : loaded 2 times (x 70B)
+Class io.netty.util.concurrent.FailedFuture                                           : loaded 2 times (x 118B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueue                 : loaded 2 times (x 183B)
+Class io.netty.util.concurrent.PromiseTask$SentinelRunnable                           : loaded 2 times (x 74B)
+Class io.netty.util.concurrent.FastThreadLocal                                        : loaded 2 times (x 71B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueuePad1: loaded 2 times (x 148B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueuePad2: loaded 2 times (x 148B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueuePad3: loaded 2 times (x 149B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueMidPad: loaded 2 times (x 179B)
+Class io.netty.channel.EventLoopException                                             : loaded 2 times (x 80B)
+Class io.netty.util.internal.logging.LocationAwareSlf4JLogger                         : loaded 2 times (x 159B)
+Class [Lio.netty.util.internal.PriorityQueueNode;                                     : loaded 2 times (x 67B)
+Class io.grpc.Codec$Identity                                                          : loaded 2 times (x 79B)
+Class io.netty.util.AttributeMap                                                      : loaded 2 times (x 68B)
+Class io.netty.channel.nio.SelectedSelectionKeySetSelector                            : loaded 2 times (x 88B)
+Class io.netty.util.internal.logging.Log4JLoggerFactory                               : loaded 2 times (x 70B)
+Class io.netty.util.HashingStrategy                                                   : loaded 2 times (x 68B)
+Class io.netty.util.internal.logging.InternalLogger                                   : loaded 2 times (x 68B)
+Class io.grpc.Metadata$TrustedAsciiKey                                                : loaded 2 times (x 74B)
+Class io.netty.util.concurrent.CompleteFuture                                         : loaded 2 times (x 118B)
+Class io.grpc.Metadata$LazyStreamBinaryKey                                            : loaded 2 times (x 77B)
+Class io.netty.util.concurrent.PromiseTask                                            : loaded 2 times (x 157B)
+Class io.grpc.Metadata$TrustedAsciiMarshaller                                         : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent$Mpsc                                   : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscUnboundedAtomicArrayQueue: loaded 2 times (x 186B)
+Class io.netty.util.internal.StringUtil                                               : loaded 2 times (x 69B)
+Class io.netty.util.concurrent.EventExecutor                                          : loaded 2 times (x 68B)
+Class io.netty.channel.nio.NioEventLoop$1                                             : loaded 2 times (x 74B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscUnboundedArrayQueue        : loaded 2 times (x 186B)
+Class io.netty.channel.nio.NioEventLoop$3                                             : loaded 2 times (x 74B)
+Class io.netty.channel.nio.NioEventLoop$4                                             : loaded 2 times (x 74B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.SpscLinkedAtomicQueue   : loaded 2 times (x 172B)
+Class io.netty.handler.codec.Headers                                                  : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.AbstractFuture                                         : loaded 2 times (x 116B)
+Class io.netty.channel.socket.DuplexChannel                                           : loaded 2 times (x 68B)
+Class io.grpc.Decompressor                                                            : loaded 2 times (x 68B)
+Class [Lio.grpc.TlsServerCredentials$Feature;                                         : loaded 2 times (x 67B)
+Class io.netty.util.concurrent.ScheduledFutureTask                                    : loaded 2 times (x 171B)
+Class io.netty.util.internal.ObjectUtil                                               : loaded 2 times (x 69B)
+Class io.grpc.internal.CallTracer$1                                                   : loaded 2 times (x 73B)
+Class io.grpc.netty.Utils$EventLoopGroupType                                          : loaded 2 times (x 77B)
+Class io.netty.channel.nio.NioEventLoop                                               : loaded 2 times (x 368B)
+Class io.netty.channel.ChannelFactory                                                 : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.ConcurrentCircularArrayQueue   : loaded 2 times (x 182B)
+Class io.netty.util.internal.shaded.org.jctools.queues.QueueProgressIndicators        : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueL1Pad: loaded 2 times (x 179B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueProducerLimitField: loaded 2 times (x 179B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerLimitField: loaded 2 times (x 182B)
+Class io.netty.util.internal.shaded.org.jctools.queues.SupportsIterator               : loaded 2 times (x 68B)
+Class io.grpc.netty.ProtocolNegotiator                                                : loaded 2 times (x 68B)
+Class io.netty.channel.ChannelPromise                                                 : loaded 2 times (x 68B)
+Class io.grpc.TlsServerCredentials$Feature                                            : loaded 2 times (x 77B)
+Class io.grpc.netty.ProtocolNegotiator$ServerFactory                                  : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.Promise                                                : loaded 2 times (x 68B)
+Class io.netty.util.AsciiString                                                       : loaded 2 times (x 84B)
+Class io.netty.util.AsciiString$CharEqualityComparator                                : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.Future                                                 : loaded 2 times (x 68B)
+Class io.netty.channel.nio.NioEventLoop$SelectorTuple                                 : loaded 2 times (x 70B)
+Class io.netty.util.internal.ThrowableUtil                                            : loaded 2 times (x 69B)
+Class io.grpc.Metadata$BinaryMarshaller                                               : loaded 2 times (x 68B)
+Class io.grpc.internal.GrpcUtil                                                       : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.IndexedQueueSizeUtil$IndexedQueue: loaded 2 times (x 68B)
+Class io.netty.util.concurrent.GlobalEventExecutor                                    : loaded 2 times (x 257B)
+Class io.grpc.Metadata$AsciiMarshaller                                                : loaded 2 times (x 68B)
+Class io.netty.channel.ChannelException                                               : loaded 2 times (x 80B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueuePad0            : loaded 2 times (x 168B)
+Class io.netty.util.IllegalReferenceCountException                                    : loaded 2 times (x 80B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueuePad1            : loaded 2 times (x 169B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueuePad2            : loaded 2 times (x 170B)
+Class io.netty.channel.DefaultSelectStrategy                                          : loaded 2 times (x 72B)
+Class io.grpc.internal.GrpcUtil$AcceptEncodingMarshaller                              : loaded 2 times (x 75B)
+Class io.netty.channel.ServerChannel                                                  : loaded 2 times (x 68B)
+Class io.grpc.MethodDescriptor$Marshaller                                             : loaded 2 times (x 68B)
+Class io.netty.util.internal.LongCounter                                              : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.DefaultEventExecutorChooserFactory$PowerOfTwoEventExecutorChooser: loaded 2 times (x 73B)
+Class io.grpc.ProxiedSocketAddress                                                    : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueL2Pad: loaded 2 times (x 179B)
+Class io.grpc.internal.CallTracer                                                     : loaded 2 times (x 71B)
+Class io.netty.util.internal.logging.AbstractInternalLogger                           : loaded 2 times (x 159B)
+Class io.grpc.internal.StreamListener                                                 : loaded 2 times (x 68B)
+Class io.netty.util.internal.logging.Log4JLogger                                      : loaded 2 times (x 160B)
+Class io.grpc.protobuf.ProtoServiceDescriptorSupplier                                 : loaded 2 times (x 68B)
+Class io.grpc.internal.SharedResourceHolder                                           : loaded 2 times (x 70B)
+Class io.netty.util.concurrent.SingleThreadEventExecutor$1                            : loaded 2 times (x 72B)
+Class dagger.internal.DoubleCheck                                                     : loaded 2 times (x 76B)
+Class io.grpc.stub.StreamObserver                                                     : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueuePad0: loaded 2 times (x 168B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueuePad1: loaded 2 times (x 169B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueuePad2: loaded 2 times (x 170B)
+Class io.netty.util.internal.PriorityQueue                                            : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.BlockingOperationException                             : loaded 2 times (x 80B)
+Class io.netty.channel.SelectStrategyFactory                                          : loaded 2 times (x 68B)
+Class io.grpc.netty.ProtocolNegotiators                                               : loaded 2 times (x 69B)
+Class io.grpc.KnownLength                                                             : loaded 2 times (x 68B)
+Class io.grpc.internal.ObjectPool                                                     : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueueConsumerNodeRef: loaded 2 times (x 170B)
+Class io.grpc.DecompressorRegistry$DecompressorInfo                                   : loaded 2 times (x 70B)
+Class io.grpc.internal.LongCounterFactory                                             : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueProducerFields: loaded 2 times (x 148B)
+Class io.netty.util.internal.PriorityQueueNode                                        : loaded 2 times (x 68B)
+Class io.grpc.internal.CallTracer$Factory                                             : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.DefaultPromise$LeanCancellationException               : loaded 2 times (x 80B)
+Class io.netty.util.internal.Cleaner                                                  : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueConsumerIndexField: loaded 2 times (x 179B)
+Class io.grpc.ClientStreamTracer                                                      : loaded 2 times (x 83B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueConsumerIndexField: loaded 2 times (x 182B)
+Class io.grpc.protobuf.ProtoFileDescriptorSupplier                                    : loaded 2 times (x 68B)
+Class io.netty.channel.ChannelFuture                                                  : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueL3Pad: loaded 2 times (x 179B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueL1Pad            : loaded 2 times (x 182B)
+Class io.netty.util.concurrent.GlobalEventExecutor$TaskRunner                         : loaded 2 times (x 73B)
+Class io.grpc.MethodDescriptor$PrototypeMarshaller                                    : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.EventExecutorGroup                                     : loaded 2 times (x 68B)
+Class io.netty.util.internal.InternalThreadLocalMap                                   : loaded 2 times (x 70B)
+Class io.netty.channel.socket.SocketChannel                                           : loaded 2 times (x 68B)
+Class io.netty.util.AsciiString$1                                                     : loaded 2 times (x 73B)
+Class io.netty.util.AsciiString$2                                                     : loaded 2 times (x 73B)
+Class [Lio.netty.util.concurrent.EventExecutorGroup;                                  : loaded 2 times (x 67B)
+Class io.netty.channel.ChannelOutboundInvoker                                         : loaded 2 times (x 68B)
+Class [Lio.grpc.TlsChannelCredentials$Feature;                                        : loaded 2 times (x 67B)
+Class io.grpc.InternalMetadata                                                        : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields: loaded 2 times (x 148B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscChunkedArrayQueue          : loaded 2 times (x 186B)
+Class io.netty.channel.DefaultSelectStrategyFactory                                   : loaded 2 times (x 72B)
+Class io.netty.buffer.ByteBufAllocator                                                : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent0                                       : loaded 2 times (x 69B)
+Class io.netty.channel.EventLoop                                                      : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscChunkedAtomicArrayQueueColdProducerFields: loaded 2 times (x 186B)
+Class io.netty.channel.nio.AbstractNioByteChannel                                     : loaded 2 times (x 201B)
+Class io.netty.util.concurrent.ThreadPerTaskExecutor                                  : loaded 2 times (x 73B)
+Class io.netty.util.concurrent.RejectedExecutionHandlers$1                            : loaded 2 times (x 72B)
+Class io.netty.util.internal.shaded.org.jctools.util.Pow2                             : loaded 2 times (x 69B)
+Class io.grpc.internal.TimeProvider$1                                                 : loaded 2 times (x 73B)
+Class io.netty.util.internal.logging.InternalLoggerFactory                            : loaded 2 times (x 70B)
+Class io.netty.util.concurrent.DefaultEventExecutorChooserFactory                     : loaded 2 times (x 72B)
+Class io.netty.util.internal.CleanerJava9                                             : loaded 2 times (x 72B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueL2Pad            : loaded 2 times (x 182B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.AtomicReferenceArrayQueue: loaded 2 times (x 179B)
+Class io.netty.util.concurrent.FastThreadLocalThread                                  : loaded 2 times (x 88B)
+Class io.grpc.Metadata$BinaryKey                                                      : loaded 2 times (x 76B)
+Class io.netty.util.internal.OutOfDirectMemoryError                                   : loaded 2 times (x 80B)
+Class io.netty.channel.MultithreadEventLoopGroup                                      : loaded 2 times (x 205B)
+Class io.grpc.netty.Utils                                                             : loaded 2 times (x 69B)
+Class io.grpc.InternalMetadata$TrustedAsciiMarshaller                                 : loaded 2 times (x 68B)
+Class io.grpc.internal.ProxyDetectorImpl                                              : loaded 2 times (x 74B)
+Class io.grpc.StatusRuntimeException                                                  : loaded 2 times (x 81B)
+Class io.grpc.InternalLogId                                                           : loaded 2 times (x 71B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscAtomicArrayQueueProducerIndexField: loaded 2 times (x 179B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerIndexField: loaded 2 times (x 182B)
+Class io.netty.util.concurrent.EventExecutorChooserFactory$EventExecutorChooser       : loaded 2 times (x 68B)
+Class io.netty.util.internal.logging.Slf4JLogger                                      : loaded 2 times (x 159B)
+Class io.netty.handler.codec.http2.Http2Headers                                       : loaded 2 times (x 68B)
+Class io.netty.util.internal.logging.JdkLoggerFactory                                 : loaded 2 times (x 70B)
+Class io.netty.util.internal.ThreadExecutorMap$1                                      : loaded 2 times (x 73B)
+Class io.netty.util.internal.ThreadExecutorMap$3                                      : loaded 2 times (x 73B)
+Class io.netty.util.internal.MathUtil                                                 : loaded 2 times (x 69B)
+Class io.netty.util.concurrent.RejectedExecutionHandlers                              : loaded 2 times (x 69B)
+Class [Lio.grpc.netty.Utils$EventLoopGroupType;                                       : loaded 2 times (x 67B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueL3Pad            : loaded 2 times (x 182B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseLinkedAtomicQueueProducerNodeRef: loaded 2 times (x 169B)
+Class io.netty.util.concurrent.AbstractEventExecutorGroup                             : loaded 2 times (x 161B)
+Class io.netty.util.internal.shaded.org.jctools.queues.SpscLinkedQueue                : loaded 2 times (x 172B)
+Class io.netty.util.concurrent.DefaultPromise$StacklessCancellationException          : loaded 2 times (x 80B)
+Class io.netty.util.internal.UnpaddedInternalThreadLocalMap                           : loaded 2 times (x 69B)
+Class io.grpc.InternalChannelz                                                        : loaded 2 times (x 70B)
+Class io.grpc.internal.ProxyDetectorImpl$AuthenticationProvider                       : loaded 2 times (x 68B)
+Class io.grpc.protobuf.ProtoMethodDescriptorSupplier                                  : loaded 2 times (x 68B)
+Class io.grpc.protobuf.ProtoUtils                                                     : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueue                : loaded 2 times (x 172B)
+Class io.netty.channel.nio.NioEventLoopGroup                                          : loaded 2 times (x 207B)
+Class [Lio.grpc.Compressor;                                                           : loaded 2 times (x 67B)
+Class io.grpc.stub.AbstractStub$StubFactory                                           : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscChunkedArrayQueueColdProducerFields: loaded 2 times (x 186B)
+Class io.netty.util.internal.shaded.org.jctools.queues.ConcurrentCircularArrayQueueL0Pad: loaded 2 times (x 140B)
+Class io.netty.util.concurrent.AbstractEventExecutor                                  : loaded 2 times (x 211B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue            : loaded 2 times (x 68B)
+Class io.grpc.internal.LongCounter                                                    : loaded 2 times (x 68B)
+Class io.grpc.stub.ServerCalls$StreamingRequestMethod                                 : loaded 2 times (x 68B)
+Class io.grpc.Metadata$AsciiKey                                                       : loaded 2 times (x 76B)
+Class io.grpc.protobuf.lite.ProtoLiteUtils                                            : loaded 2 times (x 69B)
+Class io.netty.util.NettyRuntime$AvailableProcessorsHolder                            : loaded 2 times (x 71B)
+Class io.netty.channel.Channel                                                        : loaded 2 times (x 68B)
+Class io.grpc.Metadata$1                                                              : loaded 2 times (x 77B)
+Class io.netty.util.internal.DefaultPriorityQueue                                     : loaded 2 times (x 165B)
+Class io.grpc.Metadata$2                                                              : loaded 2 times (x 77B)
+Class io.grpc.protobuf.lite.ProtoInputStream                                          : loaded 2 times (x 96B)
+Class io.grpc.Drainable                                                               : loaded 2 times (x 68B)
+Class io.grpc.MethodDescriptor$Builder                                                : loaded 2 times (x 70B)
+Class io.netty.util.concurrent.GlobalEventExecutor$1                                  : loaded 2 times (x 74B)
+Class io.grpc.internal.SharedResourcePool                                             : loaded 2 times (x 74B)
+Class io.netty.util.concurrent.AbstractScheduledEventExecutor                         : loaded 2 times (x 217B)
+Class io.grpc.MethodDescriptor$ReflectableMarshaller                                  : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.util.UnsafeRefArrayAccess             : loaded 2 times (x 69B)
+Class io.netty.util.DefaultAttributeMap                                               : loaded 2 times (x 76B)
+Class io.grpc.CompressorRegistry                                                      : loaded 2 times (x 70B)
+Class io.grpc.InternalInstrumented                                                    : loaded 2 times (x 68B)
+Class io.grpc.stub.ServerCalls$ClientStreamingMethod                                  : loaded 2 times (x 68B)
+Class io.netty.channel.SelectStrategy                                                 : loaded 2 times (x 68B)
+Class io.grpc.internal.TransportTracer$Factory                                        : loaded 2 times (x 70B)
+Class io.grpc.internal.ClientTransport                                                : loaded 2 times (x 68B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueConsumerFields: loaded 2 times (x 149B)
+Class io.grpc.internal.GrpcUtil$TimeoutMarshaller                                     : loaded 2 times (x 77B)
+Class io.netty.util.concurrent.MultithreadEventExecutorGroup$1                        : loaded 2 times (x 76B)
+Class io.netty.util.concurrent.DefaultPromise$CauseHolder                             : loaded 2 times (x 70B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseLinkedQueueConsumerNodeRef : loaded 2 times (x 170B)
+Class io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscChunkedAtomicArrayQueue: loaded 2 times (x 186B)
+Class dagger.Lazy                                                                     : loaded 2 times (x 68B)
+Class io.netty.bootstrap.ChannelFactory                                               : loaded 2 times (x 68B)
+Class io.grpc.netty.FixedKeyManagerFactory                                            : loaded 2 times (x 70B)
+Class io.netty.util.concurrent.OrderedEventExecutor                                   : loaded 2 times (x 68B)
+Class io.netty.channel.EventLoopGroup                                                 : loaded 2 times (x 68B)
+Class io.netty.channel.ChannelHandler                                                 : loaded 2 times (x 68B)
+Class io.grpc.Context                                                                 : loaded 2 times (x 92B)
+Class io.grpc.internal.TimeProvider                                                   : loaded 2 times (x 68B)
+Class io.grpc.netty.Utils$DefaultEventLoopGroupResource                               : loaded 2 times (x 74B)
+Class io.grpc.internal.SharedResourceHolder$Resource                                  : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent0$1                                     : loaded 2 times (x 72B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueuePad1   : loaded 2 times (x 148B)
+Class io.grpc.DecompressorRegistry                                                    : loaded 2 times (x 70B)
+Class io.netty.util.internal.PlatformDependent0$2                                     : loaded 2 times (x 73B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueuePad2   : loaded 2 times (x 148B)
+Class io.netty.util.internal.PlatformDependent0$3                                     : loaded 2 times (x 73B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueuePad3   : loaded 2 times (x 149B)
+Class io.netty.util.internal.PlatformDependent0$4                                     : loaded 2 times (x 73B)
+Class io.netty.util.concurrent.AbstractScheduledEventExecutor$1                       : loaded 2 times (x 87B)
+Class io.netty.util.internal.PlatformDependent0$5                                     : loaded 2 times (x 73B)
+Class io.netty.util.concurrent.AbstractScheduledEventExecutor$2                       : loaded 2 times (x 72B)
+Class io.netty.util.concurrent.RejectedExecutionHandler                               : loaded 2 times (x 68B)
+Class io.netty.util.internal.PlatformDependent0$6                                     : loaded 2 times (x 72B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields: loaded 2 times (x 149B)
+Class io.netty.util.internal.SystemPropertyUtil                                       : loaded 2 times (x 69B)
+Class io.netty.channel.AbstractChannel                                                : loaded 2 times (x 185B)
+Class io.netty.util.internal.ThreadExecutorMap                                        : loaded 2 times (x 69B)
+Class io.netty.util.internal.ReflectionUtil                                           : loaded 2 times (x 69B)
+Class io.grpc.MethodDescriptor$MethodType                                             : loaded 2 times (x 77B)
+Class io.grpc.netty.FixedTrustManagerFactory                                          : loaded 2 times (x 70B)
+Class io.grpc.internal.GrpcUtil$1                                                     : loaded 2 times (x 73B)
+Class io.grpc.internal.GrpcUtil$2                                                     : loaded 2 times (x 83B)
+Class io.grpc.internal.GrpcUtil$3                                                     : loaded 2 times (x 77B)
+Class io.grpc.internal.GrpcUtil$4                                                     : loaded 2 times (x 77B)
+Class io.grpc.internal.GrpcUtil$5                                                     : loaded 2 times (x 77B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields: loaded 2 times (x 150B)
+Class io.netty.util.concurrent.ThreadProperties                                       : loaded 2 times (x 68B)
+Class io.grpc.internal.SharedResourceHolder$ScheduledExecutorFactory                  : loaded 2 times (x 68B)
+Class io.grpc.netty.Utils$1                                                           : loaded 2 times (x 77B)
+Class io.grpc.netty.Utils$2                                                           : loaded 2 times (x 69B)
+Class io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueMidPad           : loaded 2 times (x 182B)
+Class io.netty.util.concurrent.GenericFutureListener                                  : loaded 2 times (x 68B)
+Class io.grpc.netty.ProtocolNegotiator$ClientFactory                                  : loaded 2 times (x 68B)
+Class io.grpc.CallOptions$Key                                                         : loaded 2 times (x 70B)
+Class io.netty.channel.ChannelFutureListener                                          : loaded 2 times (x 68B)
+Class io.netty.channel.nio.SelectedSelectionKeySet                                    : loaded 2 times (x 134B)
+Class io.netty.util.ReferenceCounted                                                  : loaded 2 times (x 68B)
+Class io.grpc.internal.ReflectionLongAdderCounter                                     : loaded 2 times (x 74B)
+Class io.netty.util.internal.logging.Slf4JLoggerFactory                               : loaded 2 times (x 70B)
+Class io.netty.channel.nio.AbstractNioChannel                                         : loaded 2 times (x 194B)
+Class io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueue       : loaded 2 times (x 186B)
+Class io.grpc.Compressor                                                              : loaded 2 times (x 68B)
+Class io.grpc.Codec                                                                   : loaded 2 times (x 68B)
+Class io.grpc.InternalWithLogId                                                       : loaded 2 times (x 68B)
+Class io.netty.util.concurrent.EventExecutorChooserFactory                            : loaded 2 times (x 68B)
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.3636)
+OS uptime: 5 days 0:27 hours
+Hyper-V role detected
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 12 microcode 0xf8, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt, hv
+Processor Information for processor 0
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 1
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 2
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 3
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 4
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 5
+  Max Mhz: 1896, Current Mhz: 1596, Mhz Limit: 1592
+Processor Information for processor 6
+  Max Mhz: 1896, Current Mhz: 1496, Mhz Limit: 1592
+Processor Information for processor 7
+  Max Mhz: 1896, Current Mhz: 1496, Mhz Limit: 1592
+
+Memory: 4k page, system-wide physical 16190M (867M free)
+TotalPageFile size 31973M (AvailPageFile size 5M)
+current process WorkingSet (physical memory assigned to process): 33M, peak: 179M
+current process commit charge ("private bytes"): 178M, peak: 369M
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.9+0--11185874) for windows-amd64 JRE (17.0.9+0--11185874), built on Dec  6 2023 18:57:44 by "androidbuild" with MS VC++ 16.10 / 16.11 (VS2019)
+
+END.

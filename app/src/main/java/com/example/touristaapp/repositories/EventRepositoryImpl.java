@@ -39,17 +39,25 @@ public class EventRepositoryImpl implements EventRepository{
 
     @Override
     public void updateEvent(String eventId, Event event, OnCompleteListener<Void> onCompleteListener) {
-
+        eventRef
+                .document(eventId)
+                .set(event)
+                .addOnCompleteListener(onCompleteListener);
     }
 
     @Override
     public void deleteEvent(String eventId, OnCompleteListener<Void> onCompleteListener) {
-
+        eventRef
+                .document(eventId)
+                .delete()
+                .addOnCompleteListener(onCompleteListener);
     }
 
     @Override
     public void getAllEvents(OnCompleteListener<QuerySnapshot> onCompleteListener) {
-
+        eventRef
+                .get()
+                .addOnCompleteListener(onCompleteListener);
     }
 
     @Override

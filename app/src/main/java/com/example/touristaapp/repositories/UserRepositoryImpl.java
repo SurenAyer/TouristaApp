@@ -1,5 +1,7 @@
 package com.example.touristaapp.repositories;
 
+import android.util.Log;
+
 import com.example.touristaapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -62,6 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void getUserByEmail(String email, OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        Log.d(TAG, "getUserByEmail: " + email);
         usersRef.whereEqualTo("email", email)
                 .get()
                 .addOnCompleteListener(onCompleteListener);
